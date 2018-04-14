@@ -10,6 +10,7 @@
   <version>1.0-SNAPSHOT</version>
   <modules>
     <module>parser</module>
+      <module>codegenerator</module>
   </modules>
 
   <name>ampt</name>
