@@ -1,0 +1,14 @@
+ASSIGN=1
+PLUS=2
+MINUS=3
+PROD=4
+DIV=5
+WS=6
+ID=7
+INTEGER=8
+REAL=9
+'='=1
+'+'=2
+'-'=3
+'*'=4
+'/'=5
