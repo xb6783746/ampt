@@ -3,6 +3,7 @@ package ru.vsu.codegenerator.builder;
 import ru.vsu.ast.BinaryOperator;
 
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 public class ExpressionBuilder {
@@ -27,13 +28,61 @@ public class ExpressionBuilder {
         precedenceTable.put(BinaryOperator.NotEqual, 0);
     }
 
+
+    public static ExpressionBuilder createRow(List<ExpressionBuilder> expressions){
+
+        StringBuilder builder = new StringBuilder("[");
+
+        if(expressions.size() > 0) {
+
+            builder.append(expressions.get(0).getExpression());
+
+            for (int i = 1; i < expressions.size(); i++) {
+
+                builder.append(", ").append(expressions.get(i).getExpression());
+            }
+        }
+
+        builder.append(']');
+
+        return new ExpressionBuilder(builder.toString(), 0);
+    }
+
+    public static ExpressionBuilder createArray(List<ExpressionBuilder> rows){
+
+        StringBuilder builder = new StringBuilder();
+
+        if(rows.size() > 0) {
+
+            builder.append(rows.get(0).getExpression());
+
+            for (int i = 1; i < rows.size(); i++) {
+
+                builder.append(", ").append(rows.get(i).getExpression());
+            }
+        }
+
+        String template = rows.size() > 1? "np.array([%s])" : "np.array(%s)";
+
+        return new ExpressionBuilder(
+                String.format(template, builder), 0
+        );
+    }
+
     public ExpressionBuilder(String expression, int precedence) {
+
+        this(expression, precedence, false);
+    }
+
+    public ExpressionBuilder(String expression, int precedence, boolean isWrapped) {
 
         this.expression = new StringBuilder(expression);
         this.precedence = precedence;
+        this.isWrapped = isWrapped;
     }
 
     private StringBuilder expression;
+    private boolean isWrapped;
     private int precedence;
 
     public ExpressionBuilder apply(BinaryOperator op, ExpressionBuilder expr){
@@ -48,12 +97,33 @@ public class ExpressionBuilder {
                 opPrecedence
         );
     }
+    public ExpressionBuilder index(List<ExpressionBuilder> indexes){
+
+        wrap();
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(indexes.get(0).getExpression());
+
+        for(int i = 1; i < indexes.size(); i++){
+
+            builder.append(", ").append(indexes.get(i).getExpression());
+        }
+
+        return new ExpressionBuilder(
+                String.format("%s[%s]", expression, builder),
+                0
+        );
+    }
 
     private ExpressionBuilder wrap(){
 
-        expression.insert(0, '(');
-        expression.append(')');
+        if(!isWrapped) {
+            isWrapped = true;
 
+            expression.insert(0, '(');
+            expression.append(')');
+        }
         return this;
     }
 
