@@ -347,6 +347,18 @@ public class AmpcBaseListener implements AmpcListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitParensExpr(AmpcParser.ParensExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterRangeExpr(AmpcParser.RangeExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRangeExpr(AmpcParser.RangeExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

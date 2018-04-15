@@ -58,4 +58,5 @@ expression:
     | left=expression op=('+' | '-') right=expression  # infixExpr
     | left=expression op=('>' | '<' | '>=' | '<=') right=expression # infixExpr
     | left=expression op=('==' | '!=') right=expression  # infixExpr
-    | atom #atomExpr;
+    | atom #atomExpr
+    | start=expression ':' (step=expression ':')? end=expression #rangeExpr;

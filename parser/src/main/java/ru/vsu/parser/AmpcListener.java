@@ -307,4 +307,16 @@ public interface AmpcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitParensExpr(AmpcParser.ParensExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code rangeExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRangeExpr(AmpcParser.RangeExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code rangeExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRangeExpr(AmpcParser.RangeExprContext ctx);
 }

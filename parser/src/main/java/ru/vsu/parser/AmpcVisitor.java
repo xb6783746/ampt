@@ -188,4 +188,11 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitParensExpr(AmpcParser.ParensExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code rangeExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRangeExpr(AmpcParser.RangeExprContext ctx);
 }
