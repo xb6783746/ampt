@@ -8,18 +8,18 @@ import ru.vsu.ast.expression.BinaryExpressionNode;
 import ru.vsu.ast.expression.IdentifierExpressionNode;
 import ru.vsu.ast.expression.NumberNode;
 
-public interface AstTreeVisitor {
+public interface AstTreeVisitor<T> {
 
-    void visit(ScriptNode node);
+    T visit(ScriptNode node);
 
-    void visit(CodeBlockNode node);
+    T visit(CodeBlockNode node);
 
-    void visit(AssignCommandNode node);
-    void visit(ConditionalOperatorNode node);
-    void visit(ElseIfNode node);
-    void visit(WhileLoopNode node);
+    T visit(AssignCommandNode node);
+    T visit(ConditionalOperatorNode node);
+    T visit(ElseIfNode node);
+    T visit(WhileLoopNode node);
 
-    void visit(BinaryExpressionNode node);
-    void visit(IdentifierExpressionNode node);
-    void visit(NumberNode node);
+    T visit(BinaryExpressionNode node);
+    T visit(IdentifierExpressionNode node);
+    T visit(NumberNode node);
 }

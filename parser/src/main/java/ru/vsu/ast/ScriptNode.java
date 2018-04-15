@@ -13,8 +13,8 @@ public class ScriptNode extends BasicAstNode {
     }
 
     @Override
-    public void accept(AstTreeVisitor visitor) {
+    public <T> T accept(AstTreeVisitor<T> visitor) {
 
-        visitor.visit(this);
+        return visitor.visit(this);
     }
 }

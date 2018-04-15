@@ -4,6 +4,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 
 public abstract class BasicAstNode {
 
-    public abstract void accept(AstTreeVisitor visitor);
+    public abstract <T> T accept(AstTreeVisitor<T> visitor);
 
 }
