@@ -55,12 +55,19 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitCondOperatorCommand(AmpcParser.CondOperatorCommandContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code loopOperatorCommand}
+	 * Visit a parse tree produced by the {@code whileLoopCommand}
 	 * labeled alternative in {@link AmpcParser#command}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLoopOperatorCommand(AmpcParser.LoopOperatorCommandContext ctx);
+	T visitWhileLoopCommand(AmpcParser.WhileLoopCommandContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code forLoopCommand}
+	 * labeled alternative in {@link AmpcParser#command}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForLoopCommand(AmpcParser.ForLoopCommandContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AmpcParser#assign}.
 	 * @param ctx the parse tree
@@ -86,11 +93,17 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitElsePart(AmpcParser.ElsePartContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link AmpcParser#loopOperator}.
+	 * Visit a parse tree produced by {@link AmpcParser#whileLoop}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLoopOperator(AmpcParser.LoopOperatorContext ctx);
+	T visitWhileLoop(AmpcParser.WhileLoopContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AmpcParser#forLoop}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForLoop(AmpcParser.ForLoopContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AmpcParser#number}.
 	 * @param ctx the parse tree
