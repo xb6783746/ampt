@@ -92,34 +92,6 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLoopOperator(AmpcParser.LoopOperatorContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code identExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIdentExpr(AmpcParser.IdentExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code infixExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInfixExpr(AmpcParser.InfixExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code numberExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNumberExpr(AmpcParser.NumberExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code parensExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitParensExpr(AmpcParser.ParensExprContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link AmpcParser#number}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -137,4 +109,83 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitCommsep(AmpcParser.CommsepContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code arrayExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayExpr(AmpcParser.ArrayExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code numberExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNumberExpr(AmpcParser.NumberExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code identExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentExpr(AmpcParser.IdentExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AmpcParser#array}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArray(AmpcParser.ArrayContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AmpcParser#arrayRow}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayRow(AmpcParser.ArrayRowContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AmpcParser#arrayRowSeparator}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayRowSeparator(AmpcParser.ArrayRowSeparatorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AmpcParser#arrayColumnSeparator}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayColumnSeparator(AmpcParser.ArrayColumnSeparatorContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AmpcParser#expressionList}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressionList(AmpcParser.ExpressionListContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code indexExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIndexExpr(AmpcParser.IndexExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code infixExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixExpr(AmpcParser.InfixExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code atomExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAtomExpr(AmpcParser.AtomExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code parensExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParensExpr(AmpcParser.ParensExprContext ctx);
 }

@@ -28,3 +28,34 @@ commsep:
       ';''\n'*
     | ',' '\n'*
     | '\n'+;
+
+atom:
+      arr=array # arrayExpr
+    | value=number  # numberExpr
+    | id=ID # identExpr;
+
+array:
+    '[' arrayRow? (arrayColumnSeparator arrayRow)* ']';
+
+arrayRow:
+    expression? (arrayRowSeparator expression)*;
+
+arrayRowSeparator:
+     ','
+    | ;
+arrayColumnSeparator:
+      ';' nl*
+    | nl+;
+
+
+expressionList:
+    expression (',' expression)*;
+
+expression:
+    '(' expression ')' # parensExpr
+    | expr=expression '(' index=expressionList ')' #indexExpr
+    | left=expression op=('*' | '/') right=expression # infixExpr
+    | left=expression op=('+' | '-') right=expression  # infixExpr
+    | left=expression op=('>' | '<' | '>=' | '<=') right=expression # infixExpr
+    | left=expression op=('==' | '!=') right=expression  # infixExpr
+    | atom #atomExpr;

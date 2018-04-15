@@ -7,7 +7,7 @@ options
 
 @header {package ru.vsu.parser; }
 
-import AmpcMath;
+import AmpcCommon;
 
 file:
     script;
