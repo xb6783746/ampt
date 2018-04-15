@@ -1,6 +1,7 @@
 package ru.vsu.codegenerator.builder;
 
 import ru.vsu.codegenerator.builder.command.AssignCommandBuilder;
+import ru.vsu.codegenerator.builder.command.ForLoopBuilder;
 import ru.vsu.codegenerator.builder.command.IfOperatorBuilder;
 import ru.vsu.codegenerator.builder.command.WhileOperatorBuilder;
 
@@ -19,6 +20,15 @@ public class CodeBlockBuilder implements CommandBuilder {
     public IfOperatorBuilder addIf(ExpressionBuilder condition){
 
         IfOperatorBuilder builder = new IfOperatorBuilder(condition);
+
+        lines.add(builder);
+
+        return builder;
+    }
+
+    public ForLoopBuilder addFor(String id, ExpressionBuilder expr){
+
+        ForLoopBuilder builder = new ForLoopBuilder(id, expr);
 
         lines.add(builder);
 

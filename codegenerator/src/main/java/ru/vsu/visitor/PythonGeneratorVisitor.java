@@ -6,6 +6,7 @@ import ru.vsu.ast.ScriptNode;
 import ru.vsu.ast.command.*;
 import ru.vsu.codegenerator.builder.CodeBlockBuilder;
 import ru.vsu.codegenerator.builder.ExpressionBuilder;
+import ru.vsu.codegenerator.builder.command.ForLoopBuilder;
 import ru.vsu.codegenerator.builder.command.IfOperatorBuilder;
 import ru.vsu.codegenerator.builder.command.WhileOperatorBuilder;
 
@@ -72,6 +73,17 @@ public class PythonGeneratorVisitor {
 
     }
 
+    private void visit(ForLoopNode node, CodeBlockBuilder codeBlockBuilder) {
+
+        String id = node.getId().getIdName();
+
+        ExpressionBuilder expression = node.getExpressionNode().accept(expressionVisitor);
+
+        ForLoopBuilder builder = codeBlockBuilder.addFor(id, expression);
+
+        visit(node.getBlock(), builder.getCodeBlockBuilder());
+    }
+
     private void visit(WhileLoopNode node, CodeBlockBuilder codeBlockBuilder) {
 
         ExpressionBuilder condition = node.getCondition().accept(expressionVisitor);
@@ -95,6 +107,9 @@ public class PythonGeneratorVisitor {
         }  else if(node instanceof ConditionalOperatorNode){
 
             visit((ConditionalOperatorNode)node, codeBlockBuilder);
+        }  else if(node instanceof ForLoopNode){
+
+            visit((ForLoopNode)node, codeBlockBuilder);
         }  else if(node instanceof WhileLoopNode){
 
             visit((WhileLoopNode)node, codeBlockBuilder);
