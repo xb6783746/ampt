@@ -69,6 +69,22 @@ public class ExpressionBuilder {
         );
     }
 
+    public static ExpressionBuilder createRange(ExpressionBuilder start,
+                                                ExpressionBuilder step,
+                                                ExpressionBuilder end){
+
+        String str;
+
+        if(step != null){
+
+            str = String.format("range(%s, %s, %s)", start, end, step);
+        } else {
+
+            str = String.format("range(%s, %s)", start, end);
+        }
+
+        return new ExpressionBuilder(str, 0);
+    }
     public ExpressionBuilder(String expression, int precedence) {
 
         this(expression, precedence, false);

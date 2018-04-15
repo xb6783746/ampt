@@ -61,6 +61,21 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     }
 
     @Override
+    public ExpressionBuilder visit(RangeExpressionNode node) {
+
+        ExpressionBuilder start = node.getStartExpression().accept(this);
+        ExpressionBuilder end = node.getEndExpression().accept(this);
+
+        ExpressionBuilder step = null;
+        if(node.getStepExpression() != null){
+
+            step = node.getStepExpression().accept(this);
+        }
+
+        return ExpressionBuilder.createRange(start, step, end);
+    }
+
+    @Override
     public ExpressionBuilder visit(IndexExpressionNode node) {
 
         ExpressionBuilder expression = node.getExpression().accept(this);
