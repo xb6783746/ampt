@@ -144,54 +144,6 @@ public interface AmpcListener extends ParseTreeListener {
 	 */
 	void exitLoopOperator(AmpcParser.LoopOperatorContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code identExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterIdentExpr(AmpcParser.IdentExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code identExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitIdentExpr(AmpcParser.IdentExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code infixExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterInfixExpr(AmpcParser.InfixExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code infixExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitInfixExpr(AmpcParser.InfixExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code numberExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterNumberExpr(AmpcParser.NumberExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code numberExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitNumberExpr(AmpcParser.NumberExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code parensExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterParensExpr(AmpcParser.ParensExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code parensExpr}
-	 * labeled alternative in {@link AmpcParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitParensExpr(AmpcParser.ParensExprContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link AmpcParser#number}.
 	 * @param ctx the parse tree
 	 */
@@ -221,4 +173,150 @@ public interface AmpcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitCommsep(AmpcParser.CommsepContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code arrayExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayExpr(AmpcParser.ArrayExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code arrayExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayExpr(AmpcParser.ArrayExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code numberExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumberExpr(AmpcParser.NumberExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code numberExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumberExpr(AmpcParser.NumberExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code identExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentExpr(AmpcParser.IdentExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code identExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentExpr(AmpcParser.IdentExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AmpcParser#array}.
+	 * @param ctx the parse tree
+	 */
+	void enterArray(AmpcParser.ArrayContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AmpcParser#array}.
+	 * @param ctx the parse tree
+	 */
+	void exitArray(AmpcParser.ArrayContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AmpcParser#arrayRow}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayRow(AmpcParser.ArrayRowContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AmpcParser#arrayRow}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayRow(AmpcParser.ArrayRowContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AmpcParser#arrayRowSeparator}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayRowSeparator(AmpcParser.ArrayRowSeparatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AmpcParser#arrayRowSeparator}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayRowSeparator(AmpcParser.ArrayRowSeparatorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AmpcParser#arrayColumnSeparator}.
+	 * @param ctx the parse tree
+	 */
+	void enterArrayColumnSeparator(AmpcParser.ArrayColumnSeparatorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AmpcParser#arrayColumnSeparator}.
+	 * @param ctx the parse tree
+	 */
+	void exitArrayColumnSeparator(AmpcParser.ArrayColumnSeparatorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AmpcParser#expressionList}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionList(AmpcParser.ExpressionListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AmpcParser#expressionList}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionList(AmpcParser.ExpressionListContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code indexExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIndexExpr(AmpcParser.IndexExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code indexExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIndexExpr(AmpcParser.IndexExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code infixExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterInfixExpr(AmpcParser.InfixExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code infixExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitInfixExpr(AmpcParser.InfixExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code atomExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAtomExpr(AmpcParser.AtomExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code atomExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAtomExpr(AmpcParser.AtomExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code parensExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterParensExpr(AmpcParser.ParensExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code parensExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitParensExpr(AmpcParser.ParensExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code rangeExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRangeExpr(AmpcParser.RangeExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code rangeExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRangeExpr(AmpcParser.RangeExprContext ctx);
 }

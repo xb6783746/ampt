@@ -8,10 +8,7 @@ import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.BinaryOperator;
 import ru.vsu.ast.CodeBlockNode;
 import ru.vsu.ast.command.*;
-import ru.vsu.ast.expression.BinaryExpressionNode;
-import ru.vsu.ast.expression.ExpressionNode;
-import ru.vsu.ast.expression.IdentifierExpressionNode;
-import ru.vsu.ast.expression.NumberNode;
+import ru.vsu.ast.expression.*;
 import ru.vsu.parser.AmpcListener;
 import ru.vsu.parser.AmpcParser;
 import ru.vsu.parser.AmpcVisitor;
@@ -151,6 +148,57 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     }
 
     @Override
+    public BasicAstNode visitArray(AmpcParser.ArrayContext ctx) {
+
+        List<ArrayExpressionNode.ArrayRowNode> rows =
+                ctx.arrayRow()
+                        .stream()
+                        .map((x) -> (ArrayExpressionNode.ArrayRowNode)x.accept(this))
+                        .collect(Collectors.toList());
+
+        return new ArrayExpressionNode(rows);
+    }
+
+    @Override
+    public BasicAstNode visitArrayRow(AmpcParser.ArrayRowContext ctx) {
+
+        List<ExpressionNode> expressionNodes =
+                ctx.expression()
+                        .stream()
+                        .map((x) -> (ExpressionNode)x.accept(this))
+                        .collect(Collectors.toList());
+
+        return new ArrayExpressionNode.ArrayRowNode(expressionNodes);
+    }
+
+    @Override
+    public BasicAstNode visitArrayRowSeparator(AmpcParser.ArrayRowSeparatorContext ctx) {
+        return null;
+    }
+    @Override
+    public BasicAstNode visitArrayColumnSeparator(AmpcParser.ArrayColumnSeparatorContext ctx) {
+        return null;
+    }
+    @Override
+    public BasicAstNode visitExpressionList(AmpcParser.ExpressionListContext ctx) {
+        return null;
+    }
+
+    @Override
+    public BasicAstNode visitIndexExpr(AmpcParser.IndexExprContext ctx) {
+
+        ExpressionNode expression = (ExpressionNode)ctx.expr.accept(this);
+
+        List<ExpressionNode> indexes =
+                ctx.index.expression()
+                        .stream()
+                        .map((x) -> (ExpressionNode)x.accept(this))
+                        .collect(Collectors.toList());
+
+        return new IndexExpressionNode(expression, indexes);
+    }
+
+    @Override
     public BasicAstNode visitInfixExpr(AmpcParser.InfixExprContext ctx) {
 
         ExpressionNode left = (ExpressionNode)ctx.left.accept(this);
@@ -159,6 +207,12 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
         BinaryOperator operator = BinaryOperator.get(ctx.op.getText());
 
         return new BinaryExpressionNode(left, right, operator);
+    }
+
+    @Override
+    public BasicAstNode visitAtomExpr(AmpcParser.AtomExprContext ctx) {
+
+        return ctx.atom().accept(this);
     }
 
     @Override
@@ -174,8 +228,35 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     }
 
     @Override
+    public BasicAstNode visitRangeExpr(AmpcParser.RangeExprContext ctx) {
+
+        ExpressionNode startExpression = (ExpressionNode)ctx.start.accept(this);
+        ExpressionNode endExpression = (ExpressionNode)ctx.end.accept(this);
+
+        ExpressionNode stepExpression = null;
+        if(ctx.step != null){
+
+            stepExpression = (ExpressionNode)ctx.step.accept(this);
+        }
+
+        return new RangeExpressionNode(startExpression, stepExpression, endExpression);
+    }
+
+    @Override
     public BasicAstNode visitNumber(AmpcParser.NumberContext ctx) {
         return null;
+    }
+
+    @Override
+    public BasicAstNode visitArrayExpr(AmpcParser.ArrayExprContext ctx) {
+
+        return ctx.arr.accept(this);
+    }
+
+    @Override
+    public BasicAstNode visit(ParseTree parseTree) {
+
+        return parseTree.accept(this);
     }
 
     @Override
@@ -186,12 +267,6 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     @Override
     public BasicAstNode visitCommsep(AmpcParser.CommsepContext ctx) {
         return null;
-    }
-
-    @Override
-    public BasicAstNode visit(ParseTree parseTree) {
-
-        return parseTree.accept(this);
     }
 
     @Override
