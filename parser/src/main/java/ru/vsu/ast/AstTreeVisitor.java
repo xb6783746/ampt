@@ -22,5 +22,6 @@ public interface AstTreeVisitor<T> {
     T visit(NumberNode node);
     T visit(ArrayExpressionNode node);
     T visit(ArrayExpressionNode.ArrayRowNode node);
+    T visit(RangeExpressionNode node);
     T visit(IndexExpressionNode node);
 }
