@@ -81,11 +81,16 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     }
 
     @Override
-    public BasicAstNode visitLoopOperatorCommand(AmpcParser.LoopOperatorCommandContext ctx) {
+    public BasicAstNode visitWhileLoopCommand(AmpcParser.WhileLoopCommandContext ctx) {
 
-        return ctx.loopOperator().accept(this);
+        return ctx.whileLoop().accept(this);
     }
 
+    @Override
+    public BasicAstNode visitForLoopCommand(AmpcParser.ForLoopCommandContext ctx) {
+
+        return ctx.forLoop().accept(this);
+    }
 
     @Override
     public BasicAstNode visitAssign(AmpcParser.AssignContext ctx) {
@@ -133,13 +138,24 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     }
 
     @Override
-    public BasicAstNode visitLoopOperator(AmpcParser.LoopOperatorContext ctx) {
+    public BasicAstNode visitWhileLoop(AmpcParser.WhileLoopContext ctx) {
 
         ExpressionNode cond = (ExpressionNode)ctx.cond.accept(this);
         CodeBlockNode block = (CodeBlockNode)ctx.block.accept(this);
 
         return new WhileLoopNode(true, cond, block);
     }
+
+    @Override
+    public BasicAstNode visitForLoop(AmpcParser.ForLoopContext ctx) {
+
+        IdentifierExpressionNode id = new IdentifierExpressionNode(ctx.ID().getText());
+        ExpressionNode expressionNode = (ExpressionNode)ctx.expr.accept(this);
+        CodeBlockNode codeBlockNode = (CodeBlockNode)ctx.block.accept(this);
+
+        return new ForLoopNode(true, id, expressionNode, codeBlockNode);
+    }
+
 
     @Override
     public BasicAstNode visitIdentExpr(AmpcParser.IdentExprContext ctx) {
