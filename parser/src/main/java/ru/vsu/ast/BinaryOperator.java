@@ -15,6 +15,10 @@ public enum BinaryOperator {
         this.operator = operator;
     }
 
+    public String getOperator() {
+        return operator;
+    }
+
     public static BinaryOperator get(String operator){
 
         return Arrays.stream(BinaryOperator.values())
