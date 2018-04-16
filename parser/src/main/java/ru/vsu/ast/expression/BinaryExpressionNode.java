@@ -1,14 +1,25 @@
 package ru.vsu.ast.expression;
 
 import ru.vsu.ast.AstTreeVisitor;
+import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.BinaryOperator;
 
 public class BinaryExpressionNode extends ExpressionNode {
 
     public BinaryExpressionNode(ExpressionNode left, ExpressionNode right, BinaryOperator operator) {
+
+        this(null, left, right, operator);
+    }
+
+    public BinaryExpressionNode(BasicAstNode parent,
+                                ExpressionNode left, ExpressionNode right, BinaryOperator operator) {
+        super(parent);
         this.left = left;
         this.right = right;
         this.operator = operator;
+
+        left.setParent(this);
+        right.setParent(this);
     }
 
     private ExpressionNode left;
@@ -23,6 +34,20 @@ public class BinaryExpressionNode extends ExpressionNode {
     }
     public BinaryOperator getOperator() {
         return operator;
+    }
+
+    @Override
+    public void replace(BasicAstNode oldNode, BasicAstNode newNode) {
+
+        if(left == oldNode){
+
+            left = (ExpressionNode) newNode;
+        }
+
+        if(right == oldNode){
+
+            right = (ExpressionNode) newNode;
+        }
     }
 
     @Override

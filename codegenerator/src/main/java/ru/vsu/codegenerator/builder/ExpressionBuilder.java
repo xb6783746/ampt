@@ -86,6 +86,17 @@ public class ExpressionBuilder {
 
         return new ExpressionBuilder(str, 0);
     }
+
+    public static ExpressionBuilder createFunction(String funcName, List<ExpressionBuilder> args){
+
+        StringBuilder builder = makeExpressionList(args);
+
+        return new ExpressionBuilder(
+                String.format("%s(%s)", funcName, builder),
+                0
+        );
+    }
+
     public ExpressionBuilder(String expression, int precedence) {
 
         this(expression, precedence, false);
@@ -118,14 +129,7 @@ public class ExpressionBuilder {
 
         wrap();
 
-        StringBuilder builder = new StringBuilder();
-
-        builder.append(indexes.get(0).getExpression());
-
-        for(int i = 1; i < indexes.size(); i++){
-
-            builder.append(", ").append(indexes.get(i).getExpression());
-        }
+        StringBuilder builder = makeExpressionList(indexes);
 
         return new ExpressionBuilder(
                 String.format("%s[%s]", expression, builder),
@@ -156,5 +160,23 @@ public class ExpressionBuilder {
     public String toString() {
 
         return expression.toString();
+    }
+
+    private static StringBuilder makeExpressionList(List<ExpressionBuilder> indexes){
+
+        StringBuilder builder = new StringBuilder();
+
+        if(indexes.size() > 0) {
+
+            builder.append(indexes.get(0).getExpression());
+
+            for (int i = 1; i < indexes.size(); i++) {
+
+                builder.append(", ").append(indexes.get(i).getExpression());
+            }
+
+        }
+
+        return builder;
     }
 }

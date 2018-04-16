@@ -9,7 +9,6 @@ import ru.vsu.ast.BinaryOperator;
 import ru.vsu.ast.CodeBlockNode;
 import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
-import ru.vsu.parser.AmpcListener;
 import ru.vsu.parser.AmpcParser;
 import ru.vsu.parser.AmpcVisitor;
 
@@ -205,11 +204,18 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
 
         ExpressionNode expression = (ExpressionNode)ctx.expr.accept(this);
 
-        List<ExpressionNode> indexes =
-                ctx.index.expression()
-                        .stream()
-                        .map((x) -> (ExpressionNode)x.accept(this))
-                        .collect(Collectors.toList());
+        List<ExpressionNode> indexes;
+        if(ctx.index != null) {
+
+            indexes =
+                    ctx.index.expression()
+                            .stream()
+                            .map((x) -> (ExpressionNode) x.accept(this))
+                            .collect(Collectors.toList());
+        } else {
+
+            indexes = new ArrayList<>();
+        }
 
         return new IndexExpressionNode(expression, indexes);
     }

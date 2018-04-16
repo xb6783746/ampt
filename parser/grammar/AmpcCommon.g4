@@ -53,7 +53,7 @@ expressionList:
 
 expression:
     '(' expression ')' # parensExpr
-    | expr=expression '(' index=expressionList ')' #indexExpr
+    | expr=expression '(' index=expressionList? ')' #indexExpr
     | left=expression op=('*' | '/') right=expression # infixExpr
     | left=expression op=('+' | '-') right=expression  # infixExpr
     | left=expression op=('>' | '<' | '>=' | '<=') right=expression # infixExpr
