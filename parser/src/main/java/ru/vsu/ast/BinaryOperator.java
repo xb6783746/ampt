@@ -4,9 +4,13 @@ import java.util.Arrays;
 
 public enum BinaryOperator {
 
+    And("&"), Or("|"),
     Equal("=="), NotEqual("!="),
     Less("<"), Greater(">"), LessOrEqual("<="), GreaterOrEqual(">="),
-    Plus("+"), Minus("-"), Prod("*"), Div("/");
+    Plus("+"), Minus("-"),
+    Pow("^"), ElemPow(".^"),
+    ElemProd(".*"), ElemDiv("./"),
+    Prod("*"), Div("/");
 
     private String operator;
 
@@ -20,6 +24,17 @@ public enum BinaryOperator {
     }
 
     public static BinaryOperator get(String operator){
+
+        //TODO move to different class
+        if(operator.equals("&&")){
+
+            return And;
+        }
+
+        if(operator.equals("||")){
+
+            return Or;
+        }
 
         return Arrays.stream(BinaryOperator.values())
                 .filter(x -> x.operator.equals(operator))

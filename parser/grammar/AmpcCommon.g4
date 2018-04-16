@@ -18,6 +18,9 @@ INTEGER:
 REAL:
     INTEGER '.' INTEGER;
 
+STRING:
+    '\'' ~[']* '\'';
+
 COMMENT
     : '\n'* '%' .*? '\n' -> skip;
 
@@ -35,6 +38,7 @@ commsep:
 atom:
       arr=array # arrayExpr
     | value=number  # numberExpr
+    | str=STRING # stringExpr
     | id=ID # identExpr;
 
 array:
@@ -57,9 +61,11 @@ expressionList:
 expression:
     '(' expression ')' # parensExpr
     | expr=expression '(' index=expressionList? ')' #indexExpr
-    | left=expression op=('*' | '/') right=expression # infixExpr
+    | left=expression op=('.^' | '^') right=expression # infixExpr
+    | left=expression op=('*' | '/' | '.*' | './') right=expression # infixExpr
     | left=expression op=('+' | '-') right=expression  # infixExpr
     | left=expression op=('>' | '<' | '>=' | '<=') right=expression # infixExpr
     | left=expression op=('==' | '!=') right=expression  # infixExpr
+    | left=expression op=('&' | '&&' | '|' | '||') right=expression  # infixExpr
     | atom #atomExpr
     | start=expression ':' (step=expression ':')? end=expression #rangeExpr;
