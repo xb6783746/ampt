@@ -73,6 +73,7 @@ public class ExpressionBuilder {
                                                 ExpressionBuilder step,
                                                 ExpressionBuilder end){
 
+        end = end.apply(BinaryOperator.Plus, new ExpressionBuilder("1", 0));
         String str;
 
         if(step != null){

@@ -82,17 +82,29 @@ public interface AmpcListener extends ParseTreeListener {
 	 */
 	void exitCondOperatorCommand(AmpcParser.CondOperatorCommandContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code loopOperatorCommand}
+	 * Enter a parse tree produced by the {@code whileLoopCommand}
 	 * labeled alternative in {@link AmpcParser#command}.
 	 * @param ctx the parse tree
 	 */
-	void enterLoopOperatorCommand(AmpcParser.LoopOperatorCommandContext ctx);
+	void enterWhileLoopCommand(AmpcParser.WhileLoopCommandContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code loopOperatorCommand}
+	 * Exit a parse tree produced by the {@code whileLoopCommand}
 	 * labeled alternative in {@link AmpcParser#command}.
 	 * @param ctx the parse tree
 	 */
-	void exitLoopOperatorCommand(AmpcParser.LoopOperatorCommandContext ctx);
+	void exitWhileLoopCommand(AmpcParser.WhileLoopCommandContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code forLoopCommand}
+	 * labeled alternative in {@link AmpcParser#command}.
+	 * @param ctx the parse tree
+	 */
+	void enterForLoopCommand(AmpcParser.ForLoopCommandContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code forLoopCommand}
+	 * labeled alternative in {@link AmpcParser#command}.
+	 * @param ctx the parse tree
+	 */
+	void exitForLoopCommand(AmpcParser.ForLoopCommandContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AmpcParser#assign}.
 	 * @param ctx the parse tree
@@ -134,15 +146,25 @@ public interface AmpcListener extends ParseTreeListener {
 	 */
 	void exitElsePart(AmpcParser.ElsePartContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link AmpcParser#loopOperator}.
+	 * Enter a parse tree produced by {@link AmpcParser#whileLoop}.
 	 * @param ctx the parse tree
 	 */
-	void enterLoopOperator(AmpcParser.LoopOperatorContext ctx);
+	void enterWhileLoop(AmpcParser.WhileLoopContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link AmpcParser#loopOperator}.
+	 * Exit a parse tree produced by {@link AmpcParser#whileLoop}.
 	 * @param ctx the parse tree
 	 */
-	void exitLoopOperator(AmpcParser.LoopOperatorContext ctx);
+	void exitWhileLoop(AmpcParser.WhileLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AmpcParser#forLoop}.
+	 * @param ctx the parse tree
+	 */
+	void enterForLoop(AmpcParser.ForLoopContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AmpcParser#forLoop}.
+	 * @param ctx the parse tree
+	 */
+	void exitForLoop(AmpcParser.ForLoopContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AmpcParser#number}.
 	 * @param ctx the parse tree

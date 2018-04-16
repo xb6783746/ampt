@@ -26,7 +26,8 @@ comOptSep:
 command:
         assign #assingCommand
       | condOperator #condOperatorCommand
-      | loopOperator #loopOperatorCommand;
+      | whileLoop #whileLoopCommand
+      | forLoop #forLoopCommand;
 
 assign:
     lvalue=expression ASSIGN rvalue=expression;
@@ -45,7 +46,12 @@ elseIfPart:
 elsePart:
     'else' commsep block=codeBlock;
 
-loopOperator:
+whileLoop:
     'while' cond=expression commsep
         block=codeBlock
+    'end';
+
+forLoop:
+    'for' ID '=' expr=expression commsep
+         block=codeBlock
     'end';

@@ -3,10 +3,7 @@ package ru.vsu.visitor;
 import ru.vsu.ast.AstTreeVisitor;
 import ru.vsu.ast.CodeBlockNode;
 import ru.vsu.ast.ScriptNode;
-import ru.vsu.ast.command.AssignCommandNode;
-import ru.vsu.ast.command.ConditionalOperatorNode;
-import ru.vsu.ast.command.ElseIfNode;
-import ru.vsu.ast.command.WhileLoopNode;
+import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
 import ru.vsu.codegenerator.builder.ExpressionBuilder;
 
@@ -111,6 +108,11 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     }
     @Override
     public ExpressionBuilder visit(WhileLoopNode node) {
+        return null;
+    }
+
+    @Override
+    public ExpressionBuilder visit(ForLoopNode node) {
         return null;
     }
 }

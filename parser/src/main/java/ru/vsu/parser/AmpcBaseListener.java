@@ -100,13 +100,25 @@ public class AmpcBaseListener implements AmpcListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLoopOperatorCommand(AmpcParser.LoopOperatorCommandContext ctx) { }
+	@Override public void enterWhileLoopCommand(AmpcParser.WhileLoopCommandContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLoopOperatorCommand(AmpcParser.LoopOperatorCommandContext ctx) { }
+	@Override public void exitWhileLoopCommand(AmpcParser.WhileLoopCommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForLoopCommand(AmpcParser.ForLoopCommandContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForLoopCommand(AmpcParser.ForLoopCommandContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -160,13 +172,25 @@ public class AmpcBaseListener implements AmpcListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLoopOperator(AmpcParser.LoopOperatorContext ctx) { }
+	@Override public void enterWhileLoop(AmpcParser.WhileLoopContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitLoopOperator(AmpcParser.LoopOperatorContext ctx) { }
+	@Override public void exitWhileLoop(AmpcParser.WhileLoopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterForLoop(AmpcParser.ForLoopContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitForLoop(AmpcParser.ForLoopContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
