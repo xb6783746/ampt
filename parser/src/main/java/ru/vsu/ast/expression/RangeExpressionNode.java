@@ -1,14 +1,32 @@
 package ru.vsu.ast.expression;
 
 import ru.vsu.ast.AstTreeVisitor;
+import ru.vsu.ast.BasicAstNode;
 
 public class RangeExpressionNode extends ExpressionNode {
 
-
     public RangeExpressionNode(ExpressionNode startExpression, ExpressionNode stepExpression, ExpressionNode endExpression) {
+
+        this(null, startExpression, stepExpression, endExpression);
+    }
+
+    public RangeExpressionNode(
+            BasicAstNode parent,
+            ExpressionNode startExpression, ExpressionNode stepExpression, ExpressionNode endExpression) {
+
+        super(parent);
         this.startExpression = startExpression;
         this.stepExpression = stepExpression;
         this.endExpression = endExpression;
+
+        startExpression.setParent(this);
+
+        if(stepExpression != null){
+
+            stepExpression.setParent(this);
+        }
+
+        endExpression.setParent(this);
     }
 
     private ExpressionNode startExpression;
@@ -25,6 +43,25 @@ public class RangeExpressionNode extends ExpressionNode {
 
     public ExpressionNode getEndExpression() {
         return endExpression;
+    }
+
+    @Override
+    public void replace(BasicAstNode oldNode, BasicAstNode newNode) {
+
+        if(oldNode == startExpression){
+
+            startExpression = (ExpressionNode)newNode;
+        }
+
+        if(oldNode == stepExpression){
+
+            stepExpression = (ExpressionNode)newNode;
+        }
+
+        if(oldNode == endExpression){
+
+            endExpression = (ExpressionNode)newNode;
+        }
     }
 
     @Override

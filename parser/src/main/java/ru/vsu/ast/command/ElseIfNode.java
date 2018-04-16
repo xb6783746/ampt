@@ -10,6 +10,9 @@ public class ElseIfNode extends BasicAstNode {
     public ElseIfNode(ExpressionNode condition, CodeBlockNode block) {
         this.condition = condition;
         this.block = block;
+
+        condition.setParent(this);
+        block.setParent(this);
     }
 
     private ExpressionNode condition;
@@ -20,6 +23,20 @@ public class ElseIfNode extends BasicAstNode {
     }
     public CodeBlockNode getBlock() {
         return block;
+    }
+
+    @Override
+    public void replace(BasicAstNode oldNode, BasicAstNode newNode) {
+
+        if(condition == oldNode){
+
+            condition = (ExpressionNode) newNode;
+        }
+
+        if(block == oldNode){
+
+            block = (CodeBlockNode) newNode;
+        }
     }
 
     @Override

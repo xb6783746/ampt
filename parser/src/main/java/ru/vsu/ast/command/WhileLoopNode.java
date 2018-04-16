@@ -1,6 +1,7 @@
 package ru.vsu.ast.command;
 
 import ru.vsu.ast.AstTreeVisitor;
+import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.CodeBlockNode;
 import ru.vsu.ast.expression.ExpressionNode;
 
@@ -12,6 +13,9 @@ public class WhileLoopNode extends CommandNode {
         super(isEscaped);
         this.condition = condition;
         this.block = block;
+
+        condition.setParent(this);
+        block.setParent(this);
     }
 
     private ExpressionNode condition;
@@ -22,6 +26,20 @@ public class WhileLoopNode extends CommandNode {
     }
     public CodeBlockNode getBlock() {
         return block;
+    }
+
+    @Override
+    public void replace(BasicAstNode oldNode, BasicAstNode newNode) {
+
+        if(condition == oldNode){
+
+            condition = (ExpressionNode) newNode;
+        }
+
+        if(block == oldNode){
+
+            block = (CodeBlockNode) newNode;
+        }
     }
 
     @Override

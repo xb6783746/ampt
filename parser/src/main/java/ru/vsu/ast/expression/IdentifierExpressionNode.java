@@ -6,6 +6,13 @@ import ru.vsu.ast.BasicAstNode;
 public class IdentifierExpressionNode extends ExpressionNode {
 
     public IdentifierExpressionNode(String idName) {
+
+        this(null, idName);
+    }
+
+    public IdentifierExpressionNode(BasicAstNode parent, String idName) {
+
+        super(parent);
         this.idName = idName;
     }
 
@@ -13,6 +20,11 @@ public class IdentifierExpressionNode extends ExpressionNode {
 
     public String getIdName() {
         return idName;
+    }
+
+    @Override
+    public void replace(BasicAstNode oldNode, BasicAstNode newNode) {
+
     }
 
     @Override

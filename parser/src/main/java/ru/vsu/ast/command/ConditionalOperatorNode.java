@@ -19,6 +19,11 @@ public class ConditionalOperatorNode extends CommandNode {
         this.block = block;
         this.elseIfNodeList = elseIfNodeList;
         this.elseNode = elseNode;
+
+        condition.setParent(this);
+        block.setParent(this);
+        elseIfNodeList.forEach((x) -> x.setParent(this));
+        elseNode.setParent(this);
     }
 
     private ExpressionNode condition;
@@ -38,6 +43,28 @@ public class ConditionalOperatorNode extends CommandNode {
     }
     public CodeBlockNode getElseNode() {
         return elseNode;
+    }
+
+    @Override
+    public void replace(BasicAstNode oldNode, BasicAstNode newNode) {
+
+
+        if(condition == oldNode){
+
+            condition = (ExpressionNode) newNode;
+        }
+
+        if(block == oldNode){
+
+            block = (CodeBlockNode) newNode;
+        }
+
+        replaceInList(elseIfNodeList, oldNode, newNode);
+
+        if(elseNode == oldNode){
+
+            elseNode = (CodeBlockNode) newNode;
+        }
     }
 
     @Override
