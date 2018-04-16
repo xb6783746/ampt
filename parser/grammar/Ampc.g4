@@ -27,7 +27,8 @@ command:
         assign #assingCommand
       | condOperator #condOperatorCommand
       | whileLoop #whileLoopCommand
-      | forLoop #forLoopCommand;
+      | forLoop #forLoopCommand
+      | expression #expressionCommand;
 
 assign:
     lvalue=expression ASSIGN rvalue=expression;

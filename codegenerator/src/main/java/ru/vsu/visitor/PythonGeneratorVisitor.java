@@ -4,6 +4,7 @@ import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.CodeBlockNode;
 import ru.vsu.ast.ScriptNode;
 import ru.vsu.ast.command.*;
+import ru.vsu.ast.expression.ExpressionNode;
 import ru.vsu.codegenerator.builder.CodeBlockBuilder;
 import ru.vsu.codegenerator.builder.ExpressionBuilder;
 import ru.vsu.codegenerator.builder.command.ForLoopBuilder;
@@ -92,6 +93,13 @@ public class PythonGeneratorVisitor {
 
         visit(node.getBlock(), builder.getCodeBlockBuilder());
     }
+
+    private void visit(ExpressionNode node, CodeBlockBuilder codeBlockBuilder) {
+
+        ExpressionBuilder expressionBuilder = node.accept(expressionVisitor);
+
+        codeBlockBuilder.addExpression(expressionBuilder);
+    }
     
     private void visit(BasicAstNode node, CodeBlockBuilder codeBlockBuilder){
 
@@ -113,6 +121,9 @@ public class PythonGeneratorVisitor {
         }  else if(node instanceof WhileLoopNode){
 
             visit((WhileLoopNode)node, codeBlockBuilder);
+        }  else if(node instanceof ExpressionNode){
+
+            visit((ExpressionNode)node, codeBlockBuilder);
         }
     }
 }

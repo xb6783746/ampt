@@ -92,6 +92,12 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     }
 
     @Override
+    public BasicAstNode visitExpressionCommand(AmpcParser.ExpressionCommandContext ctx) {
+
+        return ctx.expression().accept(this);
+    }
+
+    @Override
     public BasicAstNode visitAssign(AmpcParser.AssignContext ctx) {
 
         ExpressionNode lvalue = (ExpressionNode)ctx.lvalue.accept(this);

@@ -69,6 +69,13 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitForLoopCommand(AmpcParser.ForLoopCommandContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code expressionCommand}
+	 * labeled alternative in {@link AmpcParser#command}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressionCommand(AmpcParser.ExpressionCommandContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AmpcParser#assign}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -106,6 +106,18 @@ public interface AmpcListener extends ParseTreeListener {
 	 */
 	void exitForLoopCommand(AmpcParser.ForLoopCommandContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code expressionCommand}
+	 * labeled alternative in {@link AmpcParser#command}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionCommand(AmpcParser.ExpressionCommandContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code expressionCommand}
+	 * labeled alternative in {@link AmpcParser#command}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionCommand(AmpcParser.ExpressionCommandContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AmpcParser#assign}.
 	 * @param ctx the parse tree
 	 */
