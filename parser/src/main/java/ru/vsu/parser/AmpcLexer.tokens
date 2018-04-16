@@ -28,6 +28,7 @@ WS=27
 ID=28
 INTEGER=29
 REAL=30
+COMMENT=31
 'if'=1
 'end'=2
 'elseif'=3

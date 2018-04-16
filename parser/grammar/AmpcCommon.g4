@@ -18,6 +18,9 @@ INTEGER:
 REAL:
     INTEGER '.' INTEGER;
 
+COMMENT
+    : '\n'* '%' .*? '\n' -> skip;
+
 number:
       INTEGER
     | REAL;
