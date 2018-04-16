@@ -232,7 +232,7 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
         ExpressionNode left = (ExpressionNode)ctx.left.accept(this);
         ExpressionNode right = (ExpressionNode)ctx.right.accept(this);
 
-        BinaryOperator operator = BinaryOperator.get(ctx.op.getText());
+        BinaryOperator operator = MatlabOperators.getBinaryOperator(ctx.op.getText());
 
         return new BinaryExpressionNode(left, right, operator);
     }
