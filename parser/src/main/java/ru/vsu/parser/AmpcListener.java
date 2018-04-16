@@ -232,6 +232,18 @@ public interface AmpcListener extends ParseTreeListener {
 	 */
 	void exitNumberExpr(AmpcParser.NumberExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code stringExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterStringExpr(AmpcParser.StringExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code stringExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitStringExpr(AmpcParser.StringExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code identExpr}
 	 * labeled alternative in {@link AmpcParser#atom}.
 	 * @param ctx the parse tree

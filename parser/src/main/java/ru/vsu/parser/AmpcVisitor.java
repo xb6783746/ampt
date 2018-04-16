@@ -144,6 +144,13 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumberExpr(AmpcParser.NumberExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code stringExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringExpr(AmpcParser.StringExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code identExpr}
 	 * labeled alternative in {@link AmpcParser#atom}.
 	 * @param ctx the parse tree

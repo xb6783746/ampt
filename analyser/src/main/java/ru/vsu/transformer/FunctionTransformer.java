@@ -121,6 +121,12 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
     }
 
     @Override
+    public Void visit(StringNode node) {
+
+        return null;
+    }
+
+    @Override
     public Void visit(ArrayExpressionNode node) {
 
         iterate(node.getRows());

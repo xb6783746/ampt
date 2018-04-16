@@ -34,6 +34,12 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     }
 
     @Override
+    public ExpressionBuilder visit(StringNode node) {
+
+        return ExpressionBuilder.createString(node.getValue());
+    }
+
+    @Override
     public ExpressionBuilder visit(ArrayExpressionNode node) {
 
         List<ExpressionBuilder> rows =

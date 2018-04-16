@@ -164,6 +164,13 @@ public class AmpcBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements A
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitStringExpr(AmpcParser.StringExprContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitIdentExpr(AmpcParser.IdentExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

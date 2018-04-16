@@ -97,6 +97,14 @@ public class ExpressionBuilder {
         );
     }
 
+    public static ExpressionBuilder createString(String value){
+
+        return new ExpressionBuilder(
+                String.format("'%s'", value),
+                0
+        );
+    }
+
     public ExpressionBuilder(String expression, int precedence) {
 
         this(expression, precedence, false);

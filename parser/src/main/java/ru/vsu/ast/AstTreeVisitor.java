@@ -18,6 +18,7 @@ public interface AstTreeVisitor<T> {
     T visit(BinaryExpressionNode node);
     T visit(IdentifierExpressionNode node);
     T visit(NumberNode node);
+    T visit(StringNode node);
     T visit(ArrayExpressionNode node);
     T visit(ArrayExpressionNode.ArrayRowNode node);
     T visit(RangeExpressionNode node);
