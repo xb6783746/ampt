@@ -1,32 +1,10 @@
-package ru.vsu.codegenerator.builder;
+package ru.vsu.codegenerator.builder.expression;
 
 import ru.vsu.ast.BinaryOperator;
 
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 public class ExpressionBuilder {
-
-
-    //TODO move to BinaryOperator enum?
-    private static Map<BinaryOperator, Integer> precedenceTable = new Hashtable<>();
-    static {
-
-        precedenceTable.put(BinaryOperator.Plus, 3);
-        precedenceTable.put(BinaryOperator.Minus, 3);
-
-        precedenceTable.put(BinaryOperator.Prod, 2);
-        precedenceTable.put(BinaryOperator.Div, 2);
-
-        precedenceTable.put(BinaryOperator.Greater, 1);
-        precedenceTable.put(BinaryOperator.Less, 1);
-        precedenceTable.put(BinaryOperator.GreaterOrEqual, 1);
-        precedenceTable.put(BinaryOperator.LessOrEqual, 1);
-
-        precedenceTable.put(BinaryOperator.Equal, 0);
-        precedenceTable.put(BinaryOperator.NotEqual, 0);
-    }
 
 
     public static ExpressionBuilder createRow(List<ExpressionBuilder> expressions){
@@ -123,14 +101,19 @@ public class ExpressionBuilder {
 
     public ExpressionBuilder apply(BinaryOperator op, ExpressionBuilder expr){
 
-        int opPrecedence = precedenceTable.get(op);
+        PythonOperators.PythonOperator pOp = PythonOperators.getOperator(op);
 
-        ExpressionBuilder left = opPrecedence < precedence? this.wrap() : this;
-        ExpressionBuilder right = opPrecedence < expr.precedence? expr.wrap() : expr;
+        ExpressionBuilder left =
+                pOp.getPrecedence() < precedence && !pOp.isAsFunction()?
+                        this.wrap() : this;
+
+        ExpressionBuilder right =
+                pOp.getPrecedence() < expr.precedence && !pOp.isAsFunction()?
+                        expr.wrap() : expr;
 
         return new ExpressionBuilder(
-                String.format("%s %s %s", left.expression, op.getOperator(), right.expression),
-                opPrecedence
+                String.format(pOp.getTemplate(), left.expression, right.expression),
+                pOp.getPrecedence()
         );
     }
     public ExpressionBuilder index(List<ExpressionBuilder> indexes){

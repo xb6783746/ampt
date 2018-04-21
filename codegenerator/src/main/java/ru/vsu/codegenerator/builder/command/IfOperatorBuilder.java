@@ -2,7 +2,7 @@ package ru.vsu.codegenerator.builder.command;
 
 import ru.vsu.codegenerator.builder.CodeBlockBuilder;
 import ru.vsu.codegenerator.builder.CommandBuilder;
-import ru.vsu.codegenerator.builder.ExpressionBuilder;
+import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
