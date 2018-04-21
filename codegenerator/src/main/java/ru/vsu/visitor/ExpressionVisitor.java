@@ -5,7 +5,8 @@ import ru.vsu.ast.CodeBlockNode;
 import ru.vsu.ast.ScriptNode;
 import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
-import ru.vsu.codegenerator.builder.ExpressionBuilder;
+import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
+import ru.vsu.codegenerator.builder.expression.ExpressionFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,19 +25,19 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     @Override
     public ExpressionBuilder visit(IdentifierExpressionNode node) {
 
-        return new ExpressionBuilder(node.getIdName(), 0, true);
+        return ExpressionFactory.createVariable(node.getIdName());
     }
 
     @Override
     public ExpressionBuilder visit(NumberNode node) {
 
-        return new ExpressionBuilder(node.getNumber(), 0, true);
+        return ExpressionFactory.createNumber(node.getNumber());
     }
 
     @Override
     public ExpressionBuilder visit(StringNode node) {
 
-        return ExpressionBuilder.createString(node.getValue());
+        return ExpressionFactory.createString(node.getValue());
     }
 
     @Override
@@ -48,7 +49,7 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
                         .map((x) -> x.accept(this))
                         .collect(Collectors.toList());
 
-        return ExpressionBuilder.createArray(rows);
+        return ExpressionFactory.createArray(rows);
     }
 
     @Override
@@ -60,7 +61,7 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
                         .map((x) -> x.accept(this))
                         .collect(Collectors.toList());
 
-        return ExpressionBuilder.createRow(expressions);
+        return ExpressionFactory.createRow(expressions);
     }
 
     @Override
@@ -75,7 +76,7 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
             step = node.getStepExpression().accept(this);
         }
 
-        return ExpressionBuilder.createRange(start, step, end);
+        return ExpressionFactory.createRange(start, step, end);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
                         .map((x) -> x.accept(this))
                         .collect(Collectors.toList());
 
-        return ExpressionBuilder.createFunction(node.getFunctionName(), args);
+        return ExpressionFactory.createFunction(node.getFunctionName(), args);
     }
 
     @Override
