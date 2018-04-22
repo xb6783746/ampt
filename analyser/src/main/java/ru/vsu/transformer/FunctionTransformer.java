@@ -187,6 +187,14 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
     }
 
     @Override
+    public Void visit(TupleExpressionNode node) {
+
+        node.getExpressions().forEach(x -> x.accept(this));
+
+        return null;
+    }
+
+    @Override
     public Void visit(IndexExpressionNode node) {
 
         if(node.getExpression() instanceof IdentifierExpressionNode){

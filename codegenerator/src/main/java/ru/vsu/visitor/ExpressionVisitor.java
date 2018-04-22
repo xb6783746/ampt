@@ -80,6 +80,12 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     }
 
     @Override
+    public ExpressionBuilder visit(TupleExpressionNode node) {
+        
+        return null;
+    }
+
+    @Override
     public ExpressionBuilder visit(IndexExpressionNode node) {
 
         ExpressionBuilder expression = node.getExpression().accept(this);

@@ -155,4 +155,12 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
 
         return null;
     }
+
+    @Override
+    public T visit(TupleExpressionNode node) {
+
+        node.getExpressions().forEach(x -> x.accept(this));
+
+        return null;
+    }
 }
