@@ -24,6 +24,8 @@ public class FunctionCallNode extends ExpressionNode {
             super(parent);
             this.expression = expression;
             this.argName = argName;
+
+            expression.setParent(this);
         }
 
         private ExpressionNode expression;
