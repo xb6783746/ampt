@@ -9,5 +9,5 @@ public enum BinaryOperator {
     Plus, Minus,
     Pow, ElemPow,
     ElemProd, ElemDiv,
-    Prod, Div
+    Prod, Div, Index
 }

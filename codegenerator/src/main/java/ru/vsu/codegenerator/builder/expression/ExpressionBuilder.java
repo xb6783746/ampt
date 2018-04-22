@@ -43,12 +43,16 @@ public class ExpressionBuilder {
     }
     public ExpressionBuilder index(List<ExpressionBuilder> indexes){
 
-        wrap();
+        PythonOperators.PythonOperator pOp = PythonOperators.getOperator(BinaryOperator.Index);
+
+        ExpressionBuilder left =
+                pOp.getPrecedence() < precedence?
+                        this.wrap() : this;
 
         StringBuilder builder = ExpressionFactory.makeExpressionList(indexes);
 
         return new ExpressionBuilder(
-                String.format("%s.mget(%s)", expression, builder),
+                String.format(pOp.getTemplate(), left, builder),
                 0
         );
     }

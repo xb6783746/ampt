@@ -68,6 +68,7 @@ public class PythonOperators {
         add(BinaryOperator.Pow, "%s ** %s", 2, true);
         add(BinaryOperator.ElemPow, "dotpow(%s, %s)", 2, false);
 
+        add(BinaryOperator.Index, "%s.mget(%s)", 1, true);
     }
 
     public static PythonOperator getOperator(BinaryOperator op){
