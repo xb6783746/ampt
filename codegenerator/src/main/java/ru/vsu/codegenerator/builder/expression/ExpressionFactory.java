@@ -6,6 +6,25 @@ import java.util.List;
 
 public class ExpressionFactory {
 
+    public static class ExpressionArg{
+
+
+        public ExpressionArg(ExpressionBuilder expression, String expressionName) {
+            this.expression = expression;
+            this.expressionName = expressionName;
+        }
+
+        private ExpressionBuilder expression;
+        private String expressionName;
+
+        public ExpressionBuilder getExpression() {
+            return expression;
+        }
+
+        public String getExpressionName() {
+            return expressionName;
+        }
+    }
     public static ExpressionBuilder createRow(List<ExpressionBuilder> expressions){
 
         StringBuilder builder = new StringBuilder("[");
@@ -39,7 +58,7 @@ public class ExpressionFactory {
             }
         }
 
-        String template = rows.size() > 1? "np.array([%s])" : "np.array(%s)";
+        String template = rows.size() > 1? "mr([%s])" : "mr(%s)";
 
         return new ExpressionBuilder(
                 String.format(template, builder), 0
@@ -74,6 +93,18 @@ public class ExpressionFactory {
         );
     }
 
+    public static ExpressionBuilder createCall(ExpressionBuilder obj,
+                                               String funcName,
+                                               List<ExpressionArg> args){
+
+        StringBuilder builder = makeArgsList(args);
+
+        return new ExpressionBuilder(
+                String.format("%s.%s(%s)", obj, funcName, builder),
+                0
+        );
+    }
+
     public static ExpressionBuilder createNumber(String value){
 
         return new ExpressionBuilder(
@@ -96,6 +127,36 @@ public class ExpressionFactory {
                 String.format("'%s'", value),
                 0
         );
+    }
+
+    public static StringBuilder makeArgsList(List<ExpressionArg> args){
+
+        StringBuilder builder = new StringBuilder();
+
+        if(args.size() > 0) {
+
+            appendArg(builder, args.get(0));
+
+            for (int i = 1; i < args.size(); i++) {
+
+                builder.append(", ");
+
+                appendArg(builder, args.get(i));
+            }
+
+        }
+
+        return builder;
+    }
+
+    private static void appendArg(StringBuilder builder, ExpressionArg arg){
+
+        if(arg.getExpressionName() != null){
+
+            builder.append(arg.getExpressionName()).append("=");
+        }
+
+        builder.append(arg.getExpression());
     }
 
     public static StringBuilder makeExpressionList(List<ExpressionBuilder> indexes){
