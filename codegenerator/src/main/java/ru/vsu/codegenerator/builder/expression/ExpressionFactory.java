@@ -58,7 +58,7 @@ public class ExpressionFactory {
             }
         }
 
-        String template = rows.size() > 1? "np.array([%s]).view(mlarr)" : "np.array(%s).view(mlarr)";
+        String template = rows.size() > 1? "mr([%s])" : "mr(%s)";
 
         return new ExpressionBuilder(
                 String.format(template, builder), 0
