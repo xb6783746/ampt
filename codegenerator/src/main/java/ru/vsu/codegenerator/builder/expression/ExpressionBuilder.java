@@ -48,7 +48,7 @@ public class ExpressionBuilder {
         StringBuilder builder = ExpressionFactory.makeExpressionList(indexes);
 
         return new ExpressionBuilder(
-                String.format("%s[%s]", expression, builder),
+                String.format("%s.mget(%s)", expression, builder),
                 0
         );
     }
