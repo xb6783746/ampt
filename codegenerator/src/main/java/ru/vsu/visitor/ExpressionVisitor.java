@@ -96,13 +96,35 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     @Override
     public ExpressionBuilder visit(FunctionCallNode node) {
 
-        List<ExpressionBuilder> args =
-                node.getArgs()
-                        .stream()
-                        .map((x) -> x.accept(this))
-                        .collect(Collectors.toList());
+        if(node.getObject() != null){
 
-        return ExpressionFactory.createFunction(node.getFunctionName(), args);
+            ExpressionBuilder obj = node.getObject().accept(this);
+            List<ExpressionFactory.ExpressionArg> args =
+                    node.getArgs()
+                            .stream()
+                            .map(x ->
+                                    new ExpressionFactory.ExpressionArg(
+                                            x.getExpression().accept(this),
+                                            x.getArgName())
+                            ).collect(Collectors.toList());
+
+            return ExpressionFactory.createCall(obj, node.getFunctionName(), args);
+        } else {
+
+            List<ExpressionBuilder> args =
+                    node.getArgs()
+                            .stream()
+                            .map((x) -> x.getExpression().accept(this))
+                            .collect(Collectors.toList());
+
+            return ExpressionFactory.createFunction(node.getFunctionName(), args);
+        }
+    }
+
+    @Override
+    public ExpressionBuilder visit(FunctionCallNode.FunctionArgumentNode node) {
+
+        return null;
     }
 
     @Override
