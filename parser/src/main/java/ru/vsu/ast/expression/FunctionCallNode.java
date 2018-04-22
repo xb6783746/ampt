@@ -89,6 +89,10 @@ public class FunctionCallNode extends ExpressionNode {
         return functionName;
     }
 
+    public void setFunctionName(String functionName) {
+        this.functionName = functionName;
+    }
+
     public List<FunctionArgumentNode> getArgs() {
         return args;
     }
