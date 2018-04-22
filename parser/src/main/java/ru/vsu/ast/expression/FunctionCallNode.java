@@ -99,6 +99,10 @@ public class FunctionCallNode extends ExpressionNode {
         return args;
     }
 
+    public void setArgs(List<FunctionArgumentNode> args) {
+        this.args = args;
+    }
+
     public ExpressionNode getObject() {
         return object;
     }
