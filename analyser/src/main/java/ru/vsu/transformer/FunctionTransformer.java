@@ -9,6 +9,7 @@ import ru.vsu.ast.expression.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>  {
 
@@ -41,13 +42,41 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
     @Override
     public Void visit(AssignCommandNode node) {
 
-        node.getLvalue().accept(this);
-        node.getRvalue().accept(this);
+        if(node.getLvalue() instanceof IndexExpressionNode){
 
-        if(node.getLvalue() instanceof IdentifierExpressionNode){
+            IndexExpressionNode expr = (IndexExpressionNode)node.getLvalue();
 
-            String varName = ((IdentifierExpressionNode)node.getLvalue()).getIdName();
-            variableNames.add(varName);
+            List<FunctionCallNode.FunctionArgumentNode> indices =
+                    expr.getIndexes()
+                            .stream()
+                            .map(FunctionCallNode.FunctionArgumentNode::new)
+                            .collect(Collectors.toList());
+
+            FunctionCallNode.FunctionArgumentNode value =
+                    new FunctionCallNode.FunctionArgumentNode(node.getRvalue(), "val");
+
+            indices.add(value);
+
+            FunctionCallNode func = new FunctionCallNode(
+                    node.getParent(),
+                    expr.getExpression(),
+                    "mset",
+                    indices
+            );
+
+            node.getParent().replace(node, func);
+
+            func.accept(this);
+        } else {
+
+            node.getLvalue().accept(this);
+            node.getRvalue().accept(this);
+
+            if (node.getLvalue() instanceof IdentifierExpressionNode) {
+
+                String varName = ((IdentifierExpressionNode) node.getLvalue()).getIdName();
+                variableNames.add(varName);
+            }
         }
 
         return null;
@@ -172,8 +201,14 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
 
                 //replace with FunctionCallNode
 
+                List<FunctionCallNode.FunctionArgumentNode> args =
+                        node.getIndexes()
+                                .stream()
+                                .map(FunctionCallNode.FunctionArgumentNode::new)
+                                .collect(Collectors.toList());
+
                 FunctionCallNode funcCallNode =
-                        new FunctionCallNode(node.getParent(), id, node.getIndexes());
+                        new FunctionCallNode(node.getParent(), id, args);
 
                 node.getParent().replace(node, funcCallNode);
             }
@@ -192,6 +227,21 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
 
     @Override
     public Void visit(FunctionCallNode node) {
+
+        if(node.getObject() != null) {
+
+            node.getObject().accept(this);
+        }
+
+        iterate(node.getArgs());
+
+        return null;
+    }
+
+    @Override
+    public Void visit(FunctionCallNode.FunctionArgumentNode node) {
+
+        node.getExpression().accept(this);
         return null;
     }
 
