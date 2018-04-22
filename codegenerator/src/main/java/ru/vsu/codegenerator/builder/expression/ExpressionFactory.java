@@ -83,6 +83,16 @@ public class ExpressionFactory {
         return new ExpressionBuilder(str, 0);
     }
 
+    public static ExpressionBuilder createTuple(List<ExpressionBuilder> expressions){
+
+        StringBuilder elements = makeExpressionList(expressions);
+
+        return new ExpressionBuilder(
+                String.format("(%s)", elements),
+                0
+        );
+    }
+
     public static ExpressionBuilder createFunction(String funcName, List<ExpressionBuilder> args){
 
         StringBuilder builder = makeExpressionList(args);

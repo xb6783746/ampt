@@ -81,8 +81,14 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
 
     @Override
     public ExpressionBuilder visit(TupleExpressionNode node) {
-        
-        return null;
+
+        List<ExpressionBuilder> expressions =
+                node.getExpressions()
+                        .stream()
+                        .map(x -> x.accept(this))
+                        .collect(Collectors.toList());
+
+        return ExpressionFactory.createTuple(expressions);
     }
 
     @Override
