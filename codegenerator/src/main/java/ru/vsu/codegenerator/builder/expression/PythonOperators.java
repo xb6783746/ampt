@@ -46,8 +46,16 @@ public class PythonOperators {
     static {
 
 
-        add(BinaryOperator.And, "%s and %s", -1, false);
-        add(BinaryOperator.Or, "%s or %s", -1, false);
+        add(BinaryOperator.And, "%s and %s", 7, false);
+        add(BinaryOperator.Or, "%s or %s", 7, false);
+
+        add(BinaryOperator.Equal, "%s == %s", 6, false);
+        add(BinaryOperator.NotEqual, "%s != %s", 6, false);
+
+        add(BinaryOperator.Greater, "%s > %s", 5, false);
+        add(BinaryOperator.Less, "%s < %s", 5, false);
+        add(BinaryOperator.GreaterOrEqual, "%s >= %s", 5, false);
+        add(BinaryOperator.LessOrEqual, "%s <= %s", 5, false);
 
         add(BinaryOperator.Plus, "%s + %s", 4, false);
         add(BinaryOperator.Minus, "%s - %s", 4, false);
@@ -59,14 +67,6 @@ public class PythonOperators {
 
         add(BinaryOperator.Pow, "%s ** %s", 2, true);
         add(BinaryOperator.ElemPow, "dotpow(%s, %s)", 2, false);
-
-        add(BinaryOperator.Greater, "%s > %s", 1, false);
-        add(BinaryOperator.Less, "%s < %s", 1, false);
-        add(BinaryOperator.GreaterOrEqual, "%s >= %s", 1, false);
-        add(BinaryOperator.LessOrEqual, "%s <= %s", 1, false);
-
-        add(BinaryOperator.Equal, "%s == %s", 0, false);
-        add(BinaryOperator.NotEqual, "%s != %s", 1, false);
 
     }
 
