@@ -74,10 +74,10 @@ public class ExpressionFactory {
 
         if(step != null){
 
-            str = String.format("range(%s, %s, %s)", start, end, step);
+            str = String.format("np.arange(%s, %s, %s)", start, end, step);
         } else {
 
-            str = String.format("range(%s, %s)", start, end);
+            str = String.format("np.arange(%s, %s)", start, end);
         }
 
         return new ExpressionBuilder(str, 0);
