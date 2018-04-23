@@ -58,7 +58,7 @@ public class ExpressionFactory {
             }
         }
 
-        String template = rows.size() > 1? "mr([%s])" : "mr(%s)";
+        String template = rows.size() > 1? "mr([%s])" : "mr([%s])";
 
         return new ExpressionBuilder(
                 String.format(template, builder), 0
@@ -81,6 +81,26 @@ public class ExpressionFactory {
         }
 
         return new ExpressionBuilder(str, 0);
+    }
+
+    public static ExpressionBuilder createSlice(ExpressionBuilder start,
+                                                ExpressionBuilder step,
+                                                ExpressionBuilder end){
+
+        String slice;
+
+        if(start == null && step == null && end == null){
+
+            slice = "slice(None)";
+        } else if(step == null){
+
+            slice = String.format("slice(%s, %s)", start, end);
+        } else {
+
+            slice = String.format("slice(%s, %s, %s)", start, end, step);
+        }
+
+        return new ExpressionBuilder(slice, 0);
     }
 
     public static ExpressionBuilder createTuple(List<ExpressionBuilder> expressions){

@@ -266,10 +266,18 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     @Override
     public BasicAstNode visitRangeExpr(AmpcParser.RangeExprContext ctx) {
 
-        ExpressionNode startExpression = (ExpressionNode)ctx.start.accept(this);
-        ExpressionNode endExpression = (ExpressionNode)ctx.end.accept(this);
-
+        ExpressionNode startExpression = null;
+        ExpressionNode endExpression = null;
         ExpressionNode stepExpression = null;
+
+        if(ctx.start != null){
+
+            startExpression = (ExpressionNode)ctx.start.accept(this);
+        }
+        if(ctx.end != null){
+
+            endExpression = (ExpressionNode)ctx.end.accept(this);
+        }
         if(ctx.step != null){
 
             stepExpression = (ExpressionNode)ctx.step.accept(this);

@@ -108,14 +108,20 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
     @Override
     public T visit(RangeExpressionNode node) {
 
-        node.getStartExpression().accept(this);
+        if(node.getStartExpression() != null){
+
+            node.getStartExpression().accept(this);
+        }
 
         if(node.getStepExpression() != null){
 
             node.getStepExpression().accept(this);
         }
 
-        node.getEndExpression().accept(this);
+        if(node.getEndExpression() != null){
+
+            node.getEndExpression().accept(this);
+        }
 
         return null;
     }

@@ -4,6 +4,8 @@ import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.BasicAstVisitor;
 import ru.vsu.ast.expression.FunctionCallNode;
 import ru.vsu.ast.expression.FunctionCallNode.FunctionArgumentNode;
+import ru.vsu.ast.expression.RangeExpressionNode;
+import ru.vsu.ast.expression.SliceExpressionNode;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -39,6 +41,12 @@ public class CompatibleFunctionTransformer extends BasicAstVisitor<Void> impleme
 
         tree.accept(this);
         return tree;
+    }
+
+    @Override
+    public Void visit(SliceExpressionNode node) {
+
+        return visit((RangeExpressionNode)node);
     }
 
     @Override

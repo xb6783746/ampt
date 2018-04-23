@@ -19,14 +19,21 @@ public class RangeExpressionNode extends ExpressionNode {
         this.stepExpression = stepExpression;
         this.endExpression = endExpression;
 
-        startExpression.setParent(this);
+        if(startExpression != null){
+
+            startExpression.setParent(this);
+        }
 
         if(stepExpression != null){
 
             stepExpression.setParent(this);
         }
 
-        endExpression.setParent(this);
+        if(endExpression != null){
+
+            endExpression.setParent(this);
+        }
+
     }
 
     private ExpressionNode startExpression;

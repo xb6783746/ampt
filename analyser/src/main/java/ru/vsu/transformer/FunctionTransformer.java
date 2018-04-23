@@ -181,9 +181,20 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
             node.getStepExpression().accept(this);
         }
 
+        if(node.getEndExpression() != null){
+
+            node.getEndExpression().accept(this);
+        }
+
         node.getEndExpression().accept(this);
 
         return null;
+    }
+
+    @Override
+    public Void visit(SliceExpressionNode node) {
+
+        return visit((RangeExpressionNode)node);
     }
 
     @Override

@@ -80,6 +80,29 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     }
 
     @Override
+    public ExpressionBuilder visit(SliceExpressionNode node) {
+
+        ExpressionBuilder start = null, stop = null, step = null;
+
+        if(node.getStartExpression() != null){
+
+            start = node.getStartExpression().accept(this);
+        }
+
+        if(node.getEndExpression() != null){
+
+            stop = node.getEndExpression().accept(this);
+        }
+
+        if(node.getStepExpression() != null){
+
+            step = node.getStepExpression().accept(this);
+        }
+
+        return ExpressionFactory.createSlice(start, step, stop);
+    }
+
+    @Override
     public ExpressionBuilder visit(TupleExpressionNode node) {
 
         List<ExpressionBuilder> expressions =
