@@ -4,29 +4,29 @@ class mlarr(np.ndarray):
 
     def sum(self, axis=None, dtype=None, out=None, keepdims=False):
         
-        res = self.__array__().sum(axis=0);
+        res = self.__array__().sum(axis=0)
         
         if not np.isscalar(res):
             res = res.view(mlarr)
             
-        return res;
+        return res
     
     def __mul__(self, val):
         
         if np.isscalar(val):
-            res = np.multiply(self, val);
+            res = np.multiply(self, val)
         else :
             res = (self @ val).view(mlarr)
         
         if res.size == 1:
 
-            res = np.asscalar(res);
+            res = np.asscalar(res)
             
-        return res;
+        return res
     
     def __rmul__(self, val):
             
-        return self.__mul__(val);
+        return self.__mul__(val)
     
     def __truediv__(self, val):
         
@@ -38,7 +38,7 @@ class mlarr(np.ndarray):
     
     def __rtruediv__(self, val):
         
-        return self.__truediv__(val);
+        return self.__truediv__(val)
     
     def __pow__(self, val):
         
@@ -50,36 +50,56 @@ class mlarr(np.ndarray):
     
     def mget(self, *index):
         
-        index = self.buildIndices(*index);
-        
-        if len(index) == 1:
-        
-            return self.flatten(order="F")[index[0]]
-        
-        return self[np.ix_(*index)];
-    
-    def mset(self, *index, val=None):
-        
-        index = self.buildIndices(*index);
+        index = self.buildIndices(*index)
         
         print(index)
-        print(len(index))
         if len(index) == 1:
-            
+
+            return self.flatten(order="F")[index[0]]
+
+        return self[np.ix_(*index)]
+
+    def mset(self, *index, val=None):
+
+        index = self.buildIndices(*index)
+
+        if len(index) == 1:
+
             index = np.unravel_index(index[0], self.shape, order="F")
             self[index] = val
         else:
-            
-            self[np.ix_(*index)] = val;
-        
+
+            self[np.ix_(*index)] = val
+
     def buildIndices(self, *index):
-        
-        index = [x - 1 for x in index]
-        
+
         if len(index) > 1:
-            index = index[2:] + [index[0], index[1]]
-        
-        return index;
+            index = list(index[2:]) + [index[0], index[1]]
+
+            for i in range(0, len(index)):
+                index[i] = self.dec(index[i], self.shape[i])
+
+            return index
+        else:
+
+            index = (self.dec(index[0], self.size),);
+
+            return index
+
+    @staticmethod
+    def dec(index, dimsize):
+
+        if isinstance(index, slice):
+
+            start = index.start - 1 if index.start is not None else 0
+            stop = index.stop if index.stop is not None else dimsize
+            step = index.step if index.step is not None else 1
+
+            return np.arange(start, stop, step)
+        if np.isscalar(index):
+            index = np.array([index])
+
+        return index - 1
     
 
 
@@ -98,4 +118,11 @@ def dotpow(a, b):
 
 def mr(arg):
     
-    return np.array(arg).view(mlarr)
+    if np.isscalar(arg):
+        return arg
+
+    return np.block(arg).view(mlarr)
+
+def rg(start, stop, end=None):
+
+    return np.arange(start, stop+1, end).view(mlarr)
