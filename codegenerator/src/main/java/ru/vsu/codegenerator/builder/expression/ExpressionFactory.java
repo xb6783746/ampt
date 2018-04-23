@@ -1,7 +1,5 @@
 package ru.vsu.codegenerator.builder.expression;
 
-import ru.vsu.ast.BinaryOperator;
-
 import java.util.List;
 
 public class ExpressionFactory {
@@ -69,15 +67,14 @@ public class ExpressionFactory {
                                                 ExpressionBuilder step,
                                                 ExpressionBuilder end){
 
-        end = end.apply(BinaryOperator.Plus, new ExpressionBuilder("1", 0));
         String str;
 
         if(step != null){
 
-            str = String.format("np.arange(%s, %s, %s)", start, end, step);
+            str = String.format("rg(%s, %s, %s)", start, end, step);
         } else {
 
-            str = String.format("np.arange(%s, %s)", start, end);
+            str = String.format("rg(%s, %s)", start, end);
         }
 
         return new ExpressionBuilder(str, 0);
