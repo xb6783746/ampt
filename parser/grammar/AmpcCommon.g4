@@ -68,4 +68,5 @@ expression:
     | left=expression op=('==' | '!=') right=expression  # infixExpr
     | left=expression op=('&' | '&&' | '|' | '||') right=expression  # infixExpr
     | atom #atomExpr
-    | start=expression ':' (step=expression ':')? end=expression #rangeExpr;
+    | start=expression ':' (step=expression ':')? end=expression #rangeExpr
+    | ':' #rangeExpr;
