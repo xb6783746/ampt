@@ -15,6 +15,7 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
 
 
     private List<String> variableNames = new ArrayList<>();
+    private boolean isInsideIndex = false;
 
     @Override
     public BasicAstNode transform(BasicAstNode tree) {
@@ -174,7 +175,24 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
     @Override
     public Void visit(RangeExpressionNode node) {
 
-        node.getStartExpression().accept(this);
+        if(isInsideIndex){
+
+            SliceExpressionNode slice = new SliceExpressionNode(
+                    node.getParent(),
+                    node.getStartExpression(),
+                    node.getStepExpression(),
+                    node.getEndExpression()
+            );
+
+            node.getParent().replace(node, slice);
+
+            node = slice;
+        }
+
+        if(node.getStartExpression() != null){
+
+            node.getStartExpression().accept(this);
+        }
 
         if(node.getStepExpression() != null){
 
@@ -186,7 +204,6 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
             node.getEndExpression().accept(this);
         }
 
-        node.getEndExpression().accept(this);
 
         return null;
     }
@@ -207,6 +224,8 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
 
     @Override
     public Void visit(IndexExpressionNode node) {
+
+        isInsideIndex = true;
 
         if(node.getExpression() instanceof IdentifierExpressionNode){
 
@@ -241,6 +260,7 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
             expressionNode.accept(this);
         }
 
+        isInsideIndex = false;
         return null;
     }
 
