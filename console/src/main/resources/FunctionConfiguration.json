@@ -1,0 +1,27 @@
+{
+  "coreName": "mpc",
+  "numpyName": "np",
+  "apmtlibName": "mpl",
+  "functions": [
+
+    {
+      "matlabName": "sin",
+      "generatedName": "sin",
+      "from": "numpy",
+      "needWrap": true
+    },
+    {
+      "matlabName": "num2str",
+      "generatedName": "str",
+      "from": "python",
+      "needWrap": false
+    },
+    {
+      "matlabName": "all",
+      "generatedName": "all",
+      "from": "apmtlib",
+      "needWrap": false
+    }
+  ]
+
+}

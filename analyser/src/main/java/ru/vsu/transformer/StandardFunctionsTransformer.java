@@ -29,6 +29,7 @@ public class StandardFunctionsTransformer extends BasicAstVisitor<Void> implemen
         standardFunctions.put("rand", new Replace("np.random.rand", this::reorder));
         standardFunctions.put("zeros", new Replace("np.zeros", this::reorderWithTuple));
         standardFunctions.put("ones", new Replace("np.ones", this::reorderWithTuple));
+        standardFunctions.put("disp", new Replace("print", this::transformDisp));
     }
 
     private Map<String, Replace> standardFunctions = new Hashtable<>();
@@ -78,6 +79,37 @@ public class StandardFunctionsTransformer extends BasicAstVisitor<Void> implemen
         node.setArgs(Collections.singletonList(tuple));
 
         view(node);
+    }
+
+    private void transformDisp(FunctionCallNode node){
+
+        FunctionArgumentNode arg = node.getArgs().get(0);
+
+        if(arg != null && arg.getExpression() instanceof ArrayExpressionNode){
+
+            List<FunctionArgumentNode> args = new ArrayList<>();
+
+            ArrayExpressionNode array = (ArrayExpressionNode)arg.getExpression();
+
+            for(int i = 0; i < array.getRows().size(); i++){
+
+                ArrayExpressionNode.ArrayRowNode row = array.getRows().get(i);
+
+                args.addAll(
+                        row.getRowExpressions()
+                                .stream()
+                                .map(FunctionArgumentNode::new)
+                                .collect(Collectors.toList())
+                );
+
+                if(i < array.getRows().size() - 1) {
+
+                    args.add(new FunctionArgumentNode(new StringNode("\\n")));
+                }
+            }
+
+            node.setArgs(args);
+        }
     }
 
     private List<FunctionArgumentNode> reorderList(List<FunctionArgumentNode> expressions){

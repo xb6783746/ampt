@@ -6,35 +6,18 @@ import ru.vsu.ast.expression.FunctionCallNode;
 import ru.vsu.ast.expression.FunctionCallNode.FunctionArgumentNode;
 import ru.vsu.ast.expression.RangeExpressionNode;
 import ru.vsu.ast.expression.SliceExpressionNode;
+import ru.vsu.helpers.FunctionNameResolver;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 
 public class CompatibleFunctionTransformer extends BasicAstVisitor<Void> implements AstTransformer {
 
-    private static String compatibleFunctionsFile = "CompatibleFunctions.properties";
-    private static Properties compatibleFunctions;
-
-    static {
-
-        URL path =
-                Thread.currentThread()
-                        .getContextClassLoader()
-                        .getResource(compatibleFunctionsFile);
-
-        compatibleFunctions = new Properties();
-
-        try {
-
-            compatibleFunctions.load(new FileInputStream(path.getFile()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public CompatibleFunctionTransformer(FunctionNameResolver nameResolver) {
+        this.nameResolver = nameResolver;
     }
+
+    private FunctionNameResolver nameResolver;
 
     @Override
     public BasicAstNode transform(BasicAstNode tree) {
@@ -52,11 +35,18 @@ public class CompatibleFunctionTransformer extends BasicAstVisitor<Void> impleme
     @Override
     public Void visit(FunctionCallNode node) {
 
-        if(compatibleFunctions.containsKey(node.getFunctionName())){
 
-            node.setFunctionName(compatibleFunctions.getProperty(node.getFunctionName()));
+        FunctionNameResolver.Replace replace =
+                nameResolver.resolve(node.getFunctionName());
 
-            toMr(node);
+        if(replace != null){
+
+            node.setFunctionName(replace.getFuncName());
+
+            if(replace.isNeedWrapToMlarr()){
+
+                toMr(node);
+            }
         }
 
         return super.visit(node);

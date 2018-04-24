@@ -7,25 +7,32 @@ import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.ExpressionNode;
 import ru.vsu.ast.expression.FunctionCallNode;
 import ru.vsu.codegenerator.builder.CodeBlockBuilder;
+import ru.vsu.codegenerator.builder.ImportStatement;
+import ru.vsu.codegenerator.builder.ScriptBuilder;
 import ru.vsu.codegenerator.builder.command.ForLoopBuilder;
 import ru.vsu.codegenerator.builder.command.IfOperatorBuilder;
 import ru.vsu.codegenerator.builder.command.WhileOperatorBuilder;
 import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
+import ru.vsu.config.entity.FunctionsConfiguration;
+
+import java.util.List;
 
 public class PythonGeneratorVisitor {
 
 
-    public PythonGeneratorVisitor(BasicAstNode tree){
+    public PythonGeneratorVisitor(List<ImportStatement> imports, BasicAstNode tree){
 
-        visit(tree, codeBlockBuilder);
+        scriptBuilder = new ScriptBuilder(imports);
+
+        visit(tree, scriptBuilder.getCodeBlockBuilder());
     }
 
-    private CodeBlockBuilder codeBlockBuilder = new CodeBlockBuilder();
+    private ScriptBuilder scriptBuilder;
     private ExpressionVisitor expressionVisitor = new ExpressionVisitor();
 
     public String generate(){
 
-        return codeBlockBuilder.getString(0);
+        return scriptBuilder.build();
     }
 
     private void visit(ScriptNode node, CodeBlockBuilder codeBlockBuilder) {
