@@ -21,6 +21,18 @@
       "generatedName": "all",
       "from": "apmtlib",
       "needWrap": false
+    },
+    {
+      "matlabName": "and",
+      "generatedName": "logical_and",
+      "from": "numpy",
+      "needWrap": false
+    },
+    {
+      "matlabName": "or",
+      "generatedName": "logical_or",
+      "from": "numpy",
+      "needWrap": false
     }
   ]
 
