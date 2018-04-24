@@ -62,6 +62,7 @@ expression:
     '(' expression ')' # parensExpr
     | expr=expression '(' index=expressionList? ')' #indexExpr
     | left=expression op=('.^' | '^') right=expression # infixExpr
+    | op=('+' | '-' | '~') expr=expression # unaryExpr
     | left=expression op=('*' | '/' | '.*' | './') right=expression # infixExpr
     | left=expression op=('+' | '-') right=expression  # infixExpr
     | left=expression op=('>' | '<' | '>=' | '<=') right=expression # infixExpr

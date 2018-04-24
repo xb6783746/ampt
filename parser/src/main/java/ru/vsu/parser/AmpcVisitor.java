@@ -1,4 +1,4 @@
-// Generated from /home/vlad/IdeaProjects/ampt/parser/grammar/Ampc.g4 by ANTLR 4.7
+// Generated from /home/vlad/IdeaProjects/ampt1/ampt/parser/grammar/Ampc.g4 by ANTLR 4.7
 package ru.vsu.parser; 
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -201,6 +201,13 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitInfixExpr(AmpcParser.InfixExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code unaryExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryExpr(AmpcParser.UnaryExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code atomExpr}
 	 * labeled alternative in {@link AmpcParser#expression}.

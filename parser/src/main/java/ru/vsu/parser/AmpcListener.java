@@ -1,4 +1,4 @@
-// Generated from /home/vlad/IdeaProjects/ampt/parser/grammar/Ampc.g4 by ANTLR 4.7
+// Generated from /home/vlad/IdeaProjects/ampt1/ampt/parser/grammar/Ampc.g4 by ANTLR 4.7
 package ru.vsu.parser; 
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -329,6 +329,18 @@ public interface AmpcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInfixExpr(AmpcParser.InfixExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code unaryExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryExpr(AmpcParser.UnaryExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code unaryExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryExpr(AmpcParser.UnaryExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code atomExpr}
 	 * labeled alternative in {@link AmpcParser#expression}.

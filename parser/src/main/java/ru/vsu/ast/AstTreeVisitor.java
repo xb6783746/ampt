@@ -16,6 +16,7 @@ public interface AstTreeVisitor<T> {
     T visit(ForLoopNode node);
 
     T visit(BinaryExpressionNode node);
+    T visit(UnaryExpressionNode node);
     T visit(IdentifierExpressionNode node);
     T visit(NumberNode node);
     T visit(StringNode node);

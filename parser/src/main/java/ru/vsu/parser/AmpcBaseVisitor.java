@@ -1,4 +1,4 @@
-// Generated from /home/vlad/IdeaProjects/ampt/parser/grammar/Ampc.g4 by ANTLR 4.7
+// Generated from /home/vlad/IdeaProjects/ampt1/ampt/parser/grammar/Ampc.g4 by ANTLR 4.7
 package ru.vsu.parser; 
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -221,6 +221,13 @@ public class AmpcBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements A
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitInfixExpr(AmpcParser.InfixExprContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitUnaryExpr(AmpcParser.UnaryExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

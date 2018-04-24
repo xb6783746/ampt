@@ -1,4 +1,4 @@
-// Generated from /home/vlad/IdeaProjects/ampt/parser/grammar/Ampc.g4 by ANTLR 4.7
+// Generated from /home/vlad/IdeaProjects/ampt1/ampt/parser/grammar/Ampc.g4 by ANTLR 4.7
 package ru.vsu.parser; 
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -371,6 +371,18 @@ public class AmpcBaseListener implements AmpcListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInfixExpr(AmpcParser.InfixExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterUnaryExpr(AmpcParser.UnaryExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnaryExpr(AmpcParser.UnaryExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

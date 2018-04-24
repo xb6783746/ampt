@@ -139,6 +139,14 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
     }
 
     @Override
+    public Void visit(UnaryExpressionNode node) {
+
+        node.getExpression().accept(this);
+
+        return null;
+    }
+
+    @Override
     public Void visit(IdentifierExpressionNode node) {
 
         return null;

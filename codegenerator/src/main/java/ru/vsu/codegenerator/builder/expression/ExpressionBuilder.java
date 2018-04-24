@@ -1,6 +1,7 @@
 package ru.vsu.codegenerator.builder.expression;
 
 import ru.vsu.ast.BinaryOperator;
+import ru.vsu.ast.UnaryOperator;
 
 import java.util.List;
 
@@ -41,6 +42,25 @@ public class ExpressionBuilder {
                 pOp.getPrecedence()
         );
     }
+    public ExpressionBuilder apply(UnaryOperator op){
+
+        if(op == UnaryOperator.Plus){
+
+            return this;
+        }
+
+        PythonOperators.PythonOperator pOp = PythonOperators.getOperator(op);
+
+        ExpressionBuilder expr =
+                pOp.getPrecedence() < precedence && !pOp.isAsFunction()?
+                        this.wrap() : this;
+
+        return new ExpressionBuilder(
+                String.format(pOp.getTemplate(), expr),
+                pOp.getPrecedence()
+        );
+    }
+
     public ExpressionBuilder index(List<ExpressionBuilder> indexes){
 
         PythonOperators.PythonOperator pOp = PythonOperators.getOperator(BinaryOperator.Index);

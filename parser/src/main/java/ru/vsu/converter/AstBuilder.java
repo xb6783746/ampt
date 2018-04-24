@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.BinaryOperator;
 import ru.vsu.ast.CodeBlockNode;
+import ru.vsu.ast.UnaryOperator;
 import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
 import ru.vsu.parser.AmpcParser;
@@ -235,6 +236,16 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
         BinaryOperator operator = MatlabOperators.getBinaryOperator(ctx.op.getText());
 
         return new BinaryExpressionNode(left, right, operator);
+    }
+
+    @Override
+    public BasicAstNode visitUnaryExpr(AmpcParser.UnaryExprContext ctx) {
+
+        ExpressionNode expr = (ExpressionNode)ctx.expr.accept(this);
+
+        UnaryOperator operator = MatlabOperators.getUnaryOperator(ctx.op.getText());
+
+        return new UnaryExpressionNode(expr, operator);
     }
 
     @Override

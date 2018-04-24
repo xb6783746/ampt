@@ -23,6 +23,14 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     }
 
     @Override
+    public ExpressionBuilder visit(UnaryExpressionNode node) {
+
+        ExpressionBuilder expr = node.getExpression().accept(this);
+
+        return expr.apply(node.getOperator());
+    }
+
+    @Override
     public ExpressionBuilder visit(IdentifierExpressionNode node) {
 
         return ExpressionFactory.createVariable(node.getIdName());
