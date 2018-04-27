@@ -65,8 +65,10 @@ public class PythonOperators {
         add(UnaryOperator.Minus, "-%s", 3, false);
         add(UnaryOperator.Not, "not %s", 3, false);
 
-        add(BinaryOperator.Pow, "%s ** %s", 2, true);
-        add(BinaryOperator.ElemPow, "dotpow(%s, %s)", 2, false);
+        add(BinaryOperator.Pow, "%s ** %s", 2, false);
+        add(BinaryOperator.ElemPow, "dotpow(%s, %s)", 2, true);
+        add(UnaryOperator.Transpose, "transpose(%s)", 2, true);
+        add(UnaryOperator.ComplexConjTranspose, "ctranspose(%s)", 2, true);
 
         add(BinaryOperator.Index, "%s.mget(%s)", 1, true);
 
