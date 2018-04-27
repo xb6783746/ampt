@@ -43,6 +43,14 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
     public Void visit(FunctionNode node) {
 
         node.getBlock().accept(this);
+        iterate(node.getArgs());
+
+        FunctionArgumentNode nargout = new FunctionArgumentNode(
+                new NumberNode("1"),
+                "nargout"
+        );
+
+        node.getArgs().add(nargout);
 
         return null;
     }
@@ -295,7 +303,10 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
     @Override
     public Void visit(FunctionArgumentNode node) {
 
-        node.getExpression().accept(this);
+        if(node.getExpression() != null) {
+
+            node.getExpression().accept(this);
+        }
         return null;
     }
 
