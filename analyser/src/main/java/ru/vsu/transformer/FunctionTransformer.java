@@ -1,9 +1,6 @@
 package ru.vsu.transformer;
 
-import ru.vsu.ast.AstTreeVisitor;
-import ru.vsu.ast.BasicAstNode;
-import ru.vsu.ast.CodeBlockNode;
-import ru.vsu.ast.ScriptNode;
+import ru.vsu.ast.*;
 import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
 
@@ -29,13 +26,23 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
     @Override
     public Void visit(ScriptNode node) {
 
-        return node.getBlock().accept(this);
+        iterate(node.getNodes());
+
+        return null;
     }
 
     @Override
     public Void visit(CodeBlockNode node) {
 
         iterate(node.getCommandNodeList());
+
+        return null;
+    }
+
+    @Override
+    public Void visit(FunctionNode node) {
+
+        node.getBlock().accept(this);
 
         return null;
     }

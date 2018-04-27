@@ -8,6 +8,7 @@ public interface AstTreeVisitor<T> {
     T visit(ScriptNode node);
 
     T visit(CodeBlockNode node);
+    T visit(FunctionNode node);
 
     T visit(AssignCommandNode node);
     T visit(ConditionalOperatorNode node);
