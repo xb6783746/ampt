@@ -135,7 +135,7 @@ public class ExpressionFactory {
     public static ExpressionBuilder createNumber(String value){
 
         return new ExpressionBuilder(
-                String.format("%s", value),
+                String.format("mr(%s)", value),
                 0
         );
     }
