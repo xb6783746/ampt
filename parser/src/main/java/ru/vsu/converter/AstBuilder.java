@@ -187,10 +187,14 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
                 .map(ParseTree::getText)
                 .collect(Collectors.toList());
 
-        List<FunctionArgumentNode> args = ctx.args.ID()
-                .stream()
-                .map(x -> new FunctionArgumentNode(null, x.getText()))
-                .collect(Collectors.toList());
+        List<FunctionArgumentNode> args = new ArrayList<>();
+
+        if(ctx.args != null) {
+            args = ctx.args.ID()
+                    .stream()
+                    .map(x -> new FunctionArgumentNode(null, x.getText()))
+                    .collect(Collectors.toList());
+        }
 
         return new FunctionNode(ctx.name.getText(), out, args, block);
     }
