@@ -2,19 +2,19 @@ package ru.vsu.visitor;
 
 import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.CodeBlockNode;
+import ru.vsu.ast.FunctionNode;
 import ru.vsu.ast.ScriptNode;
 import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.ExpressionNode;
 import ru.vsu.ast.expression.FunctionCallNode;
-import ru.vsu.codegenerator.builder.CodeBlockBuilder;
-import ru.vsu.codegenerator.builder.ImportStatement;
-import ru.vsu.codegenerator.builder.ScriptBuilder;
+import ru.vsu.codegenerator.builder.*;
 import ru.vsu.codegenerator.builder.command.ForLoopBuilder;
 import ru.vsu.codegenerator.builder.command.IfOperatorBuilder;
 import ru.vsu.codegenerator.builder.command.WhileOperatorBuilder;
 import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PythonGeneratorVisitor {
 
@@ -23,7 +23,7 @@ public class PythonGeneratorVisitor {
 
         scriptBuilder = new ScriptBuilder(imports);
 
-        visit(tree, scriptBuilder.getCodeBlockBuilder());
+        visitScriptNode((ScriptNode)tree);
     }
 
     private ScriptBuilder scriptBuilder;
@@ -34,15 +34,56 @@ public class PythonGeneratorVisitor {
         return scriptBuilder.build();
     }
 
-    private void visit(ScriptNode node, CodeBlockBuilder codeBlockBuilder) {
+    private void visitScriptNode(ScriptNode node) {
 
         for(BasicAstNode entry: node.getNodes()){
 
-            visit(entry, codeBlockBuilder);
+            if(entry instanceof CodeBlockNode){
+
+                generateIsScriptCode((CodeBlockNode)entry);
+            } else if(entry instanceof FunctionNode){
+
+                generateFunction((FunctionNode)entry);
+            }
         }
     }
 
+    private void generateIsScriptCode(CodeBlockNode node) {
+
+        InScriptCodeBuilder builder = new InScriptCodeBuilder();
+
+        for(CommandNode commandNode : node.getCommandNodeList()){
+
+            visit(commandNode, builder.getCodeBlockBuilder());
+        }
+
+        scriptBuilder.getBuilders().add(builder);
+    }
+
+    private void generateFunction(FunctionNode node) {
+
+
+        List<FunctionBuilder.Argument> args = node.getArgs()
+                .stream()
+                .map(x -> new FunctionBuilder.Argument(
+                        x.getArgName(),
+                        x.getExpression().accept(expressionVisitor))
+                )
+                .collect(Collectors.toList());
+
+        FunctionBuilder functionBuilder = new FunctionBuilder(
+                node.getName(),
+                node.getOutArgs(),
+                args
+        );
+
+        visit(node.getBlock(), functionBuilder.getCodeBlockBuilder());
+
+        scriptBuilder.getBuilders().add(functionBuilder);
+    }
+
     private void visit(CodeBlockNode node, CodeBlockBuilder codeBlockBuilder) {
+
 
         for(CommandNode commandNode : node.getCommandNodeList()){
 
@@ -127,7 +168,10 @@ public class PythonGeneratorVisitor {
         } else if(node instanceof CodeBlockNode){
 
             visit((CodeBlockNode)node, codeBlockBuilder);
-        }  else if(node instanceof AssignCommandNode){
+        } else if(node instanceof FunctionNode){
+
+            visit((FunctionNode)node, codeBlockBuilder);
+        } else if(node instanceof AssignCommandNode){
 
             visit((AssignCommandNode)node, codeBlockBuilder);
         }  else if(node instanceof ConditionalOperatorNode){

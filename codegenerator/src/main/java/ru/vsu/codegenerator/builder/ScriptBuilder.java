@@ -11,10 +11,10 @@ public class ScriptBuilder {
     }
 
     private List<ImportStatement> imports;
-    private CodeBlockBuilder codeBlockBuilder = new CodeBlockBuilder();
+    private List<CommandBuilder> builders = new ArrayList<>();
 
-    public CodeBlockBuilder getCodeBlockBuilder() {
-        return codeBlockBuilder;
+    public List<CommandBuilder> getBuilders() {
+        return builders;
     }
 
     public String build(){
@@ -28,7 +28,10 @@ public class ScriptBuilder {
 
         builder.append("\n");
 
-        builder.append(codeBlockBuilder.getString(0));
+        for(CommandBuilder entry: builders) {
+
+            builder.append(entry.getString(0));
+        }
 
         return builder.toString();
     }
