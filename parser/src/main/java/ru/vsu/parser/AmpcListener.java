@@ -28,6 +28,30 @@ public interface AmpcListener extends ParseTreeListener {
 	 */
 	void exitScript(AmpcParser.ScriptContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code codeNode}
+	 * labeled alternative in {@link AmpcParser#scriptEntry}.
+	 * @param ctx the parse tree
+	 */
+	void enterCodeNode(AmpcParser.CodeNodeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code codeNode}
+	 * labeled alternative in {@link AmpcParser#scriptEntry}.
+	 * @param ctx the parse tree
+	 */
+	void exitCodeNode(AmpcParser.CodeNodeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code funcNode}
+	 * labeled alternative in {@link AmpcParser#scriptEntry}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncNode(AmpcParser.FuncNodeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code funcNode}
+	 * labeled alternative in {@link AmpcParser#scriptEntry}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncNode(AmpcParser.FuncNodeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AmpcParser#codeBlock}.
 	 * @param ctx the parse tree
 	 */
@@ -177,6 +201,36 @@ public interface AmpcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitForLoop(AmpcParser.ForLoopContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AmpcParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction(AmpcParser.FunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AmpcParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction(AmpcParser.FunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AmpcParser#funcOut}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncOut(AmpcParser.FuncOutContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AmpcParser#funcOut}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncOut(AmpcParser.FuncOutContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AmpcParser#funcArgs}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncArgs(AmpcParser.FuncArgsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AmpcParser#funcArgs}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncArgs(AmpcParser.FuncArgsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AmpcParser#number}.
 	 * @param ctx the parse tree

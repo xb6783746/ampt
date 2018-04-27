@@ -23,6 +23,20 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitScript(AmpcParser.ScriptContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code codeNode}
+	 * labeled alternative in {@link AmpcParser#scriptEntry}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCodeNode(AmpcParser.CodeNodeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code funcNode}
+	 * labeled alternative in {@link AmpcParser#scriptEntry}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncNode(AmpcParser.FuncNodeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AmpcParser#codeBlock}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -111,6 +125,24 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitForLoop(AmpcParser.ForLoopContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AmpcParser#function}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunction(AmpcParser.FunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AmpcParser#funcOut}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncOut(AmpcParser.FuncOutContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AmpcParser#funcArgs}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncArgs(AmpcParser.FuncArgsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AmpcParser#number}.
 	 * @param ctx the parse tree

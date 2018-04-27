@@ -10,13 +10,17 @@ options
 import AmpcCommon;
 
 file:
-    script;
+    script EOF;
 
 script:
-    codeBlock EOF;
+    scriptEntry+;
+
+scriptEntry:
+      codeBlock #codeNode
+    | function #funcNode;
 
 codeBlock:
-    commSep* comOptSep?;
+    comOptSep | commSep+ comOptSep?;
 
 commSep:
     command commsep;
@@ -56,3 +60,14 @@ forLoop:
     'for' ID '=' expr=expression commsep
          block=codeBlock
     'end';
+
+function:
+    'function'out=funcOut '=' name=ID '(' args=funcArgs? ')' commsep
+        block=codeBlock
+    'endfunction' commsep;
+
+funcOut:
+    ID? | '[' ID? (',' ID)* ']';
+
+funcArgs:
+    ID ( ',' ID)*;
