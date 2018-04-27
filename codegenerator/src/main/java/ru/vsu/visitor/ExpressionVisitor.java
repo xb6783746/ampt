@@ -1,8 +1,6 @@
 package ru.vsu.visitor;
 
-import ru.vsu.ast.AstTreeVisitor;
-import ru.vsu.ast.CodeBlockNode;
-import ru.vsu.ast.ScriptNode;
+import ru.vsu.ast.*;
 import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
 import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
@@ -165,7 +163,7 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     }
 
     @Override
-    public ExpressionBuilder visit(FunctionCallNode.FunctionArgumentNode node) {
+    public ExpressionBuilder visit(FunctionArgumentNode node) {
 
         return null;
     }
@@ -178,6 +176,12 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     public ExpressionBuilder visit(CodeBlockNode node) {
         return null;
     }
+
+    @Override
+    public ExpressionBuilder visit(FunctionNode node) {
+        return null;
+    }
+
     @Override
     public ExpressionBuilder visit(AssignCommandNode node) {
         return null;

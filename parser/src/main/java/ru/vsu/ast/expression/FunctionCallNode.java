@@ -2,58 +2,11 @@ package ru.vsu.ast.expression;
 
 import ru.vsu.ast.AstTreeVisitor;
 import ru.vsu.ast.BasicAstNode;
+import ru.vsu.ast.FunctionArgumentNode;
 
 import java.util.List;
 
 public class FunctionCallNode extends ExpressionNode {
-
-
-    public static class FunctionArgumentNode extends ExpressionNode {
-
-        public FunctionArgumentNode(ExpressionNode expression) {
-
-            this(null, expression, null);
-        }
-
-        public FunctionArgumentNode(ExpressionNode expression, String argName) {
-
-            this(null, expression, argName);
-        }
-
-        public FunctionArgumentNode(BasicAstNode parent, ExpressionNode expression, String argName) {
-            super(parent);
-            this.expression = expression;
-            this.argName = argName;
-
-            expression.setParent(this);
-        }
-
-        private ExpressionNode expression;
-        private String argName;
-
-        public ExpressionNode getExpression() {
-            return expression;
-        }
-
-        public String getArgName() {
-            return argName;
-        }
-
-        @Override
-        public void replace(BasicAstNode oldNode, BasicAstNode newNode) {
-
-            if(expression == oldNode){
-
-                expression = (ExpressionNode)newNode;
-            }
-        }
-
-        @Override
-        public <T> T accept(AstTreeVisitor<T> visitor) {
-
-            return visitor.visit(this);
-        }
-    }
 
 
     public FunctionCallNode(ExpressionNode object, String functionName, List<FunctionArgumentNode> args) {

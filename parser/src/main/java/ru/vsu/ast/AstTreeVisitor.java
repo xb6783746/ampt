@@ -8,6 +8,7 @@ public interface AstTreeVisitor<T> {
     T visit(ScriptNode node);
 
     T visit(CodeBlockNode node);
+    T visit(FunctionNode node);
 
     T visit(AssignCommandNode node);
     T visit(ConditionalOperatorNode node);
@@ -27,5 +28,5 @@ public interface AstTreeVisitor<T> {
     T visit(TupleExpressionNode node);
     T visit(IndexExpressionNode node);
     T visit(FunctionCallNode node);
-    T visit(FunctionCallNode.FunctionArgumentNode node);
+    T visit(FunctionArgumentNode node);
 }

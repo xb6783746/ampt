@@ -4,10 +4,7 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.RuleNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import ru.vsu.ast.BasicAstNode;
-import ru.vsu.ast.BinaryOperator;
-import ru.vsu.ast.CodeBlockNode;
-import ru.vsu.ast.UnaryOperator;
+import ru.vsu.ast.*;
 import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
 import ru.vsu.parser.AmpcParser;
@@ -33,7 +30,25 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     @Override
     public BasicAstNode visitScript(AmpcParser.ScriptContext ctx) {
 
+        List<BasicAstNode> nodes =
+                ctx.scriptEntry()
+                        .stream()
+                        .map(x -> x.accept(this))
+                        .collect(Collectors.toList());
+
+        return new ScriptNode(nodes);
+    }
+
+    @Override
+    public BasicAstNode visitCodeNode(AmpcParser.CodeNodeContext ctx) {
+
         return ctx.codeBlock().accept(this);
+    }
+
+    @Override
+    public BasicAstNode visitFuncNode(AmpcParser.FuncNodeContext ctx) {
+
+        return ctx.function().accept(this);
     }
 
     @Override
@@ -160,6 +175,34 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
         CodeBlockNode codeBlockNode = (CodeBlockNode)ctx.block.accept(this);
 
         return new ForLoopNode(true, id, expressionNode, codeBlockNode);
+    }
+
+    @Override
+    public BasicAstNode visitFunction(AmpcParser.FunctionContext ctx) {
+
+        CodeBlockNode block = (CodeBlockNode)ctx.block.accept(this);
+
+        List<String> out = ctx.out.ID()
+                .stream()
+                .map(ParseTree::getText)
+                .collect(Collectors.toList());
+
+        List<FunctionArgumentNode> args = ctx.args.ID()
+                .stream()
+                .map(x -> new FunctionArgumentNode(null, x.getText()))
+                .collect(Collectors.toList());
+
+        return new FunctionNode(ctx.name.getText(), out, args, block);
+    }
+
+    @Override
+    public BasicAstNode visitFuncOut(AmpcParser.FuncOutContext ctx) {
+        return null;
+    }
+
+    @Override
+    public BasicAstNode visitFuncArgs(AmpcParser.FuncArgsContext ctx) {
+        return null;
     }
 
 

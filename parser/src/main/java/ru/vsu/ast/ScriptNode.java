@@ -1,28 +1,27 @@
 package ru.vsu.ast;
 
+import java.util.List;
+
 public class ScriptNode extends BasicAstNode {
 
-    public ScriptNode(CodeBlockNode block) {
+    public ScriptNode(List<BasicAstNode> nodes) {
 
         super(null);
-        this.block = block;
+        this.nodes = nodes;
 
-        block.setParent(this);
+        nodes.forEach(x -> x.setParent(this));
     }
 
-    private CodeBlockNode block;
+    private List<BasicAstNode> nodes;
 
-    public CodeBlockNode getBlock() {
-        return block;
+    public List<BasicAstNode> getNodes() {
+        return nodes;
     }
 
     @Override
     public void replace(BasicAstNode oldNode, BasicAstNode newNode) {
 
-        if(oldNode == block){
-
-            block = (CodeBlockNode)newNode;
-        }
+        replaceInList(nodes, oldNode, newNode);
     }
 
     @Override

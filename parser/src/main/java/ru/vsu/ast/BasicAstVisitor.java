@@ -8,7 +8,9 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
     @Override
     public T visit(ScriptNode node) {
 
-        return node.getBlock().accept(this);
+        node.getNodes().forEach(x -> x.accept(this));
+
+        return null;
     }
 
     @Override
@@ -163,7 +165,7 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
     }
 
     @Override
-    public T visit(FunctionCallNode.FunctionArgumentNode node) {
+    public T visit(FunctionArgumentNode node) {
 
         node.getExpression().accept(this);
 
@@ -175,6 +177,34 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
 
         node.getExpressions().forEach(x -> x.accept(this));
 
+        return null;
+    }
+
+    @Override
+    public T visit(FunctionNode node) {
+
+        node.getBlock().accept(this);
+
+        return null;
+    }
+
+    @Override
+    public T visit(SliceExpressionNode node) {
+
+        if(node.getStartExpression() != null){
+
+            node.getStartExpression().accept(this);
+        }
+
+        if(node.getStepExpression() != null){
+
+            node.getStepExpression().accept(this);
+        }
+
+        if(node.getEndExpression() != null){
+
+            node.getEndExpression().accept(this);
+        }
         return null;
     }
 }

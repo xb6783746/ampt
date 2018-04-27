@@ -13,7 +13,6 @@ import ru.vsu.codegenerator.builder.command.ForLoopBuilder;
 import ru.vsu.codegenerator.builder.command.IfOperatorBuilder;
 import ru.vsu.codegenerator.builder.command.WhileOperatorBuilder;
 import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
-import ru.vsu.config.entity.FunctionsConfiguration;
 
 import java.util.List;
 
@@ -37,7 +36,10 @@ public class PythonGeneratorVisitor {
 
     private void visit(ScriptNode node, CodeBlockBuilder codeBlockBuilder) {
 
-        visit(node.getBlock(), codeBlockBuilder);
+        for(BasicAstNode entry: node.getNodes()){
+
+            visit(entry, codeBlockBuilder);
+        }
     }
 
     private void visit(CodeBlockNode node, CodeBlockBuilder codeBlockBuilder) {

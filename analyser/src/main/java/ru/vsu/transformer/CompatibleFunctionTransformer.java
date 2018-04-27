@@ -2,8 +2,8 @@ package ru.vsu.transformer;
 
 import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.BasicAstVisitor;
+import ru.vsu.ast.FunctionArgumentNode;
 import ru.vsu.ast.expression.FunctionCallNode;
-import ru.vsu.ast.expression.FunctionCallNode.FunctionArgumentNode;
 import ru.vsu.ast.expression.RangeExpressionNode;
 import ru.vsu.ast.expression.SliceExpressionNode;
 import ru.vsu.helpers.FunctionNameResolver;

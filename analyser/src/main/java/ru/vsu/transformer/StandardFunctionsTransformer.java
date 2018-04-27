@@ -2,8 +2,8 @@ package ru.vsu.transformer;
 
 import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.BasicAstVisitor;
+import ru.vsu.ast.FunctionArgumentNode;
 import ru.vsu.ast.expression.*;
-import ru.vsu.ast.expression.FunctionCallNode.FunctionArgumentNode;
 
 import java.util.*;
 import java.util.function.Consumer;
