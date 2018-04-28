@@ -152,6 +152,30 @@ public interface AmpcListener extends ParseTreeListener {
 	 */
 	void exitAssign(AmpcParser.AssignContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code exprRValue}
+	 * labeled alternative in {@link AmpcParser#rValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprRValue(AmpcParser.ExprRValueContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code exprRValue}
+	 * labeled alternative in {@link AmpcParser#rValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprRValue(AmpcParser.ExprRValueContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code functionHandleRValue}
+	 * labeled alternative in {@link AmpcParser#rValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionHandleRValue(AmpcParser.FunctionHandleRValueContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code functionHandleRValue}
+	 * labeled alternative in {@link AmpcParser#rValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionHandleRValue(AmpcParser.FunctionHandleRValueContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AmpcParser#condOperator}.
 	 * @param ctx the parse tree
 	 */

@@ -35,7 +35,11 @@ command:
       | expression #expressionCommand;
 
 assign:
-    lvalue=expression ASSIGN rvalue=expression;
+    lvalue=expression ASSIGN rvalue=rValue;
+
+rValue:
+       expression #exprRValue
+    | '@'ID #functionHandleRValue;
 
 condOperator:
     'if' cond=expression commsep?
