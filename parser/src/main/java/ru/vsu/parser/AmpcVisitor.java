@@ -110,6 +110,13 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFunctionHandleRValue(AmpcParser.FunctionHandleRValueContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code anonymousFuncRValue}
+	 * labeled alternative in {@link AmpcParser#rValue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnonymousFuncRValue(AmpcParser.AnonymousFuncRValueContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AmpcParser#condOperator}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -151,6 +158,12 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFuncOut(AmpcParser.FuncOutContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AmpcParser#idList}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdList(AmpcParser.IdListContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AmpcParser#funcArgs}.
 	 * @param ctx the parse tree

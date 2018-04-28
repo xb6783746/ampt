@@ -196,6 +196,18 @@ public class AmpcBaseListener implements AmpcListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAnonymousFuncRValue(AmpcParser.AnonymousFuncRValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAnonymousFuncRValue(AmpcParser.AnonymousFuncRValueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCondOperator(AmpcParser.CondOperatorContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -275,6 +287,18 @@ public class AmpcBaseListener implements AmpcListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFuncOut(AmpcParser.FuncOutContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIdList(AmpcParser.IdListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIdList(AmpcParser.IdListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

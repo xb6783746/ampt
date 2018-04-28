@@ -39,7 +39,8 @@ assign:
 
 rValue:
        expression #exprRValue
-    | '@'ID #functionHandleRValue;
+    | '@'ID #functionHandleRValue
+    | '@' '(' idList ')' expression #anonymousFuncRValue;
 
 condOperator:
     'if' cond=expression commsep?
@@ -72,6 +73,9 @@ function:
 
 funcOut:
     ID? | '[' ID? (',' ID)* ']';
+
+idList:
+    ID ( ',' ID)*;
 
 funcArgs:
     ID ( ',' ID)*;

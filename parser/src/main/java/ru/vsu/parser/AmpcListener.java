@@ -176,6 +176,18 @@ public interface AmpcListener extends ParseTreeListener {
 	 */
 	void exitFunctionHandleRValue(AmpcParser.FunctionHandleRValueContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code anonymousFuncRValue}
+	 * labeled alternative in {@link AmpcParser#rValue}.
+	 * @param ctx the parse tree
+	 */
+	void enterAnonymousFuncRValue(AmpcParser.AnonymousFuncRValueContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code anonymousFuncRValue}
+	 * labeled alternative in {@link AmpcParser#rValue}.
+	 * @param ctx the parse tree
+	 */
+	void exitAnonymousFuncRValue(AmpcParser.AnonymousFuncRValueContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AmpcParser#condOperator}.
 	 * @param ctx the parse tree
 	 */
@@ -245,6 +257,16 @@ public interface AmpcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFuncOut(AmpcParser.FuncOutContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AmpcParser#idList}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdList(AmpcParser.IdListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AmpcParser#idList}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdList(AmpcParser.IdListContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AmpcParser#funcArgs}.
 	 * @param ctx the parse tree
