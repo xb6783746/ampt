@@ -26,6 +26,35 @@ public class ExpressionFactory {
             return expressionName;
         }
     }
+
+    public static ExpressionBuilder createLValue(List<ExpressionBuilder> expressions){
+
+        StringBuilder elements = makeSeparatedList(
+                expressions.stream()
+                        .map(ExpressionBuilder::getExpression)
+                        .collect(Collectors.toList()),
+                "="
+        );
+
+        return new ExpressionBuilder(elements.toString(), 0);
+    }
+
+    public static ExpressionBuilder createUnpackLValue(List<ExpressionBuilder> expressions){
+
+        StringBuilder elements = makeSeparatedList(
+                expressions.stream()
+                        .map(ExpressionBuilder::getExpression)
+                        .collect(Collectors.toList()),
+                ","
+        );
+
+        return new ExpressionBuilder(
+                String.format("(%s,)", elements),
+                0
+        );
+    }
+
+
     public static ExpressionBuilder createRow(List<ExpressionBuilder> expressions){
 
         StringBuilder builder = new StringBuilder("[");
@@ -105,10 +134,11 @@ public class ExpressionFactory {
 
     public static ExpressionBuilder createTuple(List<ExpressionBuilder> expressions){
 
-        StringBuilder elements = makeCommaSeparatedList(
+        StringBuilder elements = makeSeparatedList(
                 expressions.stream()
                         .map(ExpressionBuilder::getExpression)
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()),
+                ","
         );
 
         return new ExpressionBuilder(
@@ -119,10 +149,12 @@ public class ExpressionFactory {
 
     public static ExpressionBuilder createFunction(String funcName, List<ExpressionBuilder> args){
 
-        StringBuilder builder = makeCommaSeparatedList(
+        StringBuilder builder = makeSeparatedList(
                 args.stream()
                         .map(ExpressionBuilder::getExpression)
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList()),
+                ","
+        );
 
         return new ExpressionBuilder(
                 String.format("%s(%s)", funcName, builder),
@@ -138,10 +170,11 @@ public class ExpressionFactory {
     public static ExpressionBuilder createAnonymousFunction(List<FunctionArgument> args,
                                                             ExpressionBuilder expression){
 
-        StringBuilder commaSeparatedList = makeCommaSeparatedList(
+        StringBuilder commaSeparatedList = makeSeparatedList(
                 args.stream()
                         .map(FunctionArgument::toString).
-                        collect(Collectors.toList())
+                        collect(Collectors.toList()),
+                ","
         );
 
         return new ExpressionBuilder(
@@ -215,7 +248,7 @@ public class ExpressionFactory {
         builder.append(arg.getExpression());
     }
 
-    public static StringBuilder makeCommaSeparatedList(List<String> list){
+    public static StringBuilder makeSeparatedList(List<String> list, String separator){
 
         StringBuilder builder = new StringBuilder();
 
@@ -225,7 +258,7 @@ public class ExpressionFactory {
 
             for (int i = 1; i < list.size(); i++) {
 
-                builder.append(", ").append(list.get(i));
+                builder.append(separator).append(list.get(i));
             }
 
         }

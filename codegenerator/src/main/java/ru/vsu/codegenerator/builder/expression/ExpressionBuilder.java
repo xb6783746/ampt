@@ -70,10 +70,11 @@ public class ExpressionBuilder {
                 pOp.getPrecedence() < precedence?
                         this.wrap() : this;
 
-        StringBuilder builder = ExpressionFactory.makeCommaSeparatedList(
+        StringBuilder builder = ExpressionFactory.makeSeparatedList(
                 indexes.stream()
                         .map(ExpressionBuilder::getExpression)
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()),
+                ","
         );
 
         return new ExpressionBuilder(

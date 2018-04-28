@@ -187,6 +187,29 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     public ExpressionBuilder visit(AssignCommandNode node) {
         return null;
     }
+
+    @Override
+    public ExpressionBuilder visit(LValueNode node) {
+
+        List<ExpressionBuilder> expressions = node.getExpressions()
+                .stream()
+                .map(x -> x.accept(this))
+                .collect(Collectors.toList());
+
+        return ExpressionFactory.createLValue(expressions);
+    }
+
+    @Override
+    public ExpressionBuilder visit(UnpackLValueNode node) {
+
+        List<ExpressionBuilder> expressions = node.getExpressions()
+                .stream()
+                .map(x -> x.accept(this))
+                .collect(Collectors.toList());
+
+        return ExpressionFactory.createUnpackLValue(expressions);
+    }
+
     @Override
     public ExpressionBuilder visit(ConditionalOperatorNode node) {
         return null;
