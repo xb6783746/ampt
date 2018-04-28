@@ -76,6 +76,14 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
     }
 
     @Override
+    public T visit(AnonymousFunctionExpression node) {
+
+        node.getExpressionNode().accept(this);
+
+        return null;
+    }
+
+    @Override
     public T visit(BinaryExpressionNode node) {
 
         node.getLeft().accept(this);

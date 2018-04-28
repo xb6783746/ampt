@@ -209,4 +209,9 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
 
         return ExpressionFactory.createFunctionHandle(node.getFunctionName());
     }
+
+    @Override
+    public ExpressionBuilder visit(AnonymousFunctionExpression node) {
+        return null;
+    }
 }

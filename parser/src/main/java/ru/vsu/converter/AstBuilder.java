@@ -135,6 +135,19 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     }
 
     @Override
+    public BasicAstNode visitAnonymousFuncRValue(AmpcParser.AnonymousFuncRValueContext ctx) {
+
+        ExpressionNode expressionNode = (ExpressionNode)ctx.expression().accept(this);
+
+        List<FunctionArgumentNode> args = ctx.idList().ID()
+                .stream()
+                .map(x -> new FunctionArgumentNode(null, x.getText()))
+                .collect(Collectors.toList());
+
+        return new AnonymousFunctionExpression(args, expressionNode);
+    }
+
+    @Override
     public BasicAstNode visitCondOperator(AmpcParser.CondOperatorContext ctx) {
 
         ExpressionNode cond = (ExpressionNode)ctx.cond.accept(this);
@@ -213,6 +226,11 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
 
     @Override
     public BasicAstNode visitFuncOut(AmpcParser.FuncOutContext ctx) {
+        return null;
+    }
+
+    @Override
+    public BasicAstNode visitIdList(AmpcParser.IdListContext ctx) {
         return null;
     }
 
