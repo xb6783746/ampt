@@ -72,7 +72,7 @@ public class FunctionBuilder implements CommandBuilder {
                 .append("(").append(argsList).append("):\n")
                 .append(codeBlockBuilder.getString(tabulation + 1));
 
-        builder.append(tabs).append("\t").append("return ").append(outArgsList);
+        builder.append(tabs).append("\t").append("return ").append(outArgsList).append("\n");
 
         return builder.toString();
     }
