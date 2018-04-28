@@ -80,6 +80,17 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
             }
         }
 
+        if(node.getLvalue() instanceof UnpackLValueNode
+                && node.getRvalue() instanceof FunctionCallNode){
+
+            UnpackLValueNode lvalue = (UnpackLValueNode)node.getLvalue();
+            FunctionCallNode rvalue = (FunctionCallNode)node.getRvalue();
+
+            FunctionArgumentNode nargout = createNargoutNode(lvalue.getExpressions().size());
+
+            rvalue.getArgs().add(nargout);
+        }
+
         return null;
     }
 
@@ -342,5 +353,13 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
 
             list.get(i).accept(this);
         }
+    }
+
+    private FunctionArgumentNode createNargoutNode(int count){
+
+        return new FunctionArgumentNode(
+                new NumberNode(String.valueOf(count)),
+                "nargout"
+        );
     }
 }

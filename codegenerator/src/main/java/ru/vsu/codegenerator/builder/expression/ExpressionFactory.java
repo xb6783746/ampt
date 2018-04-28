@@ -25,6 +25,7 @@ public class ExpressionFactory {
         public String getExpressionName() {
             return expressionName;
         }
+
     }
 
     public static ExpressionBuilder createLValue(List<ExpressionBuilder> expressions){
@@ -147,14 +148,9 @@ public class ExpressionFactory {
         );
     }
 
-    public static ExpressionBuilder createFunction(String funcName, List<ExpressionBuilder> args){
+    public static ExpressionBuilder createFunction(String funcName, List<ExpressionArg> args){
 
-        StringBuilder builder = makeSeparatedList(
-                args.stream()
-                        .map(ExpressionBuilder::getExpression)
-                        .collect(Collectors.toList()),
-                ","
-        );
+        StringBuilder builder = makeArgsList(args);
 
         return new ExpressionBuilder(
                 String.format("%s(%s)", funcName, builder),
