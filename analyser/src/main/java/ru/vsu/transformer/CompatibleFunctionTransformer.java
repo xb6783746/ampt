@@ -4,6 +4,7 @@ import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.BasicAstVisitor;
 import ru.vsu.ast.FunctionArgumentNode;
 import ru.vsu.ast.expression.FunctionCallNode;
+import ru.vsu.ast.expression.FunctionHandleExpression;
 import ru.vsu.ast.expression.RangeExpressionNode;
 import ru.vsu.ast.expression.SliceExpressionNode;
 import ru.vsu.helpers.FunctionNameResolver;
@@ -47,6 +48,20 @@ public class CompatibleFunctionTransformer extends BasicAstVisitor<Void> impleme
 
                 toMr(node);
             }
+        }
+
+        return super.visit(node);
+    }
+
+    @Override
+    public Void visit(FunctionHandleExpression node) {
+
+        FunctionNameResolver.Replace replace =
+                nameResolver.resolve(node.getFunctionName());
+
+        if(replace != null){
+
+            node.setFunctionName(replace.getFuncName());
         }
 
         return super.visit(node);

@@ -150,6 +150,11 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
     }
 
     @Override
+    public Void visit(FunctionHandleExpression node) {
+        return null;
+    }
+
+    @Override
     public Void visit(BinaryExpressionNode node) {
 
         node.getLeft().accept(this);

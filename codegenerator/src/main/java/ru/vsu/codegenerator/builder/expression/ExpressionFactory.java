@@ -120,6 +120,11 @@ public class ExpressionFactory {
         );
     }
 
+    public static ExpressionBuilder createFunctionHandle(String funcName){
+
+        return new ExpressionBuilder(funcName, 0);
+    }
+
     public static ExpressionBuilder createCall(ExpressionBuilder obj,
                                                String funcName,
                                                List<ExpressionArg> args){

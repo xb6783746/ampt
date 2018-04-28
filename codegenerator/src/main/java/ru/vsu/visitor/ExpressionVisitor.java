@@ -203,4 +203,10 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     public ExpressionBuilder visit(ForLoopNode node) {
         return null;
     }
+
+    @Override
+    public ExpressionBuilder visit(FunctionHandleExpression node) {
+
+        return ExpressionFactory.createFunctionHandle(node.getFunctionName());
+    }
 }
