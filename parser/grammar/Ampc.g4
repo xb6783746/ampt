@@ -35,7 +35,11 @@ command:
       | expression #expressionCommand;
 
 assign:
-    lvalue=expression ASSIGN rvalue=rValue;
+    lvalue=lValue ASSIGN rvalue=rValue;
+
+lValue:
+       '[' expressionList ']' #unpackLValue
+    |   expressionList #exprLValue;
 
 rValue:
        expression #exprRValue
