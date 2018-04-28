@@ -4,24 +4,14 @@ import ru.vsu.ast.expression.ExpressionNode;
 
 import java.util.List;
 
-public class UnpackLValueNode extends ExpressionNode {
+public class UnpackLValueNode extends LValueNode {
 
 
     public UnpackLValueNode(List<ExpressionNode> expressions) {
-        this(null, expressions);
-    }
 
-    public UnpackLValueNode(BasicAstNode parent, List<ExpressionNode> expressions) {
-        super(parent);
-        this.expressions = expressions;
+        super(expressions);
 
         expressions.forEach(x -> x.setParent(this));
-    }
-
-    private List<ExpressionNode> expressions;
-
-    public List<ExpressionNode> getExpressions() {
-        return expressions;
     }
 
     @Override

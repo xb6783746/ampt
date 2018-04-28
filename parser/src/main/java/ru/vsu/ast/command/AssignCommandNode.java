@@ -2,11 +2,12 @@ package ru.vsu.ast.command;
 
 import ru.vsu.ast.AstTreeVisitor;
 import ru.vsu.ast.BasicAstNode;
+import ru.vsu.ast.LValueNode;
 import ru.vsu.ast.expression.ExpressionNode;
 
 public class AssignCommandNode extends CommandNode {
 
-    public AssignCommandNode(boolean isEscaped, ExpressionNode lvalue, ExpressionNode rvalue) {
+    public AssignCommandNode(boolean isEscaped, LValueNode lvalue, ExpressionNode rvalue) {
         super(isEscaped);
         this.lvalue = lvalue;
         this.rvalue = rvalue;
@@ -15,10 +16,10 @@ public class AssignCommandNode extends CommandNode {
         rvalue.setParent(this);
     }
 
-    private ExpressionNode lvalue;
+    private LValueNode lvalue;
     private ExpressionNode rvalue;
 
-    public ExpressionNode getLvalue() {
+    public LValueNode getLvalue() {
         return lvalue;
     }
     public ExpressionNode getRvalue() {
@@ -30,7 +31,7 @@ public class AssignCommandNode extends CommandNode {
 
         if(lvalue == oldNode){
 
-            lvalue = (ExpressionNode) newNode;
+            lvalue = (LValueNode) newNode;
         }
 
         if(rvalue == oldNode){

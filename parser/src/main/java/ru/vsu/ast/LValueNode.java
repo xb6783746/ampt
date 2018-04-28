@@ -18,7 +18,7 @@ public class LValueNode extends ExpressionNode {
         expressions.forEach(x -> x.setParent(this));
     }
 
-    private List<ExpressionNode> expressions;
+    protected List<ExpressionNode> expressions;
 
     public List<ExpressionNode> getExpressions() {
         return expressions;

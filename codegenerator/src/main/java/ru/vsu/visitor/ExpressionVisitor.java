@@ -132,7 +132,7 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
                         .map((x) -> x.accept(this))
                         .collect(Collectors.toList());
 
-        return expression.index(indexes);
+        return expression.index(indexes, node.isGetter());
     }
 
     @Override

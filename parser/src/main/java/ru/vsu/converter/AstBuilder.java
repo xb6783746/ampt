@@ -116,7 +116,7 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     @Override
     public BasicAstNode visitAssign(AmpcParser.AssignContext ctx) {
 
-        ExpressionNode lvalue = (ExpressionNode)ctx.lvalue.accept(this);
+        LValueNode lvalue = (LValueNode)ctx.lvalue.accept(this);
         ExpressionNode rvalue = (ExpressionNode)ctx.rvalue.accept(this);
 
         return new AssignCommandNode(true, lvalue, rvalue);

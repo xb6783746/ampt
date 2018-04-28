@@ -23,6 +23,7 @@ public class IndexExpressionNode extends ExpressionNode {
 
     private ExpressionNode expression;
     private List<ExpressionNode> indexes;
+    private boolean isGetter = true;
 
     public ExpressionNode getExpression() {
         return expression;
@@ -30,6 +31,14 @@ public class IndexExpressionNode extends ExpressionNode {
 
     public List<ExpressionNode> getIndexes() {
         return indexes;
+    }
+
+    public boolean isGetter() {
+        return isGetter;
+    }
+
+    public void setGetter(boolean getter) {
+        isGetter = getter;
     }
 
     @Override

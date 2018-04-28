@@ -63,40 +63,20 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
     @Override
     public Void visit(AssignCommandNode node) {
 
-        if(node.getLvalue() instanceof IndexExpressionNode){
+        node.getLvalue().accept(this);
+        node.getRvalue().accept(this);
 
-            IndexExpressionNode expr = (IndexExpressionNode)node.getLvalue();
+        for(ExpressionNode lvalue: node.getLvalue().getExpressions()){
 
-            List<FunctionArgumentNode> indices =
-                    expr.getIndexes()
-                            .stream()
-                            .map(FunctionArgumentNode::new)
-                            .collect(Collectors.toList());
+            if (lvalue instanceof IdentifierExpressionNode) {
 
-            FunctionArgumentNode value =
-                    new FunctionArgumentNode(node.getRvalue(), "val");
-
-            indices.add(value);
-
-            FunctionCallNode func = new FunctionCallNode(
-                    node.getParent(),
-                    expr.getExpression(),
-                    "mset",
-                    indices
-            );
-
-            node.getParent().replace(node, func);
-
-            func.accept(this);
-        } else {
-
-            node.getLvalue().accept(this);
-            node.getRvalue().accept(this);
-
-            if (node.getLvalue() instanceof IdentifierExpressionNode) {
-
-                String varName = ((IdentifierExpressionNode) node.getLvalue()).getIdName();
+                String varName = ((IdentifierExpressionNode) lvalue).getIdName();
                 variableNames.add(varName);
+            }
+
+            if (lvalue instanceof IndexExpressionNode) {
+
+                ((IndexExpressionNode) lvalue).setGetter(false);
             }
         }
 

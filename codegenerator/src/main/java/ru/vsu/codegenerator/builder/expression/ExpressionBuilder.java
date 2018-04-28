@@ -62,9 +62,9 @@ public class ExpressionBuilder {
         );
     }
 
-    public ExpressionBuilder index(List<ExpressionBuilder> indexes){
+    public ExpressionBuilder index(List<ExpressionBuilder> indexes, boolean isGetter){
 
-        PythonOperators.PythonOperator pOp = PythonOperators.getOperator(BinaryOperator.Index);
+        PythonOperators.PythonOperator pOp = PythonOperators.getIndexOperator(isGetter);
 
         ExpressionBuilder left =
                 pOp.getPrecedence() < precedence?

@@ -79,6 +79,13 @@ public class PythonOperators {
         return operatorTable.get(op);
     }
 
+    public static PythonOperator getIndexOperator(boolean isGetter){
+
+        String template = isGetter ? "%s(%s)" : "%s[%s]";
+
+        return new PythonOperator(template, 1 , false);
+    }
+
     public static PythonOperator getOperator(UnaryOperator op){
 
         return unaryOperatorTable.get(op);
