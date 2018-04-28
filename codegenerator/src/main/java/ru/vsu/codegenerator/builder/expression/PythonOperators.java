@@ -70,7 +70,7 @@ public class PythonOperators {
         add(UnaryOperator.Transpose, "transpose(%s)", 2, true);
         add(UnaryOperator.ComplexConjTranspose, "ctranspose(%s)", 2, true);
 
-        add(BinaryOperator.Index, "%s.mget(%s)", 1, true);
+        add(BinaryOperator.Index, "%s(%s)", 1, true);
 
     }
 
