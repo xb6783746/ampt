@@ -2,10 +2,25 @@ package ru.vsu.codegenerator.builder;
 
 import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FunctionBuilder implements CommandBuilder {
+
+    private static List<String> specialArgs = new ArrayList<>();
+
+    static {
+
+        specialArgs.add("nargin");
+        specialArgs.add("nargout");
+        specialArgs.add("varargin");
+    }
+
+    private static boolean isSpecialArg(String name){
+
+        return specialArgs.contains(name);
+    }
 
     public static class Argument {
 
@@ -39,11 +54,22 @@ public class FunctionBuilder implements CommandBuilder {
         this.name = name;
         this.outArgs = outArgs;
         this.args = args;
+
+        regularArgsCount = args
+                .stream()
+                .filter(x -> !isSpecialArg(x.name))
+                .count();
+        isVarargs = args
+                .stream()
+                .anyMatch(x -> x.name.equals("varargin"));
     }
 
     private String name;
     private List<String> outArgs;
     private List<Argument> args;
+    private long regularArgsCount;
+    private boolean isVarargs;
+
     private CodeBlockBuilder codeBlockBuilder = new CodeBlockBuilder();
 
     public CodeBlockBuilder getCodeBlockBuilder() {
@@ -68,7 +94,11 @@ public class FunctionBuilder implements CommandBuilder {
         );
         StringBuilder outArgsList = createArgsList(outArgs);
 
-        builder.append(tabs.toString()).append("def ").append(name)
+        builder.append(tabs)
+                .append("@ampt_function(").append(regularArgsCount).append(", ")
+                .append(isVarargs? "True": "False").append(")\n");
+
+        builder.append(tabs).append("def ").append(name)
                 .append("(").append(argsList).append("):\n")
                 .append(codeBlockBuilder.getString(tabulation + 1));
 
@@ -97,13 +127,4 @@ public class FunctionBuilder implements CommandBuilder {
         return builder;
     }
 
-    private void appendArg(StringBuilder builder, Argument arg){
-
-        builder.append(arg.name);
-
-        if(arg.expressionBuilder != null){
-
-            builder.append("=").append(arg.expressionBuilder.getExpression());
-        }
-    }
 }

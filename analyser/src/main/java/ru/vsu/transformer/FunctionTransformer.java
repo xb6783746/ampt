@@ -45,11 +45,16 @@ public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>
         node.getBlock().accept(this);
         iterate(node.getArgs());
 
+        FunctionArgumentNode nargin = new FunctionArgumentNode(
+                null,
+                "nargin"
+        );
         FunctionArgumentNode nargout = new FunctionArgumentNode(
                 new NumberNode("1"),
                 "nargout"
         );
 
+        node.getArgs().add(nargin);
         node.getArgs().add(nargout);
 
         return null;

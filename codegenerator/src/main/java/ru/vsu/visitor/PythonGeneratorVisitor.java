@@ -67,7 +67,9 @@ public class PythonGeneratorVisitor {
                 .stream()
                 .map(x -> new FunctionBuilder.Argument(
                         x.getArgName(),
-                        x.getExpression().accept(expressionVisitor))
+                        x.getExpression() != null?
+                                x.getExpression().accept(expressionVisitor) : null
+                        )
                 )
                 .collect(Collectors.toList());
 
