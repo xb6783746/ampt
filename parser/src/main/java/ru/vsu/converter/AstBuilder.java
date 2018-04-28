@@ -123,6 +123,18 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     }
 
     @Override
+    public BasicAstNode visitExprRValue(AmpcParser.ExprRValueContext ctx) {
+
+        return (ExpressionNode)ctx.expression().accept(this);
+    }
+
+    @Override
+    public BasicAstNode visitFunctionHandleRValue(AmpcParser.FunctionHandleRValueContext ctx) {
+
+        return new FunctionHandleExpression(ctx.ID().getText());
+    }
+
+    @Override
     public BasicAstNode visitCondOperator(AmpcParser.CondOperatorContext ctx) {
 
         ExpressionNode cond = (ExpressionNode)ctx.cond.accept(this);
