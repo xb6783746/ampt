@@ -1,7 +1,5 @@
 package ru.vsu.codegenerator.builder;
 
-import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,51 +20,23 @@ public class FunctionBuilder implements CommandBuilder {
         return specialArgs.contains(name);
     }
 
-    public static class Argument {
-
-        public Argument(String name, ExpressionBuilder expressionBuilder) {
-            this.name = name;
-            this.expressionBuilder = expressionBuilder;
-        }
-
-        private String name;
-        private ExpressionBuilder expressionBuilder;
-
-        public String getName() {
-            return name;
-        }
-
-        public ExpressionBuilder getExpressionBuilder() {
-            return expressionBuilder;
-        }
-
-        @Override
-        public String toString() {
-
-            String expression = expressionBuilder == null?
-                    "" : " = " + expressionBuilder.getExpression();
-
-            return name + expression;
-        }
-    }
-
-    public FunctionBuilder(String name, List<String> outArgs, List<Argument> args) {
+    public FunctionBuilder(String name, List<String> outArgs, List<FunctionArgument> args) {
         this.name = name;
         this.outArgs = outArgs;
         this.args = args;
 
         regularArgsCount = args
                 .stream()
-                .filter(x -> !isSpecialArg(x.name))
+                .filter(x -> !isSpecialArg(x.getName()))
                 .count();
         isVarargs = args
                 .stream()
-                .anyMatch(x -> x.name.equals("varargin"));
+                .anyMatch(x -> x.getName().equals("varargin"));
     }
 
     private String name;
     private List<String> outArgs;
-    private List<Argument> args;
+    private List<FunctionArgument> args;
     private long regularArgsCount;
     private boolean isVarargs;
 
@@ -89,7 +59,7 @@ public class FunctionBuilder implements CommandBuilder {
 
         StringBuilder argsList = createArgsList(
                 args.stream()
-                        .map(Argument::toString)
+                        .map(FunctionArgument::toString)
                         .collect(Collectors.toList())
         );
         StringBuilder outArgsList = createArgsList(outArgs);

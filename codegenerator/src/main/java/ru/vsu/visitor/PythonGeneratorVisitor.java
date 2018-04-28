@@ -63,9 +63,9 @@ public class PythonGeneratorVisitor {
     private void generateFunction(FunctionNode node) {
 
 
-        List<FunctionBuilder.Argument> args = node.getArgs()
+        List<FunctionArgument> args = node.getArgs()
                 .stream()
-                .map(x -> new FunctionBuilder.Argument(
+                .map(x -> new FunctionArgument(
                         x.getArgName(),
                         x.getExpression() != null?
                                 x.getExpression().accept(expressionVisitor) : null

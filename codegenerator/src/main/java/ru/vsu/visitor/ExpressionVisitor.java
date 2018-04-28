@@ -3,6 +3,7 @@ package ru.vsu.visitor;
 import ru.vsu.ast.*;
 import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
+import ru.vsu.codegenerator.builder.FunctionArgument;
 import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
 import ru.vsu.codegenerator.builder.expression.ExpressionFactory;
 
@@ -212,6 +213,18 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
 
     @Override
     public ExpressionBuilder visit(AnonymousFunctionExpression node) {
-        return null;
+
+        List<FunctionArgument> args = node.getArgs()
+                .stream()
+                .map(x -> new FunctionArgument(
+                        x.getArgName(),
+                        x.getExpression() != null?
+                                x.getExpression().accept(this) : null
+                        )
+                ).collect(Collectors.toList());
+
+        ExpressionBuilder expression = node.getExpressionNode().accept(this);
+
+        return ExpressionFactory.createAnonymousFunction(args, expression);
     }
 }

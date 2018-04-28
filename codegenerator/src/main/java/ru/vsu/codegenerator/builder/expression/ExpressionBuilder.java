@@ -4,6 +4,7 @@ import ru.vsu.ast.BinaryOperator;
 import ru.vsu.ast.UnaryOperator;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ExpressionBuilder {
 
@@ -69,7 +70,11 @@ public class ExpressionBuilder {
                 pOp.getPrecedence() < precedence?
                         this.wrap() : this;
 
-        StringBuilder builder = ExpressionFactory.makeExpressionList(indexes);
+        StringBuilder builder = ExpressionFactory.makeCommaSeparatedList(
+                indexes.stream()
+                        .map(ExpressionBuilder::getExpression)
+                        .collect(Collectors.toList())
+        );
 
         return new ExpressionBuilder(
                 String.format(pOp.getTemplate(), left, builder),

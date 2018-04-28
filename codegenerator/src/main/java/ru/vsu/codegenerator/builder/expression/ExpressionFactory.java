@@ -1,6 +1,9 @@
 package ru.vsu.codegenerator.builder.expression;
 
+import ru.vsu.codegenerator.builder.FunctionArgument;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ExpressionFactory {
 
@@ -102,7 +105,11 @@ public class ExpressionFactory {
 
     public static ExpressionBuilder createTuple(List<ExpressionBuilder> expressions){
 
-        StringBuilder elements = makeExpressionList(expressions);
+        StringBuilder elements = makeCommaSeparatedList(
+                expressions.stream()
+                        .map(ExpressionBuilder::getExpression)
+                        .collect(Collectors.toList())
+        );
 
         return new ExpressionBuilder(
                 String.format("(%s)", elements),
@@ -112,7 +119,10 @@ public class ExpressionFactory {
 
     public static ExpressionBuilder createFunction(String funcName, List<ExpressionBuilder> args){
 
-        StringBuilder builder = makeExpressionList(args);
+        StringBuilder builder = makeCommaSeparatedList(
+                args.stream()
+                        .map(ExpressionBuilder::getExpression)
+                        .collect(Collectors.toList()));
 
         return new ExpressionBuilder(
                 String.format("%s(%s)", funcName, builder),
@@ -123,6 +133,20 @@ public class ExpressionFactory {
     public static ExpressionBuilder createFunctionHandle(String funcName){
 
         return new ExpressionBuilder(funcName, 0);
+    }
+
+    public static ExpressionBuilder createAnonymousFunction(List<FunctionArgument> args,
+                                                            ExpressionBuilder expression){
+
+        StringBuilder commaSeparatedList = makeCommaSeparatedList(
+                args.stream()
+                        .map(FunctionArgument::toString).
+                        collect(Collectors.toList())
+        );
+
+        return new ExpressionBuilder(
+                String.format("anonf(lambda %s: %s)", commaSeparatedList, expression)
+                , 0);
     }
 
     public static ExpressionBuilder createCall(ExpressionBuilder obj,
@@ -191,17 +215,17 @@ public class ExpressionFactory {
         builder.append(arg.getExpression());
     }
 
-    public static StringBuilder makeExpressionList(List<ExpressionBuilder> indexes){
+    public static StringBuilder makeCommaSeparatedList(List<String> list){
 
         StringBuilder builder = new StringBuilder();
 
-        if(indexes.size() > 0) {
+        if(list.size() > 0) {
 
-            builder.append(indexes.get(0).getExpression());
+            builder.append(list.get(0));
 
-            for (int i = 1; i < indexes.size(); i++) {
+            for (int i = 1; i < list.size(); i++) {
 
-                builder.append(", ").append(indexes.get(i).getExpression());
+                builder.append(", ").append(list.get(i));
             }
 
         }
