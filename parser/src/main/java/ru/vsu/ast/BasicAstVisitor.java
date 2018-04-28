@@ -30,6 +30,22 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
     }
 
     @Override
+    public T visit(LValueNode node) {
+
+        node.getExpressions().forEach(x -> x.accept(this));
+
+        return null;
+    }
+
+    @Override
+    public T visit(UnpackLValueNode node) {
+
+        node.getExpressions().forEach(x -> x.accept(this));
+
+        return null;
+    }
+
+    @Override
     public T visit(ConditionalOperatorNode node) {
 
         node.getCondition().accept(this);

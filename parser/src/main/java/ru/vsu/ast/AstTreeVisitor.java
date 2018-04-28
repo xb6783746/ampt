@@ -11,6 +11,10 @@ public interface AstTreeVisitor<T> {
     T visit(FunctionNode node);
 
     T visit(AssignCommandNode node);
+
+    T visit(LValueNode node);
+    T visit(UnpackLValueNode node);
+
     T visit(ConditionalOperatorNode node);
     T visit(ElseIfNode node);
     T visit(WhileLoopNode node);

@@ -123,6 +123,30 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     }
 
     @Override
+    public BasicAstNode visitUnpackLValue(AmpcParser.UnpackLValueContext ctx) {
+
+        List<ExpressionNode> expressions =
+                ctx.expressionList().expression()
+                        .stream()
+                        .map(x -> (ExpressionNode)x.accept(this))
+                        .collect(Collectors.toList());
+
+        return new UnpackLValueNode(expressions);
+    }
+
+    @Override
+    public BasicAstNode visitExprLValue(AmpcParser.ExprLValueContext ctx) {
+
+        List<ExpressionNode> expressions =
+                ctx.expressionList().expression()
+                        .stream()
+                        .map(x -> (ExpressionNode)x.accept(this))
+                        .collect(Collectors.toList());
+
+        return new LValueNode(expressions);
+    }
+
+    @Override
     public BasicAstNode visitExprRValue(AmpcParser.ExprRValueContext ctx) {
 
         return (ExpressionNode)ctx.expression().accept(this);
