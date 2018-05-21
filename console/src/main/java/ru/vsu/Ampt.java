@@ -14,12 +14,11 @@ public class Ampt {
 
     private static String functionConfig = "./FunctionConfiguration.json";
 
-    public Ampt() throws IOException {
+    public Ampt(String configFile) throws IOException {
 
         ConfigLoader configLoader = new ConfigLoader();
 
-        String path = Ampt.class.getClassLoader().getResource(functionConfig).getFile();
-        File functionConfFile = new File(path);
+        File functionConfFile = new File(configFile);
 
         configuration =
                 configLoader.getConfiguration(functionConfFile);

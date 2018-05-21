@@ -13,6 +13,7 @@ import java.util.List;
 public class App 
 {
     static String outDir = "";
+    static String configFile = "";
     static List<String> files = new ArrayList<>();
 
     public static void main( String[] args ) throws IOException {
@@ -27,11 +28,12 @@ public class App
 
         consoleInterface
                 .registerMainHandler(files::add)
-                .registerHandler("o", App::setOutDir);
+                .registerHandler("o", App::setOutDir)
+                .registerHandler("conf", App::setConfFile);
 
         consoleInterface.parse(args);
 
-        Ampt ampt = new Ampt();
+        Ampt ampt = new Ampt(configFile);
 
         ampt.generate(files, outDir);
     }
@@ -39,11 +41,15 @@ public class App
     private static void usage(){
 
         System.out.println("usage:");
-        System.out.println("ampt [-o out_dir]? [file]+");
+        System.out.println("ampt -conf <config_file_path> [-o out_dir]? [file]+");
     }
 
     private static void setOutDir(String arg){
 
         outDir = arg;
+    }
+    private static void setConfFile(String arg){
+
+        configFile = arg;
     }
 }
