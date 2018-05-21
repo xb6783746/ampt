@@ -8,9 +8,9 @@ import ru.vsu.ast.expression.RangeExpressionNode;
 import ru.vsu.ast.expression.SliceExpressionNode;
 import ru.vsu.helpers.FunctionNameResolver;
 
-public class CompatibleFunctionTransformer extends BasicAstVisitor<Void> implements AstTransformer {
+public class StandardFunctionTransformer extends BasicAstVisitor<Void> implements AstTransformer {
 
-    public CompatibleFunctionTransformer(FunctionNameResolver nameResolver) {
+    public StandardFunctionTransformer(FunctionNameResolver nameResolver) {
         this.nameResolver = nameResolver;
     }
 

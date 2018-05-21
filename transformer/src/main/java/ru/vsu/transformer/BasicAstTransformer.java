@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class FunctionTransformer implements AstTransformer, AstTreeVisitor<Void>  {
+public class BasicAstTransformer implements AstTransformer, AstTreeVisitor<Void>  {
 
 
     private List<String> variableNames = new ArrayList<>();

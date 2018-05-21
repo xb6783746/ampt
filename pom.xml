@@ -11,7 +11,7 @@
   <modules>
     <module>parser</module>
     <module>codegenerator</module>
-    <module>analyser</module>
+    <module>transformer</module>
     <module>console</module>
     <module>configuration</module>
   </modules>

@@ -4,9 +4,8 @@ import ru.vsu.ast.BasicAstNode;
 import ru.vsu.config.entity.Configuration;
 import ru.vsu.helpers.FunctionNameResolver;
 import ru.vsu.transformer.AstTransformer;
-import ru.vsu.transformer.CompatibleFunctionTransformer;
-import ru.vsu.transformer.FunctionTransformer;
-import ru.vsu.transformer.StandardFunctionsTransformer;
+import ru.vsu.transformer.BasicAstTransformer;
+import ru.vsu.transformer.StandardFunctionTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +18,8 @@ public class TransformProcessor {
 
         FunctionNameResolver resolver = new FunctionNameResolver(configuration);
 
-        transformers.add(new FunctionTransformer());
-        transformers.add(new CompatibleFunctionTransformer(resolver));
-        transformers.add(new StandardFunctionsTransformer());
+        transformers.add(new BasicAstTransformer());
+        transformers.add(new StandardFunctionTransformer(resolver));
     }
 
     private List<AstTransformer> transformers = new ArrayList<>();
