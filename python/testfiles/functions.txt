@@ -1,0 +1,16 @@
+d = @sin
+f = @(x) x + 1
+
+k = d(5)
+
+a, b, c = 5
+
+function [a, b, c] = tmp ();
+a = 5;
+b = 6;
+c = 7;
+
+endfunction
+
+a = tmp();
+[b, c] = tmp();
