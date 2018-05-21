@@ -2,15 +2,11 @@ package ru.vsu.transformer;
 
 import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.BasicAstVisitor;
-import ru.vsu.ast.FunctionArgumentNode;
 import ru.vsu.ast.expression.FunctionCallNode;
 import ru.vsu.ast.expression.FunctionHandleExpression;
 import ru.vsu.ast.expression.RangeExpressionNode;
 import ru.vsu.ast.expression.SliceExpressionNode;
 import ru.vsu.helpers.FunctionNameResolver;
-
-import java.util.Collections;
-import java.util.List;
 
 public class CompatibleFunctionTransformer extends BasicAstVisitor<Void> implements AstTransformer {
 
@@ -36,19 +32,9 @@ public class CompatibleFunctionTransformer extends BasicAstVisitor<Void> impleme
     @Override
     public Void visit(FunctionCallNode node) {
 
+        String name = nameResolver.resolve(node.getFunctionName());
 
-        FunctionNameResolver.Replace replace =
-                nameResolver.resolve(node.getFunctionName());
-
-        if(replace != null){
-
-            node.setFunctionName(replace.getFuncName());
-
-            if(replace.isNeedWrapToMlarr()){
-
-                toMr(node);
-            }
-        }
+        node.setFunctionName(name);
 
         return super.visit(node);
     }
@@ -56,30 +42,11 @@ public class CompatibleFunctionTransformer extends BasicAstVisitor<Void> impleme
     @Override
     public Void visit(FunctionHandleExpression node) {
 
-        FunctionNameResolver.Replace replace =
-                nameResolver.resolve(node.getFunctionName());
+        String name = nameResolver.resolve(node.getFunctionName());
 
-        if(replace != null){
-
-            node.setFunctionName(replace.getFuncName());
-        }
+        node.setFunctionName(name);
 
         return super.visit(node);
     }
 
-    private void toMr(FunctionCallNode node){
-
-        BasicAstNode parent = node.getParent();
-
-        FunctionCallNode toMr = createMrNode(node);
-
-        parent.replace(node, toMr);
-    }
-
-    private FunctionCallNode createMrNode(FunctionCallNode node){
-
-        List<FunctionArgumentNode> arg = Collections.singletonList(new FunctionArgumentNode(node));
-
-        return new FunctionCallNode("mr", arg);
-    }
 }

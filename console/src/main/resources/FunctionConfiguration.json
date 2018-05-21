@@ -2,38 +2,12 @@
   "coreName": "mpc",
   "numpyName": "np",
   "apmtlibName": "mpl",
-  "functions": [
-
-    {
-      "matlabName": "sin",
-      "generatedName": "sin",
-      "from": "numpy",
-      "needWrap": true
-    },
-    {
-      "matlabName": "num2str",
-      "generatedName": "str",
-      "from": "python",
-      "needWrap": false
-    },
-    {
-      "matlabName": "all",
-      "generatedName": "all",
-      "from": "apmtlib",
-      "needWrap": false
-    },
-    {
-      "matlabName": "and",
-      "generatedName": "logical_and",
-      "from": "numpy",
-      "needWrap": false
-    },
-    {
-      "matlabName": "or",
-      "generatedName": "logical_or",
-      "from": "numpy",
-      "needWrap": false
-    }
+  "standardFunctions": [
+    "sin",
+    "zeros",
+    "ones",
+    "rand",
+    "mean"
   ]
 
 }

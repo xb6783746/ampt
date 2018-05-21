@@ -2,14 +2,11 @@ package ru.vsu;
 
 import ru.vsu.ast.BasicAstNode;
 import ru.vsu.config.ConfigLoader;
-import ru.vsu.config.entity.FunctionsConfiguration;
-import ru.vsu.visitor.PythonGeneratorVisitor;
+import ru.vsu.config.entity.Configuration;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 
 public class Ampt {
@@ -24,15 +21,15 @@ public class Ampt {
         String path = Ampt.class.getClassLoader().getResource(functionConfig).getFile();
         File functionConfFile = new File(path);
 
-        functionsConfiguration =
-                configLoader.getFunctionConfiguration(functionConfFile);
+        configuration =
+                configLoader.getConfiguration(functionConfFile);
 
-        transformProcessor = new TransformProcessor(functionsConfiguration);
+        transformProcessor = new TransformProcessor(configuration);
 
-        codegenerator = new Codegenerator(functionsConfiguration);
+        codegenerator = new Codegenerator(configuration);
     }
 
-    private FunctionsConfiguration functionsConfiguration;
+    private Configuration configuration;
     private AstLoader loader = new AstLoader();
     private TransformProcessor transformProcessor;
     private Codegenerator codegenerator;

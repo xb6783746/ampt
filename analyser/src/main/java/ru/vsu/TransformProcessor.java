@@ -1,7 +1,7 @@
 package ru.vsu;
 
 import ru.vsu.ast.BasicAstNode;
-import ru.vsu.config.entity.FunctionsConfiguration;
+import ru.vsu.config.entity.Configuration;
 import ru.vsu.helpers.FunctionNameResolver;
 import ru.vsu.transformer.AstTransformer;
 import ru.vsu.transformer.CompatibleFunctionTransformer;
@@ -14,10 +14,10 @@ import java.util.List;
 public class TransformProcessor {
 
 
-    public TransformProcessor(FunctionsConfiguration functionsConfiguration) {
+    public TransformProcessor(Configuration configuration) {
 
 
-        FunctionNameResolver resolver = new FunctionNameResolver(functionsConfiguration);
+        FunctionNameResolver resolver = new FunctionNameResolver(configuration);
 
         transformers.add(new FunctionTransformer());
         transformers.add(new CompatibleFunctionTransformer(resolver));

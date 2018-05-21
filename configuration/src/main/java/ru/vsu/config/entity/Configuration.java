@@ -2,42 +2,40 @@ package ru.vsu.config.entity;
 
 import java.util.List;
 
-public class FunctionsConfiguration {
+public class Configuration {
 
     private String coreName;
     private String numpyName;
     private String apmtlibName;
-    private List<FunctionConfigurationEntry> functions;
+    private List<String> standardFunctions;
 
     public String getCoreName() {
         return coreName;
+    }
+    public String getNumpyName() {
+        return numpyName;
+    }
+    public String getApmtlibName() {
+        return apmtlibName;
     }
 
     public void setCoreName(String coreName) {
         this.coreName = coreName;
     }
 
-    public String getNumpyName() {
-        return numpyName;
-    }
-
     public void setNumpyName(String numpyName) {
         this.numpyName = numpyName;
-    }
-
-    public String getApmtlibName() {
-        return apmtlibName;
     }
 
     public void setApmtlibName(String apmtlibName) {
         this.apmtlibName = apmtlibName;
     }
 
-    public List<FunctionConfigurationEntry> getFunctions() {
-        return functions;
+    public void setStandardFunctions(List<String> standardFunctions) {
+        this.standardFunctions = standardFunctions;
     }
 
-    public void setFunctions(List<FunctionConfigurationEntry> functions) {
-        this.functions = functions;
+    public List<String> getStandardFunctions() {
+        return standardFunctions;
     }
 }

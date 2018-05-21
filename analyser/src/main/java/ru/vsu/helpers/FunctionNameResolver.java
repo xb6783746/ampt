@@ -1,65 +1,33 @@
 package ru.vsu.helpers;
 
 
-import ru.vsu.config.entity.FunctionConfigurationEntry;
-import ru.vsu.config.entity.FunctionsConfiguration;
+import ru.vsu.config.entity.Configuration;
 
 import java.util.Hashtable;
 import java.util.Map;
 
 public class FunctionNameResolver {
 
-    public static class Replace {
-
-        public Replace(String funcName, boolean needWrapToMlarr) {
-            this.funcName = funcName;
-            this.needWrapToMlarr = needWrapToMlarr;
-        }
-
-        private String funcName;
-        private boolean needWrapToMlarr;
-
-        public String getFuncName() {
-            return funcName;
-        }
-
-        public boolean isNeedWrapToMlarr() {
-            return needWrapToMlarr;
-        }
-    }
+    public FunctionNameResolver(Configuration entity){
 
 
-    public FunctionNameResolver(FunctionsConfiguration entity){
+        String prefix = entity.getApmtlibName().isEmpty()?
+                "" : entity.getApmtlibName()+ ".";
 
-        prefixes.put("python", "");
-        prefixes.put("numpy", entity.getNumpyName());
-        prefixes.put("apmtlib", entity.getApmtlibName());
-        prefixes.put("core", "");
-
-        for(FunctionConfigurationEntry entry: entity.getFunctions()){
+        for(String entry: entity.getStandardFunctions()){
 
             functions.put(
-                    entry.getMatlabName(),
-                    new Replace(buildName(prefixes, entry), entry.getNeedWrap())
+                    entry,
+                    prefix + entry
             );
         }
     }
 
-    private Map<String, String> prefixes = new Hashtable<>();
-    private Map<String, Replace> functions = new Hashtable<>();
+    private Map<String, String> functions = new Hashtable<>();
 
-    public Replace resolve(String name){
+    public String resolve(String name){
 
-        return functions.getOrDefault(name, null);
+        return functions.getOrDefault(name, name);
     }
 
-    private String buildName(Map<String, String> prefixes, FunctionConfigurationEntry entry){
-
-        if(prefixes.get(entry.getFrom()).isEmpty()){
-
-            return entry.getGeneratedName();
-        }
-
-        return prefixes.get(entry.getFrom()).concat(".").concat(entry.getGeneratedName());
-    }
 }

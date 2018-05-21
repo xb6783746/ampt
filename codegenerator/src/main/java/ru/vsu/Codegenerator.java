@@ -2,7 +2,7 @@ package ru.vsu;
 
 import ru.vsu.ast.BasicAstNode;
 import ru.vsu.codegenerator.builder.ImportStatement;
-import ru.vsu.config.entity.FunctionsConfiguration;
+import ru.vsu.config.entity.Configuration;
 import ru.vsu.visitor.PythonGeneratorVisitor;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import java.util.List;
 public class Codegenerator {
 
 
-    public Codegenerator(FunctionsConfiguration functionConfiguration){
+    public Codegenerator(Configuration functionConfiguration){
 
         imports = createImports(functionConfiguration);
     }
@@ -26,7 +26,7 @@ public class Codegenerator {
         return generatorVisitor.generate();
     }
 
-    private List<ImportStatement> createImports(FunctionsConfiguration funcConf){
+    private List<ImportStatement> createImports(Configuration funcConf){
 
         List<ImportStatement> imports = new ArrayList<>();
 
