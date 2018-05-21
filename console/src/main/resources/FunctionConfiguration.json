@@ -4,6 +4,7 @@
   "apmtlibName": "mpl",
   "standardFunctions": [
     "sin",
+    "disp",
     "zeros",
     "ones",
     "rand",
