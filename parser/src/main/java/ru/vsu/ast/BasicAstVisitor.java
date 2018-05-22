@@ -68,6 +68,23 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
     }
 
     @Override
+    public T visit(SwitchOperatorNode node) {
+
+        node.getCases().forEach(x -> x.accept(this));
+
+        return null;
+    }
+
+    @Override
+    public T visit(SwitchCaseNode node) {
+
+        node.getCondition().accept(this);
+        node.getCodeBlockNode().accept(this);
+
+        return null;
+    }
+
+    @Override
     public T visit(WhileLoopNode node) {
 
         node.getCondition().accept(this);

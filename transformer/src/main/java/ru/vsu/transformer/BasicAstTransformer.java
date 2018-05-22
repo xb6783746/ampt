@@ -133,6 +133,23 @@ public class BasicAstTransformer implements AstTransformer, AstTreeVisitor<Void>
     }
 
     @Override
+    public Void visit(SwitchOperatorNode node) {
+
+        node.getCases().forEach(x -> x.accept(this));
+
+        return null;
+    }
+
+    @Override
+    public Void visit(SwitchCaseNode node) {
+
+        node.getCondition().accept(this);
+        node.getCodeBlockNode().accept(this);
+
+        return null;
+    }
+
+    @Override
     public Void visit(WhileLoopNode node) {
 
         node.getCondition().accept(this);

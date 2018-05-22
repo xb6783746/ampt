@@ -6,6 +6,7 @@ import ru.vsu.ast.expression.*;
 import ru.vsu.codegenerator.builder.FunctionArgument;
 import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
 import ru.vsu.codegenerator.builder.expression.ExpressionFactory;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -222,6 +223,19 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     public ExpressionBuilder visit(ElseIfNode node) {
         return null;
     }
+
+    @Override
+    public ExpressionBuilder visit(SwitchOperatorNode node) {
+
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public ExpressionBuilder visit(SwitchCaseNode node) {
+
+        throw new NotImplementedException();
+    }
+
     @Override
     public ExpressionBuilder visit(WhileLoopNode node) {
         return null;

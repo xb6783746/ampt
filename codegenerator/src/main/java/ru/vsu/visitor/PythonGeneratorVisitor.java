@@ -12,6 +12,7 @@ import ru.vsu.codegenerator.builder.command.ForLoopBuilder;
 import ru.vsu.codegenerator.builder.command.IfOperatorBuilder;
 import ru.vsu.codegenerator.builder.command.WhileOperatorBuilder;
 import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -126,6 +127,11 @@ public class PythonGeneratorVisitor {
 
     }
 
+    private void visit(SwitchOperatorNode node, CodeBlockBuilder codeBlockBuilder) {
+
+        throw new NotImplementedException();
+    }
+
     private void visit(ForLoopNode node, CodeBlockBuilder codeBlockBuilder) {
 
         String id = node.getId().getIdName();
@@ -175,10 +181,13 @@ public class PythonGeneratorVisitor {
         } else if(node instanceof AssignCommandNode){
 
             visit((AssignCommandNode)node, codeBlockBuilder);
-        }  else if(node instanceof ConditionalOperatorNode){
+        } else if(node instanceof ConditionalOperatorNode){
 
             visit((ConditionalOperatorNode)node, codeBlockBuilder);
-        }  else if(node instanceof ForLoopNode){
+        } else if(node instanceof SwitchOperatorNode){
+
+            visit((SwitchOperatorNode)node, codeBlockBuilder);
+        } else if(node instanceof ForLoopNode){
 
             visit((ForLoopNode)node, codeBlockBuilder);
         }  else if(node instanceof WhileLoopNode){

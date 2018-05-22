@@ -17,6 +17,8 @@ public interface AstTreeVisitor<T> {
 
     T visit(ConditionalOperatorNode node);
     T visit(ElseIfNode node);
+    T visit(SwitchOperatorNode node);
+    T visit(SwitchCaseNode node);
     T visit(WhileLoopNode node);
     T visit(ForLoopNode node);
 
