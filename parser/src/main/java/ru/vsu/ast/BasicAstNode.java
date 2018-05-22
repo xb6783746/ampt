@@ -23,7 +23,7 @@ public abstract class BasicAstNode {
     }
 
     public abstract void replace(BasicAstNode oldNode, BasicAstNode newNode);
-    public abstract <T> T accept(AstTreeVisitor<T> visitor);
+    public abstract <T> T accept(AstVisitor<T> visitor);
 
     protected <T extends BasicAstNode> void replaceInList(
             List<T> list, BasicAstNode oldNode, BasicAstNode newNode){

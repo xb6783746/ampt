@@ -136,7 +136,7 @@ public class PythonGeneratorVisitor {
 
         String id = node.getId().getIdName();
 
-        ExpressionBuilder expression = node.getExpressionNode().accept(expressionVisitor);
+        ExpressionBuilder expression = node.getExpression().accept(expressionVisitor);
 
         ForLoopBuilder builder = codeBlockBuilder.addFor(id, expression);
 

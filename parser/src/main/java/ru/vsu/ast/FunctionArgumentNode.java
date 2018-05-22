@@ -46,7 +46,7 @@ public class FunctionArgumentNode extends ExpressionNode {
     }
 
     @Override
-    public <T> T accept(AstTreeVisitor<T> visitor) {
+    public <T> T accept(AstVisitor<T> visitor) {
 
         return visitor.visit(this);
     }

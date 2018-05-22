@@ -3,7 +3,7 @@ package ru.vsu.ast;
 import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
 
-public interface AstTreeVisitor<T> {
+public interface AstVisitor<T> {
 
     T visit(ScriptNode node);
 
@@ -13,7 +13,6 @@ public interface AstTreeVisitor<T> {
     T visit(AssignCommandNode node);
 
     T visit(LValueNode node);
-    T visit(UnpackLValueNode node);
 
     T visit(ConditionalOperatorNode node);
     T visit(ElseIfNode node);
@@ -34,7 +33,6 @@ public interface AstTreeVisitor<T> {
     T visit(ArrayExpressionNode.ArrayRowNode node);
     T visit(RangeExpressionNode node);
     T visit(SliceExpressionNode node);
-    T visit(TupleExpressionNode node);
     T visit(IndexExpressionNode node);
     T visit(FunctionCallNode node);
     T visit(FunctionArgumentNode node);

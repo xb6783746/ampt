@@ -1,6 +1,6 @@
 package ru.vsu.ast.expression;
 
-import ru.vsu.ast.AstTreeVisitor;
+import ru.vsu.ast.AstVisitor;
 import ru.vsu.ast.BasicAstNode;
 
 public class IdentifierExpressionNode extends ExpressionNode {
@@ -28,7 +28,7 @@ public class IdentifierExpressionNode extends ExpressionNode {
     }
 
     @Override
-    public <T> T accept(AstTreeVisitor<T> visitor) {
+    public <T> T accept(AstVisitor<T> visitor) {
 
         return visitor.visit(this);
     }

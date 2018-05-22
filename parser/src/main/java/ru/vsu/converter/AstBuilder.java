@@ -131,7 +131,7 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
                         .map(x -> (ExpressionNode)x.accept(this))
                         .collect(Collectors.toList());
 
-        return new UnpackLValueNode(expressions);
+        return new LValueNode(true, expressions);
     }
 
     @Override
@@ -143,7 +143,7 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
                         .map(x -> (ExpressionNode)x.accept(this))
                         .collect(Collectors.toList());
 
-        return new LValueNode(expressions);
+        return new LValueNode(false, expressions);
     }
 
     @Override

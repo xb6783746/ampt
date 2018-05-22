@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class BasicAstTransformer implements AstTransformer, AstTreeVisitor<Void>  {
+public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
 
 
     private List<String> variableNames = new ArrayList<>();
@@ -80,10 +80,10 @@ public class BasicAstTransformer implements AstTransformer, AstTreeVisitor<Void>
             }
         }
 
-        if(node.getLvalue() instanceof UnpackLValueNode
+        if(node.getLvalue().isUnpackExpression()
                 && node.getRvalue() instanceof FunctionCallNode){
 
-            UnpackLValueNode lvalue = (UnpackLValueNode)node.getLvalue();
+            LValueNode lvalue = node.getLvalue();
             FunctionCallNode rvalue = (FunctionCallNode)node.getRvalue();
 
             FunctionArgumentNode nargout = createNargoutNode(lvalue.getExpressions().size());
@@ -96,14 +96,6 @@ public class BasicAstTransformer implements AstTransformer, AstTreeVisitor<Void>
 
     @Override
     public Void visit(LValueNode node) {
-
-        iterate(node.getExpressions());
-
-        return null;
-    }
-
-    @Override
-    public Void visit(UnpackLValueNode node) {
 
         iterate(node.getExpressions());
 
@@ -144,7 +136,7 @@ public class BasicAstTransformer implements AstTransformer, AstTreeVisitor<Void>
     public Void visit(SwitchCaseNode node) {
 
         node.getCondition().accept(this);
-        node.getCodeBlockNode().accept(this);
+        node.getBlock().accept(this);
 
         return null;
     }
@@ -165,7 +157,7 @@ public class BasicAstTransformer implements AstTransformer, AstTreeVisitor<Void>
 
         variableNames.add(idName);
 
-        node.getExpressionNode().accept(this);
+        node.getExpression().accept(this);
         node.getBlock().accept(this);
 
         variableNames.remove(idName);
@@ -289,14 +281,6 @@ public class BasicAstTransformer implements AstTransformer, AstTreeVisitor<Void>
     public Void visit(SliceExpressionNode node) {
 
         return visit((RangeExpressionNode)node);
-    }
-
-    @Override
-    public Void visit(TupleExpressionNode node) {
-
-        node.getExpressions().forEach(x -> x.accept(this));
-
-        return null;
     }
 
     @Override

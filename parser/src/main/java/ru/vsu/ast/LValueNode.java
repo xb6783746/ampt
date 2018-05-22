@@ -7,21 +7,26 @@ import java.util.List;
 public class LValueNode extends ExpressionNode {
 
 
-    public LValueNode(List<ExpressionNode> expressions) {
-        this(null, expressions);
+    public LValueNode(boolean isUnpackExpression, List<ExpressionNode> expressions) {
+        this(null, isUnpackExpression, expressions);
     }
 
-    public LValueNode(BasicAstNode parent, List<ExpressionNode> expressions) {
+    public LValueNode(BasicAstNode parent, boolean isUnpackExpression, List<ExpressionNode> expressions) {
         super(parent);
         this.expressions = expressions;
 
         expressions.forEach(x -> x.setParent(this));
     }
 
-    protected List<ExpressionNode> expressions;
+    private boolean isUnpackExpression;
+    private List<ExpressionNode> expressions;
 
     public List<ExpressionNode> getExpressions() {
         return expressions;
+    }
+
+    public boolean isUnpackExpression() {
+        return isUnpackExpression;
     }
 
     @Override
@@ -31,7 +36,7 @@ public class LValueNode extends ExpressionNode {
     }
 
     @Override
-    public <T> T accept(AstTreeVisitor<T> visitor) {
+    public <T> T accept(AstVisitor<T> visitor) {
 
         return visitor.visit(this);
     }

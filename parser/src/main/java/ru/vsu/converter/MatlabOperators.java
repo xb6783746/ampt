@@ -9,35 +9,35 @@ import java.util.Map;
 public class MatlabOperators {
 
 
-    private static Map<String, BinaryOperator> map = new Hashtable<>();
+    private static Map<String, BinaryOperator> binaryOperators = new Hashtable<>();
     private static Map<String, UnaryOperator> unaryOperators = new Hashtable<>();
 
     static{
 
-        map.put("&", BinaryOperator.And);
-        map.put("&&", BinaryOperator.And);
-        map.put("|", BinaryOperator.Or);
-        map.put("||", BinaryOperator.And);
+        binaryOperators.put("&", BinaryOperator.And);
+        binaryOperators.put("&&", BinaryOperator.And);
+        binaryOperators.put("|", BinaryOperator.Or);
+        binaryOperators.put("||", BinaryOperator.And);
 
-        map.put("+", BinaryOperator.Plus);
-        map.put("-", BinaryOperator.Minus);
+        binaryOperators.put("+", BinaryOperator.Plus);
+        binaryOperators.put("-", BinaryOperator.Minus);
 
-        map.put("*", BinaryOperator.Prod);
-        map.put(".*", BinaryOperator.ElemProd);
+        binaryOperators.put("*", BinaryOperator.Prod);
+        binaryOperators.put(".*", BinaryOperator.ElemProd);
 
-        map.put("/", BinaryOperator.Div);
-        map.put("./", BinaryOperator.ElemDiv);
+        binaryOperators.put("/", BinaryOperator.Div);
+        binaryOperators.put("./", BinaryOperator.ElemDiv);
 
-        map.put("^", BinaryOperator.Pow);
-        map.put(".^", BinaryOperator.ElemPow);
+        binaryOperators.put("^", BinaryOperator.Pow);
+        binaryOperators.put(".^", BinaryOperator.ElemPow);
 
-        map.put(">", BinaryOperator.Greater);
-        map.put("<", BinaryOperator.Less);
-        map.put(">=", BinaryOperator.GreaterOrEqual);
-        map.put("<=", BinaryOperator.LessOrEqual);
+        binaryOperators.put(">", BinaryOperator.Greater);
+        binaryOperators.put("<", BinaryOperator.Less);
+        binaryOperators.put(">=", BinaryOperator.GreaterOrEqual);
+        binaryOperators.put("<=", BinaryOperator.LessOrEqual);
 
-        map.put("==", BinaryOperator.Equal);
-        map.put("!=", BinaryOperator.NotEqual);
+        binaryOperators.put("==", BinaryOperator.Equal);
+        binaryOperators.put("!=", BinaryOperator.NotEqual);
 
         unaryOperators.put("+", UnaryOperator.Plus);
         unaryOperators.put("-", UnaryOperator.Minus);
@@ -48,9 +48,9 @@ public class MatlabOperators {
 
     public static BinaryOperator getBinaryOperator(String string){
 
-        if(map.containsKey(string)){
+        if(binaryOperators.containsKey(string)){
 
-            return map.get(string);
+            return binaryOperators.get(string);
         }
 
         throw new IllegalArgumentException(

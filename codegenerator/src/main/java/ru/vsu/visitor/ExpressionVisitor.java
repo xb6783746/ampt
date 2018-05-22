@@ -11,7 +11,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
+public class ExpressionVisitor implements AstVisitor<ExpressionBuilder> {
 
     @Override
     public ExpressionBuilder visit(BinaryExpressionNode node) {
@@ -111,18 +111,6 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
     }
 
     @Override
-    public ExpressionBuilder visit(TupleExpressionNode node) {
-
-        List<ExpressionBuilder> expressions =
-                node.getExpressions()
-                        .stream()
-                        .map(x -> x.accept(this))
-                        .collect(Collectors.toList());
-
-        return ExpressionFactory.createTuple(expressions);
-    }
-
-    @Override
     public ExpressionBuilder visit(IndexExpressionNode node) {
 
         ExpressionBuilder expression = node.getExpression().accept(this);
@@ -201,18 +189,9 @@ public class ExpressionVisitor implements AstTreeVisitor<ExpressionBuilder> {
                 .map(x -> x.accept(this))
                 .collect(Collectors.toList());
 
-        return ExpressionFactory.createLValue(expressions);
-    }
-
-    @Override
-    public ExpressionBuilder visit(UnpackLValueNode node) {
-
-        List<ExpressionBuilder> expressions = node.getExpressions()
-                .stream()
-                .map(x -> x.accept(this))
-                .collect(Collectors.toList());
-
-        return ExpressionFactory.createUnpackLValue(expressions);
+        return node.isUnpackExpression()?
+                ExpressionFactory.createUnpackLValue(expressions) :
+                ExpressionFactory.createLValue(expressions);
     }
 
     @Override

@@ -1,30 +1,30 @@
 package ru.vsu.ast.command;
 
-import ru.vsu.ast.AstTreeVisitor;
+import ru.vsu.ast.AstVisitor;
 import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.CodeBlockNode;
 import ru.vsu.ast.expression.ExpressionNode;
 
 public class SwitchCaseNode extends BasicAstNode {
 
-    public SwitchCaseNode(BasicAstNode parent, ExpressionNode condition, CodeBlockNode codeBlockNode) {
+    public SwitchCaseNode(BasicAstNode parent, ExpressionNode condition, CodeBlockNode block) {
         super(parent);
         this.condition = condition;
-        this.codeBlockNode = codeBlockNode;
+        this.block = block;
 
         condition.setParent(this);
-        codeBlockNode.setParent(this);
+        block.setParent(this);
     }
 
     private ExpressionNode condition;
-    private CodeBlockNode codeBlockNode;
+    private CodeBlockNode block;
 
     public ExpressionNode getCondition() {
         return condition;
     }
 
-    public CodeBlockNode getCodeBlockNode() {
-        return codeBlockNode;
+    public CodeBlockNode getBlock() {
+        return block;
     }
 
     @Override
@@ -35,14 +35,14 @@ public class SwitchCaseNode extends BasicAstNode {
             condition = (ExpressionNode) newNode;
         }
 
-        if(codeBlockNode == oldNode){
+        if(block == oldNode){
 
-            codeBlockNode = (CodeBlockNode) newNode;
+            block = (CodeBlockNode) newNode;
         }
     }
 
     @Override
-    public <T> T accept(AstTreeVisitor<T> visitor) {
+    public <T> T accept(AstVisitor<T> visitor) {
 
         return visitor.visit(this);
     }

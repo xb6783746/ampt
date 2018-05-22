@@ -3,7 +3,7 @@ package ru.vsu.ast;
 import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
 
-public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
+public abstract class BasicAstVisitor<T> implements AstVisitor<T> {
     
     @Override
     public T visit(ScriptNode node) {
@@ -31,14 +31,6 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
 
     @Override
     public T visit(LValueNode node) {
-
-        node.getExpressions().forEach(x -> x.accept(this));
-
-        return null;
-    }
-
-    @Override
-    public T visit(UnpackLValueNode node) {
 
         node.getExpressions().forEach(x -> x.accept(this));
 
@@ -79,7 +71,7 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
     public T visit(SwitchCaseNode node) {
 
         node.getCondition().accept(this);
-        node.getCodeBlockNode().accept(this);
+        node.getBlock().accept(this);
 
         return null;
     }
@@ -97,7 +89,7 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
     public T visit(ForLoopNode node) {
 
         node.getId().accept(this);
-        node.getExpressionNode().accept(this);
+        node.getExpression().accept(this);
         node.getBlock().accept(this);
 
         return null;
@@ -214,14 +206,6 @@ public abstract class BasicAstVisitor<T> implements AstTreeVisitor<T> {
     public T visit(FunctionArgumentNode node) {
 
         node.getExpression().accept(this);
-
-        return null;
-    }
-
-    @Override
-    public T visit(TupleExpressionNode node) {
-
-        node.getExpressions().forEach(x -> x.accept(this));
 
         return null;
     }
