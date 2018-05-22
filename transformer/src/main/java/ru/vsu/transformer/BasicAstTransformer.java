@@ -66,7 +66,7 @@ public class BasicAstTransformer implements AstTransformer, AstTreeVisitor<Void>
         node.getLvalue().accept(this);
         node.getRvalue().accept(this);
 
-        for(ExpressionNode lvalue: node.getLvalue().getExpressions()){
+        for(BasicAstNode lvalue: node.getLvalue().getExpressions()){
 
             if (lvalue instanceof IdentifierExpressionNode) {
 
@@ -315,7 +315,7 @@ public class BasicAstTransformer implements AstTransformer, AstTreeVisitor<Void>
             node.getExpression().accept(this);
         }
 
-        for(ExpressionNode expressionNode : node.getIndexes()){
+        for(BasicAstNode expressionNode : node.getIndexes()){
 
             expressionNode.accept(this);
         }

@@ -54,18 +54,18 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     @Override
     public BasicAstNode visitCodeBlock(AmpcParser.CodeBlockContext ctx) {
 
-        List<CommandNode> commandNodeList = new ArrayList<>();
+        List<BasicAstNode> commandNodeList = new ArrayList<>();
 
         for(AmpcParser.CommSepContext command : ctx.commSep()){
 
-            CommandNode node = (CommandNode)command.accept(this);
+            BasicAstNode node = (BasicAstNode)command.accept(this);
 
             commandNodeList.add(node);
         }
 
         if(ctx.comOptSep() != null) {
 
-            commandNodeList.add((CommandNode)ctx.comOptSep().accept(this));
+            commandNodeList.add((BasicAstNode)ctx.comOptSep().accept(this));
         }
 
         return new CodeBlockNode(commandNodeList);
@@ -119,7 +119,7 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
         LValueNode lvalue = (LValueNode)ctx.lvalue.accept(this);
         ExpressionNode rvalue = (ExpressionNode)ctx.rvalue.accept(this);
 
-        return new AssignCommandNode(true, lvalue, rvalue);
+        return new AssignCommandNode(lvalue, rvalue);
     }
 
     @Override
@@ -189,7 +189,7 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
             elseBlock = (CodeBlockNode) ctx.elsePart().accept(this);
         }
 
-        return new ConditionalOperatorNode(true, cond, block, elseIfNodes, elseBlock);
+        return new ConditionalOperatorNode(cond, block, elseIfNodes, elseBlock);
     }
 
     @Override
@@ -213,7 +213,7 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
         ExpressionNode cond = (ExpressionNode)ctx.cond.accept(this);
         CodeBlockNode block = (CodeBlockNode)ctx.block.accept(this);
 
-        return new WhileLoopNode(true, cond, block);
+        return new WhileLoopNode(cond, block);
     }
 
     @Override
@@ -223,7 +223,7 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
         ExpressionNode expressionNode = (ExpressionNode)ctx.expr.accept(this);
         CodeBlockNode codeBlockNode = (CodeBlockNode)ctx.block.accept(this);
 
-        return new ForLoopNode(true, id, expressionNode, codeBlockNode);
+        return new ForLoopNode(id, expressionNode, codeBlockNode);
     }
 
     @Override

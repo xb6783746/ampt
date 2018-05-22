@@ -1,17 +1,16 @@
 package ru.vsu.ast;
 
-import ru.vsu.ast.command.CommandNode;
 
 import java.util.List;
 
 public class CodeBlockNode extends BasicAstNode {
 
-    public CodeBlockNode(List<CommandNode> commandNodeList) {
+    public CodeBlockNode(List<BasicAstNode> commandNodeList) {
 
         this(null, commandNodeList);
     }
 
-    public CodeBlockNode(BasicAstNode parent, List<CommandNode> commandNodeList) {
+    public CodeBlockNode(BasicAstNode parent, List<BasicAstNode> commandNodeList) {
 
         super(parent);
         this.commandNodeList = commandNodeList;
@@ -19,9 +18,9 @@ public class CodeBlockNode extends BasicAstNode {
         commandNodeList.forEach((x) -> x.setParent(this));
     }
 
-    private List<CommandNode> commandNodeList;
+    private List<BasicAstNode> commandNodeList;
 
-    public List<CommandNode> getCommandNodeList() {
+    public List<BasicAstNode> getCommandNodeList() {
         return commandNodeList;
     }
 

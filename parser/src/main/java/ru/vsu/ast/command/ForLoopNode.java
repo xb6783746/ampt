@@ -6,14 +6,12 @@ import ru.vsu.ast.CodeBlockNode;
 import ru.vsu.ast.expression.ExpressionNode;
 import ru.vsu.ast.expression.IdentifierExpressionNode;
 
-public class ForLoopNode extends CommandNode {
+public class ForLoopNode extends BasicAstNode {
 
 
-    public ForLoopNode(boolean isEscaped,
-                       IdentifierExpressionNode id,
+    public ForLoopNode(IdentifierExpressionNode id,
                        ExpressionNode expressionNode,
                        CodeBlockNode block) {
-        super(isEscaped);
         this.id = id;
         this.expressionNode = expressionNode;
         this.block = block;

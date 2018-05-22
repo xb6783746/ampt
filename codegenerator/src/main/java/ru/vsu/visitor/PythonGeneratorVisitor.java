@@ -52,7 +52,7 @@ public class PythonGeneratorVisitor {
 
         InScriptCodeBuilder builder = new InScriptCodeBuilder();
 
-        for(CommandNode commandNode : node.getCommandNodeList()){
+        for(BasicAstNode commandNode : node.getCommandNodeList()){
 
             visit(commandNode, builder.getCodeBlockBuilder());
         }
@@ -86,8 +86,7 @@ public class PythonGeneratorVisitor {
 
     private void visit(CodeBlockNode node, CodeBlockBuilder codeBlockBuilder) {
 
-
-        for(CommandNode commandNode : node.getCommandNodeList()){
+        for(BasicAstNode commandNode : node.getCommandNodeList()){
 
             visit(commandNode, codeBlockBuilder);
         }

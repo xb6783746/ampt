@@ -5,12 +5,10 @@ import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.CodeBlockNode;
 import ru.vsu.ast.expression.ExpressionNode;
 
-public class WhileLoopNode extends CommandNode {
+public class WhileLoopNode extends BasicAstNode {
 
-    public WhileLoopNode(boolean isEscaped,
-                         ExpressionNode condition,
+    public WhileLoopNode(ExpressionNode condition,
                          CodeBlockNode block) {
-        super(isEscaped);
         this.condition = condition;
         this.block = block;
 

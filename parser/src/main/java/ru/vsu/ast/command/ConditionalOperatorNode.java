@@ -7,14 +7,12 @@ import ru.vsu.ast.expression.ExpressionNode;
 
 import java.util.List;
 
-public class ConditionalOperatorNode extends CommandNode {
+public class ConditionalOperatorNode extends BasicAstNode {
 
-    public ConditionalOperatorNode(boolean isEscaped,
-                                   ExpressionNode condition,
+    public ConditionalOperatorNode(ExpressionNode condition,
                                    CodeBlockNode block,
                                    List<ElseIfNode> elseIfNodeList,
                                    CodeBlockNode elseNode) {
-        super(isEscaped);
         this.condition = condition;
         this.block = block;
         this.elseIfNodeList = elseIfNodeList;

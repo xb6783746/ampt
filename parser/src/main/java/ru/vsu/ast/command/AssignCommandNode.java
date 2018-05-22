@@ -5,10 +5,9 @@ import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.LValueNode;
 import ru.vsu.ast.expression.ExpressionNode;
 
-public class AssignCommandNode extends CommandNode {
+public class AssignCommandNode extends BasicAstNode {
 
-    public AssignCommandNode(boolean isEscaped, LValueNode lvalue, ExpressionNode rvalue) {
-        super(isEscaped);
+    public AssignCommandNode(LValueNode lvalue, ExpressionNode rvalue) {
         this.lvalue = lvalue;
         this.rvalue = rvalue;
 
