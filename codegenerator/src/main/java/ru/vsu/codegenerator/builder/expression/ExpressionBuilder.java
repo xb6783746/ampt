@@ -28,7 +28,7 @@ public class ExpressionBuilder {
 
     public ExpressionBuilder apply(BinaryOperator op, ExpressionBuilder expr){
 
-        PythonOperators.PythonOperator pOp = PythonOperators.getOperator(op);
+        PythonOperator pOp = PythonOperators.getOperator(op);
 
         ExpressionBuilder left =
                 pOp.getPrecedence() < precedence && !pOp.isAsFunction()?
@@ -50,7 +50,7 @@ public class ExpressionBuilder {
             return this;
         }
 
-        PythonOperators.PythonOperator pOp = PythonOperators.getOperator(op);
+        PythonOperator pOp = PythonOperators.getOperator(op);
 
         ExpressionBuilder expr =
                 pOp.getPrecedence() < precedence && !pOp.isAsFunction()?
@@ -64,7 +64,8 @@ public class ExpressionBuilder {
 
     public ExpressionBuilder index(List<ExpressionBuilder> indexes, boolean isGetter){
 
-        PythonOperators.PythonOperator pOp = PythonOperators.getIndexOperator(isGetter);
+        BinaryOperator op = isGetter? BinaryOperator.IndexGetter : BinaryOperator.IndexSetter;
+        PythonOperator pOp = PythonOperators.getOperator(op);
 
         ExpressionBuilder left =
                 pOp.getPrecedence() < precedence?
