@@ -1,6 +1,6 @@
 package ru.vsu.codegenerator.builder;
 
-public class InScriptCodeBuilder implements CommandBuilder {
+public class InScriptCodeBuilder implements PythonCodeBuilder {
 
 
     private CodeBlockBuilder codeBlockBuilder = new CodeBlockBuilder();

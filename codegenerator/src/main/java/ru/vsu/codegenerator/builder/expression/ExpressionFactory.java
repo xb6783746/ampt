@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class ExpressionFactory {
 
-    public static class ExpressionArg{
+    public static class ExpressionArg {
 
 
         public ExpressionArg(ExpressionBuilder expression, String expressionName) {
@@ -27,6 +27,7 @@ public class ExpressionFactory {
         }
 
     }
+
 
     public static ExpressionBuilder createLValue(List<ExpressionBuilder> expressions){
 
@@ -131,21 +132,6 @@ public class ExpressionFactory {
         }
 
         return new ExpressionBuilder(slice, 0);
-    }
-
-    public static ExpressionBuilder createTuple(List<ExpressionBuilder> expressions){
-
-        StringBuilder elements = makeSeparatedList(
-                expressions.stream()
-                        .map(ExpressionBuilder::getExpression)
-                        .collect(Collectors.toList()),
-                ","
-        );
-
-        return new ExpressionBuilder(
-                String.format("(%s)", elements),
-                0
-        );
     }
 
     public static ExpressionBuilder createFunction(String funcName, List<ExpressionArg> args){

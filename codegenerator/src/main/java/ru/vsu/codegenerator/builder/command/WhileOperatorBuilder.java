@@ -1,10 +1,10 @@
 package ru.vsu.codegenerator.builder.command;
 
 import ru.vsu.codegenerator.builder.CodeBlockBuilder;
-import ru.vsu.codegenerator.builder.CommandBuilder;
+import ru.vsu.codegenerator.builder.PythonCodeBuilder;
 import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
 
-public class WhileOperatorBuilder implements CommandBuilder {
+public class WhileOperatorBuilder implements PythonCodeBuilder {
 
 
     public WhileOperatorBuilder(ExpressionBuilder condition) {

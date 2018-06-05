@@ -98,7 +98,7 @@ public class PythonGeneratorVisitor {
         ExpressionBuilder lvalue = node.getLvalue().accept(expressionVisitor);
         ExpressionBuilder rvalue = node.getRvalue().accept(expressionVisitor);
 
-        codeBlockBuilder.addAssignent(lvalue, rvalue);
+        codeBlockBuilder.addAssignment(lvalue, rvalue);
     }
 
     private void visit(ConditionalOperatorNode node, CodeBlockBuilder codeBlockBuilder) {

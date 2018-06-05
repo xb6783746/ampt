@@ -9,12 +9,12 @@ import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CodeBlockBuilder implements CommandBuilder {
+public class CodeBlockBuilder implements PythonCodeBuilder {
 
 
-    private class ExpressionCommandBuilder implements CommandBuilder {
+    private class ExpressionCodeBuilder implements PythonCodeBuilder {
 
-        public ExpressionCommandBuilder(ExpressionBuilder expressionBuilder) {
+        public ExpressionCodeBuilder(ExpressionBuilder expressionBuilder) {
             this.expressionBuilder = expressionBuilder;
         }
 
@@ -34,9 +34,9 @@ public class CodeBlockBuilder implements CommandBuilder {
         }
     }
 
-    private List<CommandBuilder> lines = new ArrayList<>();
+    private List<PythonCodeBuilder> lines = new ArrayList<>();
 
-    public void addAssignent(ExpressionBuilder lvalue, ExpressionBuilder rvalue){
+    public void addAssignment(ExpressionBuilder lvalue, ExpressionBuilder rvalue){
 
         lines.add(new AssignCommandBuilder(lvalue, rvalue));
     }
@@ -70,7 +70,7 @@ public class CodeBlockBuilder implements CommandBuilder {
 
     public void addExpression(ExpressionBuilder builder){
 
-        lines.add(new ExpressionCommandBuilder(builder));
+        lines.add(new ExpressionCodeBuilder(builder));
     }
 
     @Override
@@ -78,7 +78,7 @@ public class CodeBlockBuilder implements CommandBuilder {
 
         StringBuilder builder = new StringBuilder();
 
-        for(CommandBuilder command : lines){
+        for(PythonCodeBuilder command : lines){
 
             builder.append(command.getString(tabulation)).append("\n");
         }

@@ -11,9 +11,9 @@ public class ScriptBuilder {
     }
 
     private List<ImportStatement> imports;
-    private List<CommandBuilder> builders = new ArrayList<>();
+    private List<PythonCodeBuilder> builders = new ArrayList<>();
 
-    public List<CommandBuilder> getBuilders() {
+    public List<PythonCodeBuilder> getBuilders() {
         return builders;
     }
 
@@ -28,7 +28,7 @@ public class ScriptBuilder {
 
         builder.append("\n");
 
-        for(CommandBuilder entry: builders) {
+        for(PythonCodeBuilder entry: builders) {
 
             builder.append(entry.getString(0));
         }

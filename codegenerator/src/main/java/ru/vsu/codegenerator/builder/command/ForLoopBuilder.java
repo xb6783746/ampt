@@ -1,10 +1,10 @@
 package ru.vsu.codegenerator.builder.command;
 
 import ru.vsu.codegenerator.builder.CodeBlockBuilder;
-import ru.vsu.codegenerator.builder.CommandBuilder;
+import ru.vsu.codegenerator.builder.PythonCodeBuilder;
 import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
 
-public class ForLoopBuilder implements CommandBuilder {
+public class ForLoopBuilder implements PythonCodeBuilder {
 
 
     public ForLoopBuilder(String id, ExpressionBuilder expression) {

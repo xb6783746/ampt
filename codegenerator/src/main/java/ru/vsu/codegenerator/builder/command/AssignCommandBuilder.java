@@ -1,9 +1,9 @@
 package ru.vsu.codegenerator.builder.command;
 
-import ru.vsu.codegenerator.builder.CommandBuilder;
+import ru.vsu.codegenerator.builder.PythonCodeBuilder;
 import ru.vsu.codegenerator.builder.expression.ExpressionBuilder;
 
-public class AssignCommandBuilder implements CommandBuilder {
+public class AssignCommandBuilder implements PythonCodeBuilder {
 
 
     public AssignCommandBuilder(ExpressionBuilder lvalue, ExpressionBuilder rvalue){
