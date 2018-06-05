@@ -70,9 +70,12 @@ public class IfOperatorBuilder implements PythonCodeBuilder {
                     .append(elseIfBlock.codeBlockBuilder.getString(tabulation + 1));
         }
 
-        builder
-                .append(tabString).append("else:\n ")
-                .append(elseBuilder.getString(tabulation + 1));
+        if(!elseBuilder.isEmpty()) {
+
+            builder
+                    .append(tabString).append("else:\n ")
+                    .append(elseBuilder.getString(tabulation + 1));
+        }
 
         return builder.toString();
     }

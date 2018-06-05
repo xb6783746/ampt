@@ -73,6 +73,11 @@ public class CodeBlockBuilder implements PythonCodeBuilder {
         lines.add(new ExpressionCodeBuilder(builder));
     }
 
+    public boolean isEmpty(){
+
+        return lines.isEmpty();
+    }
+
     @Override
     public String getString(int tabulation) {
 
