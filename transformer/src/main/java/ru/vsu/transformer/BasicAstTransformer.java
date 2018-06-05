@@ -12,7 +12,6 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
 
 
     private List<String> variableNames = new ArrayList<>();
-    private boolean isInsideIndex = false;
 
     @Override
     public BasicAstNode transform(BasicAstNode tree) {
@@ -247,7 +246,7 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
     @Override
     public Void visit(RangeExpressionNode node) {
 
-        if(isInsideIndex){
+        if(node.getStartExpression() == null || node.getEndExpression() == null){
 
             SliceExpressionNode slice = new SliceExpressionNode(
                     node.getParent(),
@@ -289,8 +288,6 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
     @Override
     public Void visit(IndexExpressionNode node) {
 
-        isInsideIndex = true;
-
         if(node.getExpression() instanceof IdentifierExpressionNode){
 
             // possible function call
@@ -323,8 +320,7 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
 
             expressionNode.accept(this);
         }
-
-        isInsideIndex = false;
+        
         return null;
     }
 
