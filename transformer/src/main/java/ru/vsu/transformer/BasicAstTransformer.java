@@ -110,7 +110,10 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
 
         iterate(node.getElseIfNodeList());
 
-        node.getElseNode().accept(this);
+        if(node.getElseNode() != null) {
+
+            node.getElseNode().accept(this);
+        }
 
         return null;
     }

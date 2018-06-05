@@ -21,7 +21,10 @@ public class ConditionalOperatorNode extends BasicAstNode {
         condition.setParent(this);
         block.setParent(this);
         elseIfNodeList.forEach((x) -> x.setParent(this));
-        elseNode.setParent(this);
+
+        if(elseNode != null) {
+            elseNode.setParent(this);
+        }
     }
 
     private ExpressionNode condition;

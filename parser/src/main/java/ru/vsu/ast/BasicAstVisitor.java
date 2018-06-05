@@ -45,7 +45,10 @@ public abstract class BasicAstVisitor<T> implements AstVisitor<T> {
 
         node.getElseIfNodeList().forEach(x -> x.accept(this));
 
-        node.getElseNode().accept(this);
+        if(node.getElseNode() != null) {
+
+            node.getElseNode().accept(this);
+        }
 
         return null;
     }
