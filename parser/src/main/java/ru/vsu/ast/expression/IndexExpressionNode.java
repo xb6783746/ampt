@@ -7,23 +7,32 @@ import java.util.List;
 
 public class IndexExpressionNode extends ExpressionNode {
 
-    public IndexExpressionNode(ExpressionNode expression, List<ExpressionNode> indexes) {
-        this(null, expression, indexes);
+    public IndexExpressionNode(ExpressionNode expression, List<ExpressionNode> indexes, boolean isCell) {
+        this(null, expression, indexes, isCell);
     }
 
-    public IndexExpressionNode(BasicAstNode parent, ExpressionNode expression, List<ExpressionNode> indexes) {
+    public IndexExpressionNode(BasicAstNode parent,
+                               ExpressionNode expression,
+                               List<ExpressionNode> indexes,
+                               boolean isCell) {
         super(parent);
         this.expression = expression;
         this.indexes = indexes;
+        this.isCell = isCell;
 
         expression.setParent(this);
 
         indexes.forEach((x) -> x.setParent(this));
     }
 
+    private boolean isCell;
     private ExpressionNode expression;
     private List<ExpressionNode> indexes;
     private boolean isGetter = true;
+
+    public boolean isCell() {
+        return isCell;
+    }
 
     public ExpressionNode getExpression() {
         return expression;

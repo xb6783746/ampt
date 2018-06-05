@@ -279,7 +279,19 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
                         .map((x) -> (ArrayExpressionNode.ArrayRowNode)x.accept(this))
                         .collect(Collectors.toList());
 
-        return new ArrayExpressionNode(rows);
+        return new ArrayExpressionNode(rows, false);
+    }
+
+    @Override
+    public BasicAstNode visitCell(AmpcParser.CellContext ctx) {
+
+        List<ArrayExpressionNode.ArrayRowNode> rows =
+                ctx.arrayRow()
+                        .stream()
+                        .map((x) -> (ArrayExpressionNode.ArrayRowNode)x.accept(this))
+                        .collect(Collectors.toList());
+
+        return new ArrayExpressionNode(rows, true);
     }
 
     @Override
@@ -325,7 +337,7 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
             indexes = new ArrayList<>();
         }
 
-        return new IndexExpressionNode(expression, indexes);
+        return new IndexExpressionNode(expression, indexes, false);
     }
 
     @Override
@@ -399,12 +411,39 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     }
 
     @Override
+    public BasicAstNode visitGetCellExpr(AmpcParser.GetCellExprContext ctx) {
+
+        ExpressionNode expression = (ExpressionNode)ctx.expr.accept(this);
+
+        List<ExpressionNode> indexes;
+        if(ctx.index != null) {
+
+            indexes =
+                    ctx.index.expression()
+                            .stream()
+                            .map((x) -> (ExpressionNode) x.accept(this))
+                            .collect(Collectors.toList());
+        } else {
+
+            indexes = new ArrayList<>();
+        }
+
+        return new IndexExpressionNode(expression, indexes, true);
+    }
+
+    @Override
     public BasicAstNode visitNumber(AmpcParser.NumberContext ctx) {
         return null;
     }
 
     @Override
     public BasicAstNode visitArrayExpr(AmpcParser.ArrayExprContext ctx) {
+
+        return ctx.arr.accept(this);
+    }
+
+    @Override
+    public BasicAstNode visitCellExpr(AmpcParser.CellExprContext ctx) {
 
         return ctx.arr.accept(this);
     }

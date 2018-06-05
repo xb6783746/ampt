@@ -9,5 +9,7 @@ public enum BinaryOperator {
     Plus, Minus,
     Pow, ElemPow,
     ElemProd, ElemDiv,
-    Prod, Div, IndexGetter, IndexSetter
+    Prod, Div,
+    IndexGetter, IndexSetter,
+    CellGetter, CellSetter
 }

@@ -39,16 +39,24 @@ public class ArrayExpressionNode extends ExpressionNode {
         }
     }
 
-    public ArrayExpressionNode(List<ArrayRowNode> rows) {
-        this(null, rows);
+    public ArrayExpressionNode(List<ArrayRowNode> rows, boolean isCellArray) {
+        this(null, rows, isCellArray);
     }
 
-    public ArrayExpressionNode(BasicAstNode parent, List<ArrayRowNode> rows) {
+    public ArrayExpressionNode(BasicAstNode parent, List<ArrayRowNode> rows, boolean isCellArray) {
         super(parent);
         this.rows = rows;
+        this.isCellArray = isCellArray;
+
+        rows.forEach(x -> x.setParent(this));
     }
 
+    private boolean isCellArray;
     private List<ArrayRowNode> rows;
+
+    public boolean isCellArray() {
+        return isCellArray;
+    }
 
     public List<ArrayRowNode> getRows() {
         return rows;
