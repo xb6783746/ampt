@@ -37,12 +37,16 @@ commsep:
 
 atom:
       arr=array # arrayExpr
+    | arr=cell #cellExpr
     | value=number  # numberExpr
     | str=STRING # stringExpr
     | id=ID # identExpr;
 
 array:
     '[' arrayRow? (arrayColumnSeparator arrayRow)* ']';
+
+cell:
+    '{' arrayRow? (arrayColumnSeparator arrayRow)* '}';
 
 arrayRow:
     expression? (arrayRowSeparator expression)*;
@@ -61,6 +65,7 @@ expressionList:
 expression:
     '(' expression ')' # parensExpr
     | expr=expression '(' index=expressionList? ')' #indexExpr
+    | expr=expression '{' index=expressionList? '}' #getCellExpr
     | expr=expression op=('.\'' | '\'') #unaryExpr
     | left=expression op=('.^' | '^') right=expression # infixExpr
     | op=('+' | '-' | '~') expr=expression # unaryExpr

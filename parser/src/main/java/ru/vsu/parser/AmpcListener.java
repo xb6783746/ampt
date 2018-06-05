@@ -344,6 +344,18 @@ public interface AmpcListener extends ParseTreeListener {
 	 */
 	void exitArrayExpr(AmpcParser.ArrayExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code cellExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterCellExpr(AmpcParser.CellExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code cellExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitCellExpr(AmpcParser.CellExprContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code numberExpr}
 	 * labeled alternative in {@link AmpcParser#atom}.
 	 * @param ctx the parse tree
@@ -389,6 +401,16 @@ public interface AmpcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitArray(AmpcParser.ArrayContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link AmpcParser#cell}.
+	 * @param ctx the parse tree
+	 */
+	void enterCell(AmpcParser.CellContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link AmpcParser#cell}.
+	 * @param ctx the parse tree
+	 */
+	void exitCell(AmpcParser.CellContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link AmpcParser#arrayRow}.
 	 * @param ctx the parse tree
@@ -501,4 +523,16 @@ public interface AmpcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRangeExpr(AmpcParser.RangeExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code getCellExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterGetCellExpr(AmpcParser.GetCellExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code getCellExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitGetCellExpr(AmpcParser.GetCellExprContext ctx);
 }

@@ -210,6 +210,13 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitArrayExpr(AmpcParser.ArrayExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code cellExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCellExpr(AmpcParser.CellExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code numberExpr}
 	 * labeled alternative in {@link AmpcParser#atom}.
 	 * @param ctx the parse tree
@@ -236,6 +243,12 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitArray(AmpcParser.ArrayContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link AmpcParser#cell}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCell(AmpcParser.CellContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link AmpcParser#arrayRow}.
 	 * @param ctx the parse tree
@@ -302,4 +315,11 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitRangeExpr(AmpcParser.RangeExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code getCellExpr}
+	 * labeled alternative in {@link AmpcParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGetCellExpr(AmpcParser.GetCellExprContext ctx);
 }

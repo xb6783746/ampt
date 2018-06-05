@@ -388,6 +388,18 @@ public class AmpcBaseListener implements AmpcListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCellExpr(AmpcParser.CellExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCellExpr(AmpcParser.CellExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterNumberExpr(AmpcParser.NumberExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -431,6 +443,18 @@ public class AmpcBaseListener implements AmpcListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitArray(AmpcParser.ArrayContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCell(AmpcParser.CellContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCell(AmpcParser.CellContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -551,6 +575,18 @@ public class AmpcBaseListener implements AmpcListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitRangeExpr(AmpcParser.RangeExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGetCellExpr(AmpcParser.GetCellExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGetCellExpr(AmpcParser.GetCellExprContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
