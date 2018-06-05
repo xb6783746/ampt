@@ -64,7 +64,21 @@ public class ExpressionBuilder {
 
     public ExpressionBuilder index(List<ExpressionBuilder> indexes, boolean isGetter){
 
-        BinaryOperator op = isGetter? BinaryOperator.IndexGetter : BinaryOperator.IndexSetter;
+        BinaryOperator op = isGetter?
+                BinaryOperator.IndexGetter : BinaryOperator.IndexSetter;
+
+        return applyIndex(op, indexes);
+    }
+
+    public ExpressionBuilder cell(List<ExpressionBuilder> indexes, boolean isGetter){
+
+        BinaryOperator op = isGetter? BinaryOperator.CellGetter : BinaryOperator.CellSetter;
+
+        return applyIndex(op, indexes);
+    }
+
+    private ExpressionBuilder applyIndex(BinaryOperator op, List<ExpressionBuilder> indexes){
+
         PythonOperator pOp = PythonOperators.getOperator(op);
 
         ExpressionBuilder left =

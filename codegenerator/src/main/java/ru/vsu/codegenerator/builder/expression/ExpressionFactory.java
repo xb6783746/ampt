@@ -76,7 +76,7 @@ public class ExpressionFactory {
         return new ExpressionBuilder(builder.toString(), 0);
     }
 
-    public static ExpressionBuilder createArray(List<ExpressionBuilder> rows){
+    public static ExpressionBuilder createArray(List<ExpressionBuilder> rows, boolean isCellArray){
 
         StringBuilder builder = new StringBuilder();
 
@@ -90,10 +90,10 @@ public class ExpressionFactory {
             }
         }
 
-        String template = rows.size() > 1? "mr([%s])" : "mr([%s])";
+        String funcName = isCellArray? "mc" : "mr";
 
         return new ExpressionBuilder(
-                String.format(template, builder), 0
+                String.format("%s([%s])", funcName, builder), 0
         );
     }
 

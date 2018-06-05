@@ -43,7 +43,10 @@ public class PythonOperators {
         add(UnaryOperator.ComplexConjTranspose, "ctranspose(%s)", 2, true);
 
         add(BinaryOperator.IndexGetter, "%s(%s)", 1, false);
-        add(BinaryOperator.IndexSetter, "%s(%s)", 1, false);
+        add(BinaryOperator.IndexSetter, "%s[%s]", 1, false);
+
+        add(BinaryOperator.CellGetter, "%s.cget(%s)", 1, true);
+        add(BinaryOperator.CellSetter, "%s[%s]", 1, false);
     }
 
     public static PythonOperator getOperator(BinaryOperator op){

@@ -57,7 +57,7 @@ public class ExpressionVisitor implements AstVisitor<ExpressionBuilder> {
                         .map((x) -> x.accept(this))
                         .collect(Collectors.toList());
 
-        return ExpressionFactory.createArray(rows);
+        return ExpressionFactory.createArray(rows, node.isCellArray());
     }
 
     @Override
@@ -121,7 +121,13 @@ public class ExpressionVisitor implements AstVisitor<ExpressionBuilder> {
                         .map((x) -> x.accept(this))
                         .collect(Collectors.toList());
 
-        return expression.index(indexes, node.isGetter());
+        if(node.isCell()){
+
+            return expression.cell(indexes, node.isGetter());
+        } else{
+
+            return expression.index(indexes, node.isGetter());
+        }
     }
 
     @Override
