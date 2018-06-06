@@ -5,6 +5,7 @@ import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,6 +89,15 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
             FunctionArgumentNode nargout = createNargoutNode(lvalue.getExpressions().size());
 
             rvalue.getArgs().add(nargout);
+        }
+
+        if(node.getRvalue() instanceof IdentifierExpressionNode
+                || node.getRvalue() instanceof IndexExpressionNode){
+
+            ExpressionNode oldRvalue = node.getRvalue();
+            FunctionCallNode copy = createCopyNode(node.getRvalue());
+
+            node.replace(oldRvalue, copy);
         }
 
         return null;
@@ -320,7 +330,7 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
 
             expressionNode.accept(this);
         }
-        
+
         return null;
     }
 
@@ -360,6 +370,17 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
         return new FunctionArgumentNode(
                 new NumberNode(String.valueOf(count)),
                 "nargout"
+        );
+    }
+
+    private FunctionCallNode createCopyNode(ExpressionNode arg){
+
+        List<FunctionArgumentNode> args =
+                Collections.singletonList(new FunctionArgumentNode(arg));
+
+        return new FunctionCallNode(
+                "copy",
+                args
         );
     }
 }
