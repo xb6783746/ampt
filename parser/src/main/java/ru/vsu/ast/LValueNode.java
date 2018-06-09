@@ -2,10 +2,15 @@ package ru.vsu.ast;
 
 import ru.vsu.ast.expression.ExpressionNode;
 
+import java.util.Collections;
 import java.util.List;
 
 public class LValueNode extends ExpressionNode {
 
+
+    public LValueNode(boolean isUnpackExpression, ExpressionNode expression) {
+        this(null, isUnpackExpression, Collections.singletonList(expression));
+    }
 
     public LValueNode(boolean isUnpackExpression, List<ExpressionNode> expressions) {
         this(null, isUnpackExpression, expressions);
@@ -13,6 +18,7 @@ public class LValueNode extends ExpressionNode {
 
     public LValueNode(BasicAstNode parent, boolean isUnpackExpression, List<ExpressionNode> expressions) {
         super(parent);
+        this.isUnpackExpression = isUnpackExpression;
         this.expressions = expressions;
 
         expressions.forEach(x -> x.setParent(this));

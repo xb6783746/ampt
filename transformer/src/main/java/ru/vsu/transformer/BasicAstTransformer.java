@@ -4,46 +4,74 @@ import ru.vsu.ast.*;
 import ru.vsu.ast.command.*;
 import ru.vsu.ast.expression.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
+public class BasicAstTransformer 
+        implements AstTransformer, ParameterizedAstVisitor<Void, BasicAstTransformer.Context> {
 
 
-    private List<String> variableNames = new ArrayList<>();
+    class Context {
+
+        Set<String> variableNames = new HashSet<>();
+        Set<String> notDeclaredVars = new HashSet<>();
+    }
 
     @Override
     public BasicAstNode transform(BasicAstNode tree) {
 
-        tree.accept(this);
+        tree.accept(this, null);
 
         return tree;
     }
 
 
-    @Override
-    public Void visit(ScriptNode node) {
+    private BasicAstNode createPredeclaredVar(String varName){
 
-        iterate(node.getNodes());
+        FunctionCallNode functionCallNode =
+                new FunctionCallNode(
+                        "stub",
+                        new ArrayList<>()
+                );
+
+        IdentifierExpressionNode identifierExpressionNode = new IdentifierExpressionNode(varName);
+        LValueNode lValueNode = new LValueNode(false, identifierExpressionNode);
+
+        return new AssignCommandNode(lValueNode, functionCallNode);
+    }
+
+    @Override
+    public Void visit(ScriptNode node, Context ctx) {
+
+        Context context = new Context();
+
+        iterate(node.getNodes(), context);
+
+        List<BasicAstNode> vars = context.notDeclaredVars
+                .stream()
+                .map(this::createPredeclaredVar)
+                .collect(Collectors.toList());
+        CodeBlockNode codeBlockNode = new CodeBlockNode(vars);
+        node.getNodes().add( 0, codeBlockNode);
 
         return null;
     }
 
     @Override
-    public Void visit(CodeBlockNode node) {
+    public Void visit(CodeBlockNode node, Context ctx) {
 
-        iterate(node.getCommandNodeList());
+        iterate(node.getCommandNodeList(), ctx);
 
         return null;
     }
 
     @Override
-    public Void visit(FunctionNode node) {
+    public Void visit(FunctionNode node, Context ctx) {
 
-        node.getBlock().accept(this);
-        iterate(node.getArgs());
+        Context context = new Context();
+
+        node.getBlock().accept(this, context);
+        iterate(node.getArgs(), context);
 
         FunctionArgumentNode nargin = new FunctionArgumentNode(
                 null,
@@ -57,21 +85,44 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
         node.getArgs().add(nargin);
         node.getArgs().add(nargout);
 
+
+        List<BasicAstNode> vars = context.notDeclaredVars
+                .stream()
+                .map(this::createPredeclaredVar)
+                .collect(Collectors.toList());
+        node.getBlock().getCommandNodeList().addAll( 0, vars);
+
         return null;
     }
 
     @Override
-    public Void visit(AssignCommandNode node) {
+    public Void visit(AssignCommandNode node, Context ctx) {
 
-        node.getLvalue().accept(this);
-        node.getRvalue().accept(this);
+        for(BasicAstNode lvalue: node.getLvalue().getExpressions()) {
+
+            if (lvalue instanceof IndexExpressionNode) {
+
+                IndexExpressionNode indexExpressionNode = (IndexExpressionNode)lvalue;
+
+                if(indexExpressionNode.getExpression() instanceof IdentifierExpressionNode){
+
+                    String varName = ((IdentifierExpressionNode) indexExpressionNode.getExpression()).getIdName();
+                    if(!ctx.variableNames.contains(varName)) {
+                        ctx.notDeclaredVars.add(varName);
+                        ctx.variableNames.add(varName);
+                    }
+                }
+            }
+        }
+        node.getLvalue().accept(this, ctx);
+        node.getRvalue().accept(this, ctx);
 
         for(BasicAstNode lvalue: node.getLvalue().getExpressions()){
 
             if (lvalue instanceof IdentifierExpressionNode) {
 
                 String varName = ((IdentifierExpressionNode) lvalue).getIdName();
-                variableNames.add(varName);
+                ctx.variableNames.add(varName);
             }
 
             if (lvalue instanceof IndexExpressionNode) {
@@ -104,88 +155,88 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
     }
 
     @Override
-    public Void visit(LValueNode node) {
+    public Void visit(LValueNode node, Context ctx) {
 
-        iterate(node.getExpressions());
+        iterate(node.getExpressions(), ctx);
 
         return null;
     }
 
     @Override
-    public Void visit(ConditionalOperatorNode node) {
+    public Void visit(ConditionalOperatorNode node, Context ctx) {
 
-        node.getCondition().accept(this);
-        node.getBlock().accept(this);
+        node.getCondition().accept(this, ctx);
+        node.getBlock().accept(this, ctx);
 
-        iterate(node.getElseIfNodeList());
+        iterate(node.getElseIfNodeList(), ctx);
 
         if(node.getElseNode() != null) {
 
-            node.getElseNode().accept(this);
+            node.getElseNode().accept(this, ctx);
         }
 
         return null;
     }
 
     @Override
-    public Void visit(ElseIfNode node) {
+    public Void visit(ElseIfNode node, Context ctx) {
 
-        node.getCondition().accept(this);
-        node.getBlock().accept(this);
-
-        return null;
-    }
-
-    @Override
-    public Void visit(SwitchOperatorNode node) {
-
-        node.getCases().forEach(x -> x.accept(this));
+        node.getCondition().accept(this, ctx);
+        node.getBlock().accept(this, ctx);
 
         return null;
     }
 
     @Override
-    public Void visit(SwitchCaseNode node) {
+    public Void visit(SwitchOperatorNode node, Context ctx) {
 
-        node.getCondition().accept(this);
-        node.getBlock().accept(this);
-
-        return null;
-    }
-
-    @Override
-    public Void visit(WhileLoopNode node) {
-
-        node.getCondition().accept(this);
-        node.getBlock().accept(this);
+        node.getCases().forEach(x -> x.accept(this, ctx));
 
         return null;
     }
 
     @Override
-    public Void visit(ForLoopNode node) {
+    public Void visit(SwitchCaseNode node, Context ctx) {
+
+        node.getCondition().accept(this, ctx);
+        node.getBlock().accept(this, ctx);
+
+        return null;
+    }
+
+    @Override
+    public Void visit(WhileLoopNode node, Context ctx) {
+
+        node.getCondition().accept(this, ctx);
+        node.getBlock().accept(this, ctx);
+
+        return null;
+    }
+
+    @Override
+    public Void visit(ForLoopNode node, Context ctx) {
 
         String idName = node.getId().getIdName();
 
-        variableNames.add(idName);
+        ctx.variableNames.add(idName);
 
-        node.getExpression().accept(this);
-        node.getBlock().accept(this);
+        node.getExpression().accept(this, ctx);
+        node.getBlock().accept(this, ctx);
 
-        variableNames.remove(idName);
+        ctx.variableNames.remove(idName);
 
         return null;
     }
 
     @Override
-    public Void visit(FunctionHandleExpression node) {
+    public Void visit(FunctionHandleExpression node, Context ctx) {
         return null;
     }
 
     @Override
-    public Void visit(AnonymousFunctionExpression node) {
+    public Void visit(AnonymousFunctionExpression node, Context ctx) {
 
-        node.getExpressionNode().accept(this);
+        node.getExpressionNode().accept(this, ctx);
 
         FunctionArgumentNode nargin = new FunctionArgumentNode(
                 null,
@@ -203,58 +254,58 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
     }
 
     @Override
-    public Void visit(BinaryExpressionNode node) {
+    public Void visit(BinaryExpressionNode node, Context ctx) {
 
-        node.getLeft().accept(this);
-        node.getRight().accept(this);
-
-        return null;
-    }
-
-    @Override
-    public Void visit(UnaryExpressionNode node) {
-
-        node.getExpression().accept(this);
+        node.getLeft().accept(this, ctx);
+        node.getRight().accept(this, ctx);
 
         return null;
     }
 
     @Override
-    public Void visit(IdentifierExpressionNode node) {
+    public Void visit(UnaryExpressionNode node, Context ctx) {
+
+        node.getExpression().accept(this, ctx);
 
         return null;
     }
 
     @Override
-    public Void visit(NumberNode node) {
+    public Void visit(IdentifierExpressionNode node, Context ctx) {
 
         return null;
     }
 
     @Override
-    public Void visit(StringNode node) {
+    public Void visit(NumberNode node, Context ctx) {
 
         return null;
     }
 
     @Override
-    public Void visit(ArrayExpressionNode node) {
-
-        iterate(node.getRows());
+    public Void visit(StringNode node, Context ctx) {
 
         return null;
     }
 
     @Override
-    public Void visit(ArrayExpressionNode.ArrayRowNode node) {
+    public Void visit(ArrayExpressionNode node, Context ctx) {
 
-        iterate(node.getRowExpressions());
+        iterate(node.getRows(), ctx);
 
         return null;
     }
 
     @Override
-    public Void visit(RangeExpressionNode node) {
+    public Void visit(ArrayExpressionNode.ArrayRowNode node, Context ctx) {
+
+        iterate(node.getRowExpressions(), ctx);
+
+        return null;
+    }
+
+    @Override
+    public Void visit(RangeExpressionNode node, Context ctx) {
 
         if(node.getStartExpression() == null || node.getEndExpression() == null){
 
@@ -272,17 +323,17 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
 
         if(node.getStartExpression() != null){
 
-            node.getStartExpression().accept(this);
+            node.getStartExpression().accept(this, ctx);
         }
 
         if(node.getStepExpression() != null){
 
-            node.getStepExpression().accept(this);
+            node.getStepExpression().accept(this, ctx);
         }
 
         if(node.getEndExpression() != null){
 
-            node.getEndExpression().accept(this);
+            node.getEndExpression().accept(this, ctx);
         }
 
 
@@ -290,13 +341,13 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
     }
 
     @Override
-    public Void visit(SliceExpressionNode node) {
+    public Void visit(SliceExpressionNode node, Context ctx) {
 
-        return visit((RangeExpressionNode)node);
+        return visit((RangeExpressionNode)node, ctx);
     }
 
     @Override
-    public Void visit(IndexExpressionNode node) {
+    public Void visit(IndexExpressionNode node, Context ctx) {
 
         if(node.getExpression() instanceof IdentifierExpressionNode){
 
@@ -306,7 +357,7 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
             IdentifierExpressionNode identNode = (IdentifierExpressionNode)node.getExpression();
             String id = identNode.getIdName();
 
-            if(!variableNames.contains(id)){
+            if(!ctx.variableNames.contains(id)){
 
                 //replace with FunctionCallNode
 
@@ -323,45 +374,45 @@ public class BasicAstTransformer implements AstTransformer, AstVisitor<Void> {
             }
         } else{
 
-            node.getExpression().accept(this);
+            node.getExpression().accept(this, ctx);
         }
 
         for(BasicAstNode expressionNode : node.getIndexes()){
 
-            expressionNode.accept(this);
+            expressionNode.accept(this, ctx);
         }
 
         return null;
     }
 
     @Override
-    public Void visit(FunctionCallNode node) {
+    public Void visit(FunctionCallNode node, Context ctx) {
 
         if(node.getObject() != null) {
 
-            node.getObject().accept(this);
+            node.getObject().accept(this, ctx);
         }
 
-        iterate(node.getArgs());
+        iterate(node.getArgs(), ctx);
 
         return null;
     }
 
     @Override
-    public Void visit(FunctionArgumentNode node) {
+    public Void visit(FunctionArgumentNode node, Context ctx) {
 
         if(node.getExpression() != null) {
 
-            node.getExpression().accept(this);
+            node.getExpression().accept(this, ctx);
         }
         return null;
     }
 
-    private <T extends BasicAstNode> void iterate(List<T> list){
+    private <T extends BasicAstNode> void iterate(List<T> list, Context ctx){
 
         for(int i = 0; i < list.size(); i++){
 
-            list.get(i).accept(this);
+            list.get(i).accept(this, ctx);
         }
     }
 
