@@ -3,6 +3,7 @@ package ru.vsu.ast.command;
 import ru.vsu.ast.AstVisitor;
 import ru.vsu.ast.BasicAstNode;
 import ru.vsu.ast.CodeBlockNode;
+import ru.vsu.ast.ParameterizedAstVisitor;
 import ru.vsu.ast.expression.ExpressionNode;
 import ru.vsu.ast.expression.IdentifierExpressionNode;
 
@@ -60,5 +61,11 @@ public class ForLoopNode extends BasicAstNode {
     public <T> T accept(AstVisitor<T> visitor) {
 
         return visitor.visit(this);
+    }
+
+    @Override
+    public <T, P> T accept(ParameterizedAstVisitor<T, P> visitor, P param) {
+
+        return visitor.visit(this, param);
     }
 }

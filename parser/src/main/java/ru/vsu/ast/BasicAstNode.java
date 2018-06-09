@@ -24,6 +24,7 @@ public abstract class BasicAstNode {
 
     public abstract void replace(BasicAstNode oldNode, BasicAstNode newNode);
     public abstract <T> T accept(AstVisitor<T> visitor);
+    public abstract <T, P> T accept(ParameterizedAstVisitor<T, P> visitor, P param);
 
     protected <T extends BasicAstNode> void replaceInList(
             List<T> list, BasicAstNode oldNode, BasicAstNode newNode){

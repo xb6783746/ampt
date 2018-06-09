@@ -2,6 +2,7 @@ package ru.vsu.ast.expression;
 
 import ru.vsu.ast.AstVisitor;
 import ru.vsu.ast.BasicAstNode;
+import ru.vsu.ast.ParameterizedAstVisitor;
 import ru.vsu.ast.UnaryOperator;
 
 public class UnaryExpressionNode extends ExpressionNode {
@@ -41,5 +42,11 @@ public class UnaryExpressionNode extends ExpressionNode {
     public <T> T accept(AstVisitor<T> visitor) {
 
         return visitor.visit(this);
+    }
+
+    @Override
+    public <T, P> T accept(ParameterizedAstVisitor<T, P> visitor, P param) {
+
+        return visitor.visit(this, param);
     }
 }

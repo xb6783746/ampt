@@ -40,4 +40,10 @@ public class LValueNode extends ExpressionNode {
 
         return visitor.visit(this);
     }
+
+    @Override
+    public <T, P> T accept(ParameterizedAstVisitor<T, P> visitor, P param) {
+
+        return visitor.visit(this, param);
+    }
 }
