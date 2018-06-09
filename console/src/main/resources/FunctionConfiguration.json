@@ -8,7 +8,16 @@
     "zeros",
     "ones",
     "rand",
-    "mean"
+    "mean",
+    "error",
+    "print_usage",
+    "ndims",
+    "size",
+    "find",
+    "isindex",
+    "permute",
+    "rows",
+    "columns"
   ]
 
 }
