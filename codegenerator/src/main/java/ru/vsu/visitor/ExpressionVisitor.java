@@ -75,10 +75,16 @@ public class ExpressionVisitor implements AstVisitor<ExpressionBuilder> {
     @Override
     public ExpressionBuilder visit(RangeExpressionNode node) {
 
-        ExpressionBuilder start = node.getStartExpression().accept(this);
-        ExpressionBuilder end = node.getEndExpression().accept(this);
+        ExpressionBuilder start = null, end = null, step = null;
 
-        ExpressionBuilder step = null;
+        if(node.getStartExpression() != null){
+
+            start = node.getStartExpression().accept(this);
+        }
+        if(node.getEndExpression() != null){
+
+            end = node.getEndExpression().accept(this);
+        }
         if(node.getStepExpression() != null){
 
             step = node.getStepExpression().accept(this);

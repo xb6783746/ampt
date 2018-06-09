@@ -307,19 +307,19 @@ public class BasicAstTransformer
     @Override
     public Void visit(RangeExpressionNode node, Context ctx) {
 
-        if(node.getStartExpression() == null || node.getEndExpression() == null){
-
-            SliceExpressionNode slice = new SliceExpressionNode(
-                    node.getParent(),
-                    node.getStartExpression(),
-                    node.getStepExpression(),
-                    node.getEndExpression()
-            );
-
-            node.getParent().replace(node, slice);
-
-            node = slice;
-        }
+//        if(node.getStartExpression() == null || node.getEndExpression() == null){
+//
+//            SliceExpressionNode slice = new SliceExpressionNode(
+//                    node.getParent(),
+//                    node.getStartExpression(),
+//                    node.getStepExpression(),
+//                    node.getEndExpression()
+//            );
+//
+//            node.getParent().replace(node, slice);
+//
+//            node = slice;
+//        }
 
         if(node.getStartExpression() != null){
 

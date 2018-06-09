@@ -103,12 +103,15 @@ public class ExpressionFactory {
 
         String str;
 
+        String startStr = start == null? "" : start.toString();
+        String endStr = end == null? "" : end.toString();
+
         if(step != null){
 
-            str = String.format("rg(%s, %s, %s)", start, end, step);
+            str = String.format("rg[%s:%s:%s]", startStr, endStr, step);
         } else {
 
-            str = String.format("rg(%s, %s)", start, end);
+            str = String.format("rg[%s:%s]", startStr, endStr);
         }
 
         return new ExpressionBuilder(str, 0);
