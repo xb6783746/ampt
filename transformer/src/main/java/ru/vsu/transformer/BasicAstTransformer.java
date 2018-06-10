@@ -386,6 +386,11 @@ public class BasicAstTransformer
     }
 
     @Override
+    public Void visit(EndExpressionNode node, Context param) {
+        return null;
+    }
+
+    @Override
     public Void visit(FunctionCallNode node, Context ctx) {
 
         if(node.getObject() != null) {

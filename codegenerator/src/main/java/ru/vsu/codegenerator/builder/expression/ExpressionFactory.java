@@ -152,6 +152,15 @@ public class ExpressionFactory {
         return new ExpressionBuilder(funcName, 0);
     }
 
+    public static ExpressionBuilder createEnd(){
+
+        return new ExpressionBuilder(
+                "end",
+                0
+        );
+    }
+
+
     public static ExpressionBuilder createAnonymousFunction(List<FunctionArgument> args,
                                                             ExpressionBuilder expression){
 

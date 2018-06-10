@@ -137,6 +137,11 @@ public class ExpressionVisitor implements AstVisitor<ExpressionBuilder> {
     }
 
     @Override
+    public ExpressionBuilder visit(EndExpressionNode node) {
+        return ExpressionFactory.createEnd();
+    }
+
+    @Override
     public ExpressionBuilder visit(FunctionCallNode node) {
 
         if(node.getObject() != null){

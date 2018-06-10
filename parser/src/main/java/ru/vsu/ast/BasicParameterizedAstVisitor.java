@@ -186,6 +186,11 @@ public class BasicParameterizedAstVisitor<T, ParamType> implements Parameterized
     }
 
     @Override
+    public T visit(EndExpressionNode node, ParamType param) {
+        return null;
+    }
+
+    @Override
     public T visit(StringNode node, ParamType param) {
 
         return null;

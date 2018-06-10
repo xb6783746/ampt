@@ -187,6 +187,11 @@ public abstract class BasicAstVisitor<T> implements AstVisitor<T> {
     }
 
     @Override
+    public T visit(EndExpressionNode node) {
+        return null;
+    }
+
+    @Override
     public T visit(StringNode node) {
 
         return null;

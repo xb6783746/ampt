@@ -271,6 +271,12 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     }
 
     @Override
+    public BasicAstNode visitEndExpr(AmpcParser.EndExprContext ctx) {
+
+        return new EndExpressionNode();
+    }
+
+    @Override
     public BasicAstNode visitArray(AmpcParser.ArrayContext ctx) {
 
         List<ArrayExpressionNode.ArrayRowNode> rows =

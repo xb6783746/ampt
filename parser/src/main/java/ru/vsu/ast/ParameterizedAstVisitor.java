@@ -34,6 +34,7 @@ public interface ParameterizedAstVisitor<T, ParamType> {
     T visit(RangeExpressionNode node, ParamType param);
     T visit(SliceExpressionNode node, ParamType param);
     T visit(IndexExpressionNode node, ParamType param);
+    T visit(EndExpressionNode node, ParamType param);
     T visit(FunctionCallNode node, ParamType param);
     T visit(FunctionArgumentNode node, ParamType param);
 }

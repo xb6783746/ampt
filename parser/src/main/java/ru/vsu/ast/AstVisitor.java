@@ -34,6 +34,7 @@ public interface AstVisitor<T> {
     T visit(RangeExpressionNode node);
     T visit(SliceExpressionNode node);
     T visit(IndexExpressionNode node);
+    T visit(EndExpressionNode node);
     T visit(FunctionCallNode node);
     T visit(FunctionArgumentNode node);
 }
