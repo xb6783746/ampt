@@ -392,6 +392,18 @@ public interface AmpcListener extends ParseTreeListener {
 	 */
 	void exitIdentExpr(AmpcParser.IdentExprContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code endExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void enterEndExpr(AmpcParser.EndExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code endExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 */
+	void exitEndExpr(AmpcParser.EndExprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link AmpcParser#array}.
 	 * @param ctx the parse tree
 	 */

@@ -238,6 +238,13 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIdentExpr(AmpcParser.IdentExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code endExpr}
+	 * labeled alternative in {@link AmpcParser#atom}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEndExpr(AmpcParser.EndExprContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link AmpcParser#array}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

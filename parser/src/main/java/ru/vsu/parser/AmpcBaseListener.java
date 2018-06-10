@@ -436,6 +436,18 @@ public class AmpcBaseListener implements AmpcListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterEndExpr(AmpcParser.EndExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitEndExpr(AmpcParser.EndExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterArray(AmpcParser.ArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}

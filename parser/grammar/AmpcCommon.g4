@@ -40,7 +40,8 @@ atom:
     | arr=cell #cellExpr
     | value=number  # numberExpr
     | str=STRING # stringExpr
-    | id=ID # identExpr;
+    | id=ID # identExpr
+    | end= 'end' #endExpr;
 
 array:
     '[' arrayRow? (arrayColumnSeparator arrayRow)* ']';
