@@ -23,7 +23,7 @@ STRING:
     | '"'  ~["]* '"';
 
 COMMENT
-    : '\n'* '%' .*? '\n' -> skip;
+    : ('%' | '#') .*? '\n' -> skip;
 
 number:
       INTEGER

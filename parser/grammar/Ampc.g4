@@ -48,7 +48,7 @@ condOperator:
         block=codeBlock
     elseIfPart*
     elsePart?
-    'end';
+    ('endif' | 'end');
 
 elseIfPart:
     'elseif' cond=expression commsep
@@ -60,12 +60,12 @@ elsePart:
 whileLoop:
     'while' cond=expression commsep
         block=codeBlock
-    'end';
+    ( 'endwhile' | 'end');
 
 forLoop:
     'for' ID '=' expr=expression commsep
          block=codeBlock
-    'end';
+    ('endfor' | 'end');
 
 function:
     'function'out=funcOut '=' name=ID '(' args=funcArgs? ')' commsep
