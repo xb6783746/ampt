@@ -69,7 +69,7 @@ expression:
     | expr=expression '{' index=expressionList? '}' #getCellExpr
     | expr=expression op=('.\'' | '\'') #unaryExpr
     | left=expression op=('.^' | '^') right=expression # infixExpr
-    | op=('+' | '-' | '~') expr=expression # unaryExpr
+    | op=('+' | '-' | '~' | '!') expr=expression # unaryExpr
     | left=expression op=('*' | '/' | '.*' | './') right=expression # infixExpr
     | left=expression op=('+' | '-') right=expression  # infixExpr
     | left=expression op=('>' | '<' | '>=' | '<=') right=expression # infixExpr

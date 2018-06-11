@@ -42,6 +42,7 @@ public class MatlabOperators {
         unaryOperators.put("+", UnaryOperator.Plus);
         unaryOperators.put("-", UnaryOperator.Minus);
         unaryOperators.put("~", UnaryOperator.Not);
+        unaryOperators.put("!", UnaryOperator.Not);
         unaryOperators.put(".'", UnaryOperator.Transpose);
         unaryOperators.put("'", UnaryOperator.ComplexConjTranspose);
     }
