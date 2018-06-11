@@ -114,36 +114,31 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     }
 
     @Override
-    public BasicAstNode visitAssign(AmpcParser.AssignContext ctx) {
+    public BasicAstNode visitUnpackLValue(AmpcParser.UnpackLValueContext ctx) {
 
-        LValueNode lvalue = (LValueNode)ctx.lvalue.accept(this);
+        List<ExpressionNode> lvalues = ctx.expressionList().expression()
+                .stream()
+                .map(x -> (ExpressionNode)x.accept(this))
+                .collect(Collectors.toList());
+
+        LValueNode lvalue = new LValueNode(true, lvalues);
         ExpressionNode rvalue = (ExpressionNode)ctx.rvalue.accept(this);
 
         return new AssignCommandNode(lvalue, rvalue);
     }
 
     @Override
-    public BasicAstNode visitUnpackLValue(AmpcParser.UnpackLValueContext ctx) {
-
-        List<ExpressionNode> expressions =
-                ctx.expressionList().expression()
-                        .stream()
-                        .map(x -> (ExpressionNode)x.accept(this))
-                        .collect(Collectors.toList());
-
-        return new LValueNode(true, expressions);
-    }
-
-    @Override
     public BasicAstNode visitExprLValue(AmpcParser.ExprLValueContext ctx) {
 
-        List<ExpressionNode> expressions =
-                ctx.expressionList().expression()
-                        .stream()
-                        .map(x -> (ExpressionNode)x.accept(this))
-                        .collect(Collectors.toList());
+        List<ExpressionNode> lvalues = ctx.expression()
+                .stream()
+                .map(x -> (ExpressionNode)x.accept(this))
+                .collect(Collectors.toList());
 
-        return new LValueNode(false, expressions);
+        LValueNode lvalue = new LValueNode(false, lvalues);
+        ExpressionNode rvalue = (ExpressionNode)ctx.rvalue.accept(this);
+
+        return new AssignCommandNode(lvalue, rvalue);
     }
 
     @Override

@@ -62,7 +62,7 @@ arrayColumnSeparator:
 
 
 expressionList:
-    expression (',' expression)*;
+    expression (','? expression)*;
 
 expression:
     '(' expression ')' # parensExpr
