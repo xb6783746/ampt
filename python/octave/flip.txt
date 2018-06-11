@@ -1,0 +1,23 @@
+function y = flip (x, dim)
+
+  if (nargin < 1 || nargin > 2)
+    print_usage ();
+  endif
+
+  nd = ndims (x);
+  sz = size (x);
+  if (nargin == 1)
+    ## Find the first non-singleton dimension.
+    dim = find (sz > 1, 1);
+    if !dim
+        dim = 1;
+    endif
+  elseif (! (isscalar (dim) && isindex (dim)))
+    error ("flip: DIM must be a positive integer");
+  endif
+
+  idx(1:max(nd, dim)) = {':'};
+  idx{dim} = size (x, dim):-1:1;
+  y = x(idx{:});
+
+endfunction
