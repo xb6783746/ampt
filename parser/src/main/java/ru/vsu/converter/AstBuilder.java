@@ -382,7 +382,9 @@ public class AstBuilder implements AmpcVisitor<BasicAstNode> {
     @Override
     public BasicAstNode visitStringExpr(AmpcParser.StringExprContext ctx) {
 
-        String str = ctx.getText().replace("\'", "");
+        String str = ctx.getText()
+                .replace("\'", "")
+                .replace("\"", "");
 
         return new StringNode(str);
     }

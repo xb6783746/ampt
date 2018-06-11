@@ -19,7 +19,8 @@ REAL:
     INTEGER '.' INTEGER;
 
 STRING:
-    '\'' ~[']* '\'';
+      '\'' ~[']* '\''
+    | '"'  ~["]* '"';
 
 COMMENT
     : '\n'* '%' .*? '\n' -> skip;
