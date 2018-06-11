@@ -15,6 +15,15 @@ public class BasicAstTransformer
 
         Set<String> variableNames = new HashSet<>();
         Set<String> notDeclaredVars = new HashSet<>();
+
+        public Context clone(){
+
+            Context ctx = new Context();
+            ctx.variableNames = new HashSet<>(variableNames);
+            ctx.notDeclaredVars = new HashSet<>(notDeclaredVars);
+
+            return ctx;
+        }
     }
 
     @Override
@@ -47,13 +56,6 @@ public class BasicAstTransformer
 
         iterate(node.getNodes(), context);
 
-        List<BasicAstNode> vars = context.notDeclaredVars
-                .stream()
-                .map(this::createPredeclaredVar)
-                .collect(Collectors.toList());
-        CodeBlockNode codeBlockNode = new CodeBlockNode(vars);
-        node.getNodes().add( 0, codeBlockNode);
-
         return null;
     }
 
@@ -61,6 +63,13 @@ public class BasicAstTransformer
     public Void visit(CodeBlockNode node, Context ctx) {
 
         iterate(node.getCommandNodeList(), ctx);
+
+        List<BasicAstNode> vars = ctx.notDeclaredVars
+                .stream()
+                .map(this::createPredeclaredVar)
+                .collect(Collectors.toList());
+        CodeBlockNode codeBlockNode = new CodeBlockNode(vars);
+        node.getCommandNodeList().add( 0, codeBlockNode);
 
         return null;
     }
@@ -166,13 +175,13 @@ public class BasicAstTransformer
     public Void visit(ConditionalOperatorNode node, Context ctx) {
 
         node.getCondition().accept(this, ctx);
-        node.getBlock().accept(this, ctx);
+        node.getBlock().accept(this, ctx.clone());
 
-        iterate(node.getElseIfNodeList(), ctx);
+        iterate(node.getElseIfNodeList(), ctx.clone());
 
         if(node.getElseNode() != null) {
 
-            node.getElseNode().accept(this, ctx);
+            node.getElseNode().accept(this, ctx.clone());
         }
 
         return null;
