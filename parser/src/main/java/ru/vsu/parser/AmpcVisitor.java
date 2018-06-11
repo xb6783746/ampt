@@ -90,21 +90,15 @@ public interface AmpcVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpressionCommand(AmpcParser.ExpressionCommandContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link AmpcParser#assign}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAssign(AmpcParser.AssignContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code unpackLValue}
-	 * labeled alternative in {@link AmpcParser#lValue}.
+	 * labeled alternative in {@link AmpcParser#assign}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitUnpackLValue(AmpcParser.UnpackLValueContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code exprLValue}
-	 * labeled alternative in {@link AmpcParser#lValue}.
+	 * labeled alternative in {@link AmpcParser#assign}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
