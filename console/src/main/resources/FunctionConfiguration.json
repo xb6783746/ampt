@@ -5,6 +5,12 @@
   "standardFunctions": [
     "sin",
     "disp",
+    "all",
+    "any",
+    "isreal",
+    "fix",
+    "any",
+    "max",
     "zeros",
     "ones",
     "rand",
@@ -17,7 +23,17 @@
     "isindex",
     "permute",
     "rows",
-    "columns"
+    "columns",
+    "isempty",
+    "numel",
+    "cellfun",
+    "resize",
+    "prod",
+    "reshape",
+    "kron",
+    "length",
+    "cell",
+    "issparse"
   ]
 
 }
