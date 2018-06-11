@@ -16,6 +16,8 @@ public class UnaryExpressionNode extends ExpressionNode {
         super(parent);
         this.expression = expressionNode;
         this.operator = operator;
+
+        expressionNode.setParent(this);
     }
 
     private ExpressionNode expression;
